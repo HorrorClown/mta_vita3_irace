@@ -1,0 +1,81 @@
+https://public.etherpad-mozilla.org/p/Vita3_Reloaded__Ideensammlung_&_ToDo-List
+
+Bereits erledigt:
+    - Mapmusic behoben
+    - Unterstützung der alten Stream URLs zusätzlich eingebaut
+    - Fehler beim Radio behoben
+    - Winsounds bearbeitet
+    - Mindestauflösung nun bei einer 16:9 Auflösung statt 16:10
+    - Umgehung von Donatorcheck wenn Spielerdaten fehlerhaft sind
+    - User können nicht mehr in den Teamchat schreiben
+    - Alle SUMO Maps außer die Standard-Map raus    
+    - Killist bei Ware + Waffenanzeige in der Killist    
+    - IP-Datenbank für Ländererkennung aktualisiert
+    - Rankingboard in SUMO eingebaut
+    - Donatoranzeige überschreibt die SUMO Anzeige
+    - Zeitanzeige bei SUMO auch nach Gamemode-Restart nicht fehlerhaft
+    - Editfelder im Userpanel funktionieren wieder (MTA 1.5 hats kaputt gemacht :0)
+    - Waffennamen statt WaffenID in Killiste
+    - Rankingboard in Sumo farbig (Zeit zum Gewinn)
+    - Wartezeit beim Mapkauf/Redo
+    - Anpassung an neue Foren-URL und Servernamen
+    - Teamliste im Userpanel verkleinert (nur mehr Member, Mod & Admin)
+    - Logintext überarbeitet
+    - Fehler im Mapshop behoben
+    - Sumo: "bessere" Vehikel bei wenigen Spielern deaktivieren   
+        - Falsche Geldberechnung wenn Donator Map gewinnen behoben
+        - Fehler beim Fahrzeug-Farbenkauf behoben
+        - Fehler behoben, dass GUIs teilweise nicht gelöscht wurden
+     - Mapkauf behoben
+  - Preview Winsounds: Bei Preview des nächsten Winsounds alten Winsound stoppen        
+   -/deleteMap & /fixMap: automatisch aktuelle Map auswählen sofern keine andere Map angegeben wird 
+- Login Design angepasst
+    
+    
+    Nächste Update:
+        
+
+    
+Todo:
+    -Mehr Micro Games für VitaWare
+    -Ratingsystem durch Like/Dislike ersetzen (Tasten für Like/Dislike ;)) (Am besten die Aufforderung zum Voten in den 5 Sekunden nach Mapende nochmal einblenden!)
+    -Toasty/Wabelwack/Badumtss raus / deaktivieren!
+    -Domain auf Corbert seinen Teamspeak weiterleiten
+    -"Coming Soon" raus
+    -Donator Features zusätzlich auch für Ingamegeld verfügbar machen (zeitlich begrenzt)
+    -Neues /bet-System: Je niedriger der Rang des Spielers, auf den gewettet wurde, umso höher der Gewinn
+    -Spamschutz
+    -Haystack-Winmessage beim Verlassen von Minigames löschen (Bleibt für immer da, wenn man vor dem Gamevote Minigames vor Ende des Minigamemodes verlässt)
+    -Zentrieren + Anzeige der Maus (z.B. beim Verlassen des Gamemodes, erstmaligen connecten oder Minigamevote) findet immer auf dem 1. Bildschirm statt, auch wenn man auf dem zweiten/dritten BS spielt (benutzt aber die Resolution vom zweiten/dritten BS zum "zentrieren")
+    - Userpanel an neues Rangsystem anpassen
+      -Toasty/Wabelwack/Badumtss raus / deaktivieren!
+Muss jemand von euch machen:
+    -Mapmusik vervollständigen
+    -Mehr RUN Maps    
+    
+Wird nicht gemacht:
+    -Atemlos-Winsound raus!
+    -Scrollbar in Mapshop/Adminpanel mit Maus ziehbar machen    
+    
+    
+    Idee von gero:
+        
+    -Bessere Lottery:
+         Anstatt 300 Vero kann jeder selbst entscheiden mit wie viel er reingeht und hat somit Prozentual
+         die Chance zu gewinnen wie viel % der Pots er selber gewettet hat. Beispiel:
+               Spieler 1 wettet 1000 Vero
+               Spieler 2 wettet 4000 Vero
+               Spieler 3 wettet 5000 Vero
+               
+               Spieler 1 hat 10% Chance den gesammten Pot (10.000) zu gewinnen
+               Spieler 2 hat 40% Chance den gesammten Pot (10.000) zu gewinnen
+               Spieler 3 hat 50% Chance den gesammten Pot (10.000) zu gewinnen
+               
+    mtajackpot.com (?? ???)?/
+ ____________________________________________________   
+    
+    Mapfix aufgrund von SC:
+       - [DM]Androm3D_-v3-_Stainless
+       -[DM]Darius_v3_Sabotage (wurde bereits gelöscht)
+    
+    

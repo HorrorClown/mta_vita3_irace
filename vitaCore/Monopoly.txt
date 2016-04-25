@@ -1,0 +1,13 @@
+Vita3 Gamemode
+Donator können Radiosender der Bar bei Berta ändern
+fete Berta für Getränke und Warteschlange, wenn alles voll ist
+Man joint, kommt in eine Bar - Tische sind eigene Räume: Tisch E - erster öffnet spiel und sagt und PW gibt
+Einladungssystem (Spieler aus Monopoly in Liste ienladbar wenn Privat - PW in Notification dann mitsenden)
+2-4 Leute pro Tisch, Spiel beginnt wenn alle ready, host kann kicken
+
+
+Hilfe noch alles entfernen was zu monopoly gehört
+Add MOnopoly to scoreboard (scoreboard in monopoly teilweise disablen etc)
+Chat in Monopoly
+Aus Table quitten/bei quit aus gamemode
+TODO: scrollen im chat

@@ -1,0 +1,914 @@
+<meta>
+	<info author="Sebihunter" type="gamemode" name="Vita3" />
+	
+	<include resource="race" />
+	<include resource="freecam" />
+	<include resource="vitaDownload" />
+	<include resource="vitaStream" />
+	<!-- Exports -->
+	<export function="htmlIsPlayerLoggedIn" http="true" />
+	<export function="htmlGiveDonator" http="true" />
+	
+	<!-- Files -->    
+	<file src="files/clock.png" />
+	<file src="files/metro.ttf" />
+	<file src="files/metro_bold.ttf" />
+	<file src="files/myriadproregular.ttf" />
+	
+	<file src="files/vita_login.png" />
+	<file src="files/vitaonline_symbol.png" />
+	<file src="files/btn_register.png" />
+	<file src="files/btn_login.png" />
+	<file src="files/btn_registerHover.png" />
+	<file src="files/btn_loginHover.png" />
+	
+	<file src="files/selection/vitaDM.png" />
+	<file src="files/selection/vitaDD.png" />
+	<file src="files/selection/vitaRA.png" />
+	<file src="files/selection/vitaSH.png" />
+	<file src="files/selection/vitaFUN.png" />	
+	<file src="files/selection/vitaMO.png" />
+	<file src="files/selection/vitaNone.png" />
+	<file src="files/selection/vitaDDhover.png" />
+	<file src="files/selection/vitaDMhover.png" />
+	<file src="files/selection/vitaRAhover.png" />
+	<file src="files/selection/vitaSHhover.png" />	
+	<file src="files/selection/vitaFUNhover.png" />	
+	<file src="files/selection/vitaMOhover.png" />
+	<file src="files/selection/vitaNonehover.png" />
+	
+	<file src="files/monopoly/monopolybackground.png" />
+	<file src="files/monopoly/monopolywindow.png" />
+	<file src="files/monopoly/monopolyE.png" />
+	<file src="files/monopoly/monopolyEpressed.png" />
+	<file src="files/monopoly/monopolySettingsE.png" />
+	<file src="files/monopoly/monopolyRunningE.png" />
+	<file src="files/monopoly/monopolyPublicE.png" />
+	<file src="files/monopoly/monopolyPrivateE.png" />
+	<file src="files/monopoly/monopolyEmptyE.png" />
+	<file src="files/monopoly/1.png" />
+	<file src="files/monopoly/2.png" />
+	<file src="files/monopoly/3.png" />
+	<file src="files/monopoly/4.png" />
+	<file src="files/monopoly/tex1.png" />
+	<file src="files/monopoly/tex2.png" />
+	<file src="files/monopoly/tex3.png" />
+	<file src="files/monopoly/tex4.png" />	
+	<file src="files/monopoly/swosh_in.mp3" />
+	<file src="files/monopoly/swosh_out.mp3" />
+	<file src="files/monopoly/card.mp3"/>
+	<file src="files/monopoly/kaching.mp3"/>
+	<file src="files/monopoly/chat.mp3" />
+	<file src="files/monopoly/a.dff" />
+	<file src="files/monopoly/a.col" />
+	<file src="files/monopoly/a.txd" />
+	<file src="files/monopoly/laespraydoor1-5422.txd" />
+	
+	
+	<file src="files/minigames_vote/games_chosen.png" />	
+	<file src="files/minigames_vote/games_gungame.png" />
+	<file src="files/minigames_vote/games_gungame_hover.png" />
+	<file src="files/minigames_vote/games_ware.png" />
+	<file src="files/minigames_vote/games_ware_hover.png" />
+	<file src="files/minigames_vote/games_hay.png" />
+	<file src="files/minigames_vote/games_hay_hover.png" />
+	<file src="files/minigames_vote/games_rg.png" />
+	<file src="files/minigames_vote/games_rg_hover.png" />
+	<file src="files/minigames_vote/games_su.png" />
+	<file src="files/minigames_vote/games_su_hover.png" />
+	
+	<file src="files/shader/texreplace.fx" />	
+	<file src="files/shader/zaa.png" />	
+		
+	<file src="files/notification.png" />
+	<file src="files/notify1.png" />
+	<file src="files/notify2.png" />
+	<file src="files/notify3.png" />
+	<file src="files/notify4.png" />
+	<file src="files/achv.png" />
+	
+	<file src="files/sumo/texture.txd" />
+	<file src="files/sumo/veg_palm03.dff" />
+	<file src="files/sumo/gta_tree_palm.txd" />
+	
+	<file src="files/r.png" />
+	<file src="files/g.png" />
+	<file src="files/b.png" />
+	
+	<file src="files/loading.png" />
+	<file src="files/chat.png" />
+	<file src="files/eye.png" />
+	
+	<file src="files/hurry.png" />
+	
+	<file src="files/vita_racerank.png" />
+	<file src="files/vita_racerank_list.png" />
+	
+	<file src="files/vitaprogress.png" />
+	<file src="files/vitatime.png" />
+	<file src="files/vitatime2.png" />
+	<file src="files/vitaToptimes.png" />
+	<file src="files/vitaMapinfo.png" />
+	
+	<file src="files/background.png" />
+	
+	<file src="files/countdown_0.png" />
+	<file src="files/countdown_1.png" />
+	<file src="files/countdown_2.png" />
+	<file src="files/countdown_3.png" />
+
+	<file src="files/radar/vehicle.png"/>
+  	<file src="files/radar/player.png"/>
+	<file src="files/radar/radarnorth.png"/>
+	<file src="files/radar/checkpoint.png"/>
+  	<file src="files/radar/radius.png"/>
+	<file src="files/radar/rotor.png"/>
+	<file src="files/radar/down.png"/>
+	<file src="files/radar/blank.png"/>
+	<file src="files/radar/up.png"/>
+	<file src="files/radar/hunter.png"/>
+	
+	<file src="files/audio/notify.mp3" />
+	<file src="files/audio/headshot.mp3" />
+	<file src="files/audio/click.mp3" />
+	<file src="files/audio/achievement.mp3" />
+	<file src="files/audio/hover.mp3" />
+	<file src="files/audio/swosh.mp3" />
+	<file src="files/audio/badumtss.mp3" />
+	<file src="files/audio/gay_music.mp3" />
+	<file src="files/audio/lottery.ogg" />
+	<file src="files/audio/renegade_boink.wav"/>
+	
+	<file src="files/audio/wave_change.mp3" />
+	<file src="files/audio/nigga_bike.mp3" />
+	
+	<file src="files/audio/countstart.mp3" />
+	<file src="files/audio/3.mp3" />
+	<file src="files/audio/2.mp3" />
+	<file src="files/audio/1.mp3" />
+	<file src="files/audio/0.mp3" />
+
+	<file src="files/horns/1.wav"/>
+	<file src="files/horns/2.wav"/>
+	<file src="files/horns/3.wav"/>
+	<file src="files/horns/4.wav"/>
+	<file src="files/horns/5.wav"/>
+	<file src="files/horns/6.wav"/>
+	<file src="files/horns/7.wav"/>
+	<file src="files/horns/8.wav"/>
+	<file src="files/horns/9.wav"/>
+	<file src="files/horns/10.wav"/>
+	<file src="files/horns/11.wav"/>
+	<file src="files/horns/12.wav"/>
+	<file src="files/horns/13.wav"/>
+	<file src="files/horns/14.wav"/>
+	<file src="files/horns/15.wav"/>
+	<file src="files/horns/16.wav"/>
+	<file src="files/horns/17.wav"/>
+	<file src="files/horns/18.wav"/>	
+	<file src="files/horns/19.wav"/>	
+	<file src="files/horns/20.wav"/>	
+	<file src="files/horns/21.wav"/>	
+	<file src="files/horns/22.wav"/>	
+	<file src="files/horns/23.wav"/>	
+	<file src="files/horns/24.wav"/>	
+	<file src="files/horns/25.wav"/>	
+	<file src="files/horns/26.wav"/>	
+	
+	<file src="files/winsounds/1.mp3"/>
+	<file src="files/winsounds/2.mp3"/>
+	<file src="files/winsounds/3.mp3"/>
+	<file src="files/winsounds/4.mp3"/>
+	<file src="files/winsounds/5.mp3"/>
+	<file src="files/winsounds/6.mp3"/>
+	<file src="files/winsounds/7.mp3"/>
+	<file src="files/winsounds/8.mp3"/>
+	<file src="files/winsounds/9.mp3"/>
+	<file src="files/winsounds/10.mp3"/>
+	<file src="files/winsounds/11.mp3"/>
+	<file src="files/winsounds/12.mp3"/>
+	<file src="files/winsounds/13.mp3"/>
+	<file src="files/winsounds/14.mp3"/>
+	<file src="files/winsounds/15.mp3"/>
+	<file src="files/winsounds/16.mp3"/>
+	<file src="files/winsounds/17.mp3"/>
+	<file src="files/winsounds/18.mp3"/>
+	<file src="files/winsounds/19.mp3"/>
+	<file src="files/winsounds/20.mp3"/>
+	<file src="files/winsounds/21.mp3"/>
+	<file src="files/winsounds/22.mp3"/>
+
+	<file src="files/audio/ware/game_prologue.mp3" />
+	<file src="files/audio/ware/game_ending.mp3" />
+	
+	<file src="files/audio/ware/game_new_two.mp3" />
+	<file src="files/audio/ware/game_lose_two.mp3" />
+	<file src="files/audio/ware/game_win_two.mp3" />
+	
+	<file src="files/audio/ware/countdown_ann_sec1.mp3" />
+	<file src="files/audio/ware/countdown_ann_sec2.mp3" />
+	<file src="files/audio/ware/countdown_ann_sec3.mp3" />
+	<file src="files/audio/ware/countdown_ann_sec4.mp3" />
+	<file src="files/audio/ware/countdown_ann_sec5.mp3" />
+
+	<file src="files/audio/ware/local_exo_won1.wav" />	
+	<file src="files/audio/ware/local_exo_won2.wav" />	
+	<file src="files/audio/ware/local_exo_won3.wav" />	
+	
+	<file src="files/audio/ware/local_lose1.wav" />	
+	<file src="files/audio/ware/local_lose2.wav" />	
+	<file src="files/audio/ware/local_lose3.wav" />
+
+	<file src="files/audio/ware/other_exo_won1.wav" />	
+	<file src="files/audio/ware/other_lose1.wav" />
+	
+	<file src="files/models/repair.dff" />
+	<file src="files/models/repair.txd" />
+	<file src="files/models/nitro.dff" />
+	<file src="files/models/nitro.txd" />
+	<file src="files/models/vehiclechange.dff" />
+	<file src="files/models/vehiclechange.txd" />	
+	
+	<file src="files/tacho/health.png" />
+	<file src="files/tacho/tacho.png" />
+	<file src="files/tacho/nadel.png" />
+	
+	<file src="files/vita_haystack.png" />
+	<file src="files/vita_gg.png" />
+	<file src="files/vita_rg.png" />	
+
+    <!--Country flags by Christoph Brill-->
+	<file src="files/flags/ac.png" />
+	<file src="files/flags/ad.png" />
+	<file src="files/flags/ae.png" />
+	<file src="files/flags/af.png" />
+	<file src="files/flags/ag.png" />
+	<file src="files/flags/ai.png" />
+	<file src="files/flags/al.png" />
+	<file src="files/flags/am.png" />
+	<file src="files/flags/an.png" />
+	<file src="files/flags/ao.png" />
+	<file src="files/flags/aq.png" />
+	<file src="files/flags/ar.png" />
+	<file src="files/flags/as.png" />
+	<file src="files/flags/at.png" />
+	<file src="files/flags/au.png" />
+	<file src="files/flags/aw.png" />
+	<file src="files/flags/ax.png" />
+	<file src="files/flags/az.png" />
+	<file src="files/flags/ba.png" />
+	<file src="files/flags/bb.png" />
+	<file src="files/flags/bd.png" />
+	<file src="files/flags/be.png" />
+	<file src="files/flags/bf.png" />
+	<file src="files/flags/bg.png" />
+	<file src="files/flags/bh.png" />
+	<file src="files/flags/bi.png" />
+	<file src="files/flags/bj.png" />
+	<file src="files/flags/bm.png" />
+	<file src="files/flags/bn.png" />
+	<file src="files/flags/bo.png" />
+	<file src="files/flags/br.png" />
+	<file src="files/flags/bs.png" />
+	<file src="files/flags/bt.png" />
+	<file src="files/flags/bv.png" />
+	<file src="files/flags/bw.png" />
+	<file src="files/flags/by.png" />
+	<file src="files/flags/bz.png" />
+	<file src="files/flags/ca.png" />
+	<file src="files/flags/cc.png" />
+	<file src="files/flags/cd.png" />
+	<file src="files/flags/cf.png" />
+	<file src="files/flags/cg.png" />
+	<file src="files/flags/ch.png" />
+	<file src="files/flags/ci.png" />
+	<file src="files/flags/ck.png" />
+	<file src="files/flags/cl.png" />
+	<file src="files/flags/cm.png" />
+	<file src="files/flags/cn.png" />
+	<file src="files/flags/co.png" />
+	<file src="files/flags/cr.png" />
+	<file src="files/flags/cs.png" />
+	<file src="files/flags/cu.png" />
+	<file src="files/flags/cv.png" />
+	<file src="files/flags/cx.png" />
+	<file src="files/flags/cy.png" />
+	<file src="files/flags/cz.png" />
+	<file src="files/flags/de.png" />
+	<file src="files/flags/dj.png" />
+	<file src="files/flags/dk.png" />
+	<file src="files/flags/dm.png" />
+	<file src="files/flags/do.png" />
+	<file src="files/flags/dz.png" />
+	<file src="files/flags/ec.png" />
+	<file src="files/flags/ee.png" />
+	<file src="files/flags/eg.png" />
+	<file src="files/flags/eh.png" />
+	<file src="files/flags/er.png" />
+	<file src="files/flags/es.png" />
+	<file src="files/flags/et.png" />
+	<file src="files/flags/eu.png" />
+	<file src="files/flags/fi.png" />
+	<file src="files/flags/fo.png" />
+	<file src="files/flags/fr.png" />
+	<file src="files/flags/ga.png" />
+	<file src="files/flags/gb.png" />
+	<file src="files/flags/gd.png" />
+	<file src="files/flags/gl.png" />
+	<file src="files/flags/gm.png" />
+	<file src="files/flags/gw.png" />
+	<file src="files/flags/gy.png" />
+	<file src="files/flags/hu.png" />
+	<file src="files/flags/id.png" />
+	<file src="files/flags/ie.png" />
+	<file src="files/flags/il.png" />
+	<file src="files/flags/in.png" />
+	<file src="files/flags/iq.png" />
+	<file src="files/flags/is.png" />
+	<file src="files/flags/it.png" />
+	<file src="files/flags/ja.png" />
+	<file src="files/flags/jm.png" />
+	<file src="files/flags/jp.png" />
+	<file src="files/flags/kw.png" />
+	<file src="files/flags/lt.png" />
+	<file src="files/flags/lu.png" />
+	<file src="files/flags/lv.png" />
+	<file src="files/flags/ly.png" />
+	<file src="files/flags/mc.png" />
+	<file src="files/flags/mg.png" />
+	<file src="files/flags/mh.png" />
+	<file src="files/flags/mt.png" />
+	<file src="files/flags/ng.png" />
+	<file src="files/flags/nl.png" />
+	<file src="files/flags/no.png" />
+	<file src="files/flags/nr.png" />
+	<file src="files/flags/pa.png" />
+	<file src="files/flags/pe.png" />
+	<file src="files/flags/ph.png" />
+	<file src="files/flags/pk.png" />
+	<file src="files/flags/pl.png" />
+	<file src="files/flags/pr.png" />
+	<file src="files/flags/ps.png" />
+	<file src="files/flags/pt.png" />
+	<file src="files/flags/qa.png" />
+	<file src="files/flags/re.png" />
+	<file src="files/flags/ro.png" />
+	<file src="files/flags/ru.png" />
+	<file src="files/flags/rw.png" />
+	<file src="files/flags/se.png" />
+	<file src="files/flags/sj.png" />
+	<file src="files/flags/sl.png" />
+	<file src="files/flags/so.png" />
+	<file src="files/flags/sy.png" />
+	<file src="files/flags/td.png" />
+	<file src="files/flags/to.png" />
+	<file src="files/flags/tr.png" />
+	<file src="files/flags/tv.png" />
+	<file src="files/flags/ua.png" />
+	<file src="files/flags/uk.png" />
+	<file src="files/flags/um.png" />
+	<file src="files/flags/us.png" />
+	<file src="files/flags/vn.png" />
+	<file src="files/flags/wf.png" />
+	<file src="files/flags/ws.png" />
+	<file src="files/flags/ye.png" />
+	<file src="files/flags/yt.png" />
+	<file src="files/flags/yu.png" />
+	<file src="files/flags/za.png" />		
+  
+  	<file src="files/wave/wheels/1025.jpg" />
+	<file src="files/wave/wheels/1073.jpg" />
+	<file src="files/wave/wheels/1074.jpg" />
+	<file src="files/wave/wheels/1075.jpg" />
+	<file src="files/wave/wheels/1076.jpg" />
+	<file src="files/wave/wheels/1077.jpg" />
+	<file src="files/wave/wheels/1078.jpg" />
+	<file src="files/wave/wheels/1079.jpg" />
+	<file src="files/wave/wheels/1080.jpg" />
+	<file src="files/wave/wheels/1081.jpg" />
+	<file src="files/wave/wheels/1082.jpg" />
+	<file src="files/wave/wheels/1083.jpg" />
+	<file src="files/wave/wheels/1084.jpg" />
+	<file src="files/wave/wheels/1085.jpg" />
+	<file src="files/wave/wheels/1096.jpg" />
+	<file src="files/wave/wheels/1097.jpg" />
+	<file src="files/wave/wheels/1098.jpg" />
+  
+  	<file src="files/wave/skins/0.png"/>
+	<file src="files/wave/skins/7.png"/>
+	<file src="files/wave/skins/9.png"/>
+  	<file src="files/wave/skins/10.png"/>
+  	<file src="files/wave/skins/11.png"/>
+	<file src="files/wave/skins/12.png"/>
+  	<file src="files/wave/skins/13.png"/>
+  	<file src="files/wave/skins/14.png"/>
+  	<file src="files/wave/skins/15.png"/>
+  	<file src="files/wave/skins/16.png"/>
+  	<file src="files/wave/skins/17.png"/>
+  	<file src="files/wave/skins/18.png"/>
+  	<file src="files/wave/skins/19.png"/>
+  	<file src="files/wave/skins/20.png"/>
+  	<file src="files/wave/skins/21.png"/>
+  	<file src="files/wave/skins/22.png"/>
+  	<file src="files/wave/skins/23.png"/>
+  	<file src="files/wave/skins/25.png"/>
+  	<file src="files/wave/skins/26.png"/>
+  	<file src="files/wave/skins/27.png"/>
+  	<file src="files/wave/skins/28.png"/>
+  	<file src="files/wave/skins/29.png"/>
+  	<file src="files/wave/skins/30.png"/>
+  	<file src="files/wave/skins/31.png"/>
+  	<file src="files/wave/skins/32.png"/>
+  	<file src="files/wave/skins/33.png"/>
+  	<file src="files/wave/skins/34.png"/>
+  	<file src="files/wave/skins/35.png"/>
+  	<file src="files/wave/skins/36.png"/>
+  	<file src="files/wave/skins/37.png"/>
+  	<file src="files/wave/skins/38.png"/>
+  	<file src="files/wave/skins/39.png"/>
+  	<file src="files/wave/skins/40.png"/>
+  	<file src="files/wave/skins/41.png"/>
+  	<file src="files/wave/skins/43.png"/>
+  	<file src="files/wave/skins/44.png"/>
+  	<file src="files/wave/skins/45.png"/>
+  	<file src="files/wave/skins/46.png"/>
+  	<file src="files/wave/skins/47.png"/>
+  	<file src="files/wave/skins/48.png"/>
+  	<file src="files/wave/skins/49.png"/>
+  	<file src="files/wave/skins/50.png"/>
+	<file src="files/wave/skins/51.png"/>
+  	<file src="files/wave/skins/52.png"/>
+  	<file src="files/wave/skins/53.png"/>
+  	<file src="files/wave/skins/54.png"/>
+  	<file src="files/wave/skins/55.png"/>
+  	<file src="files/wave/skins/56.png"/>
+  	<file src="files/wave/skins/57.png"/>
+  	<file src="files/wave/skins/58.png"/>
+  	<file src="files/wave/skins/59.png"/>
+  	<file src="files/wave/skins/60.png"/>
+  	<file src="files/wave/skins/61.png"/>
+  	<file src="files/wave/skins/62.png"/>
+  	<file src="files/wave/skins/63.png"/>
+  	<file src="files/wave/skins/64.png"/>
+  	<file src="files/wave/skins/66.png"/>
+  	<file src="files/wave/skins/67.png"/>
+  	<file src="files/wave/skins/68.png"/>
+  	<file src="files/wave/skins/69.png"/>
+  	<file src="files/wave/skins/70.png"/>
+  	<file src="files/wave/skins/71.png"/>
+  	<file src="files/wave/skins/72.png"/>
+  	<file src="files/wave/skins/73.png"/>
+  	<file src="files/wave/skins/75.png"/>
+  	<file src="files/wave/skins/76.png"/>
+  	<file src="files/wave/skins/77.png"/>
+  	<file src="files/wave/skins/78.png"/>
+  	<file src="files/wave/skins/79.png"/>
+  	<file src="files/wave/skins/81.png"/>
+  	<file src="files/wave/skins/82.png"/>
+  	<file src="files/wave/skins/83.png"/>
+  	<file src="files/wave/skins/84.png"/>
+  	<file src="files/wave/skins/85.png"/>
+  	<file src="files/wave/skins/87.png"/>
+  	<file src="files/wave/skins/88.png"/>
+  	<file src="files/wave/skins/89.png"/>
+  	<file src="files/wave/skins/90.png"/>
+  	<file src="files/wave/skins/91.png"/>
+  	<file src="files/wave/skins/92.png"/>
+  	<file src="files/wave/skins/93.png"/>
+  	<file src="files/wave/skins/94.png"/>
+  	<file src="files/wave/skins/95.png"/>
+  	<file src="files/wave/skins/96.png"/>
+  	<file src="files/wave/skins/97.png"/>
+  	<file src="files/wave/skins/98.png"/>
+  	<file src="files/wave/skins/99.png"/>
+  	<file src="files/wave/skins/100.png"/>
+  	<file src="files/wave/skins/101.png"/>		
+	<file src="files/wave/skins/102.png"/>
+	<file src="files/wave/skins/103.png"/>
+	<file src="files/wave/skins/104.png"/>
+  	<file src="files/wave/skins/105.png"/>
+  	<file src="files/wave/skins/106.png"/>
+  	<file src="files/wave/skins/107.png"/>
+  	<file src="files/wave/skins/108.png"/>
+  	<file src="files/wave/skins/109.png"/>
+  	<file src="files/wave/skins/110.png"/>
+  	<file src="files/wave/skins/111.png"/>
+  	<file src="files/wave/skins/112.png"/>
+  	<file src="files/wave/skins/113.png"/>
+  	<file src="files/wave/skins/114.png"/>
+  	<file src="files/wave/skins/115.png"/>
+  	<file src="files/wave/skins/116.png"/>
+  	<file src="files/wave/skins/117.png"/>
+  	<file src="files/wave/skins/118.png"/>
+  	<file src="files/wave/skins/120.png"/>
+  	<file src="files/wave/skins/121.png"/>
+  	<file src="files/wave/skins/122.png"/>
+  	<file src="files/wave/skins/123.png"/>
+  	<file src="files/wave/skins/124.png"/>
+  	<file src="files/wave/skins/125.png"/>
+  	<file src="files/wave/skins/126.png"/>
+  	<file src="files/wave/skins/127.png"/>
+  	<file src="files/wave/skins/128.png"/>
+  	<file src="files/wave/skins/129.png"/>
+  	<file src="files/wave/skins/130.png"/>
+  	<file src="files/wave/skins/131.png"/>
+  	<file src="files/wave/skins/132.png"/>
+  	<file src="files/wave/skins/133.png"/>
+  	<file src="files/wave/skins/134.png"/>
+  	<file src="files/wave/skins/135.png"/>
+  	<file src="files/wave/skins/136.png"/>
+  	<file src="files/wave/skins/137.png"/>
+  	<file src="files/wave/skins/138.png"/>
+  	<file src="files/wave/skins/139.png"/>
+  	<file src="files/wave/skins/140.png"/>
+  	<file src="files/wave/skins/141.png"/>
+  	<file src="files/wave/skins/142.png"/>
+  	<file src="files/wave/skins/143.png"/>
+  	<file src="files/wave/skins/144.png"/>
+  	<file src="files/wave/skins/145.png"/>
+	<file src="files/wave/skins/146.png"/>
+  	<file src="files/wave/skins/147.png"/>
+  	<file src="files/wave/skins/148.png"/>
+  	<file src="files/wave/skins/150.png"/>
+  	<file src="files/wave/skins/151.png"/>
+  	<file src="files/wave/skins/152.png"/>
+  	<file src="files/wave/skins/153.png"/>
+  	<file src="files/wave/skins/154.png"/>
+  	<file src="files/wave/skins/155.png"/>
+  	<file src="files/wave/skins/156.png"/>
+  	<file src="files/wave/skins/157.png"/>
+  	<file src="files/wave/skins/158.png"/>
+  	<file src="files/wave/skins/159.png"/>
+  	<file src="files/wave/skins/160.png"/>
+  	<file src="files/wave/skins/161.png"/>
+  	<file src="files/wave/skins/162.png"/>
+  	<file src="files/wave/skins/163.png"/>
+  	<file src="files/wave/skins/164.png"/>
+  	<file src="files/wave/skins/165.png"/>
+  	<file src="files/wave/skins/166.png"/>
+  	<file src="files/wave/skins/167.png"/>
+  	<file src="files/wave/skins/168.png"/>
+  	<file src="files/wave/skins/169.png"/>
+  	<file src="files/wave/skins/170.png"/>
+  	<file src="files/wave/skins/171.png"/>
+  	<file src="files/wave/skins/172.png"/>
+  	<file src="files/wave/skins/173.png"/>
+  	<file src="files/wave/skins/174.png"/>
+  	<file src="files/wave/skins/175.png"/>
+  	<file src="files/wave/skins/176.png"/>
+  	<file src="files/wave/skins/177.png"/>
+  	<file src="files/wave/skins/178.png"/>
+  	<file src="files/wave/skins/179.png"/>
+  	<file src="files/wave/skins/180.png"/>
+  	<file src="files/wave/skins/181.png"/>
+  	<file src="files/wave/skins/182.png"/>
+  	<file src="files/wave/skins/183.png"/>
+  	<file src="files/wave/skins/184.png"/>
+  	<file src="files/wave/skins/185.png"/>
+  	<file src="files/wave/skins/186.png"/>
+  	<file src="files/wave/skins/187.png"/>
+  	<file src="files/wave/skins/188.png"/>
+  	<file src="files/wave/skins/189.png"/>
+  	<file src="files/wave/skins/190.png"/>
+  	<file src="files/wave/skins/191.png"/>
+  	<file src="files/wave/skins/192.png"/>
+  	<file src="files/wave/skins/193.png"/>
+  	<file src="files/wave/skins/194.png"/>
+  	<file src="files/wave/skins/195.png"/>
+  	<file src="files/wave/skins/196.png"/>
+  	<file src="files/wave/skins/197.png"/>
+  	<file src="files/wave/skins/198.png"/>
+  	<file src="files/wave/skins/199.png"/>
+  	<file src="files/wave/skins/200.png"/>
+  	<file src="files/wave/skins/201.png"/>
+  	<file src="files/wave/skins/202.png"/>
+  	<file src="files/wave/skins/203.png"/>
+  	<file src="files/wave/skins/204.png"/>
+  	<file src="files/wave/skins/205.png"/>
+  	<file src="files/wave/skins/206.png"/>
+  	<file src="files/wave/skins/207.png"/>
+  	<file src="files/wave/skins/209.png"/>
+  	<file src="files/wave/skins/210.png"/>
+  	<file src="files/wave/skins/211.png"/>
+  	<file src="files/wave/skins/212.png"/>
+  	<file src="files/wave/skins/213.png"/>
+  	<file src="files/wave/skins/214.png"/>
+  	<file src="files/wave/skins/215.png"/>
+  	<file src="files/wave/skins/216.png"/>
+  	<file src="files/wave/skins/217.png"/>
+  	<file src="files/wave/skins/218.png"/>
+  	<file src="files/wave/skins/219.png"/>
+  	<file src="files/wave/skins/220.png"/>
+  	<file src="files/wave/skins/221.png"/>
+  	<file src="files/wave/skins/222.png"/>
+  	<file src="files/wave/skins/223.png"/>
+  	<file src="files/wave/skins/224.png"/>
+  	<file src="files/wave/skins/225.png"/>
+  	<file src="files/wave/skins/226.png"/>
+  	<file src="files/wave/skins/227.png"/>
+  	<file src="files/wave/skins/228.png"/>
+  	<file src="files/wave/skins/229.png"/>
+  	<file src="files/wave/skins/230.png"/>
+  	<file src="files/wave/skins/231.png"/>
+  	<file src="files/wave/skins/232.png"/>
+  	<file src="files/wave/skins/233.png"/>
+  	<file src="files/wave/skins/234.png"/>
+  	<file src="files/wave/skins/235.png"/>
+  	<file src="files/wave/skins/236.png"/>
+  	<file src="files/wave/skins/237.png"/>
+  	<file src="files/wave/skins/238.png"/>
+  	<file src="files/wave/skins/239.png"/>
+  	<file src="files/wave/skins/240.png"/>
+  	<file src="files/wave/skins/241.png"/>
+  	<file src="files/wave/skins/242.png"/>
+  	<file src="files/wave/skins/243.png"/>
+  	<file src="files/wave/skins/244.png"/>
+  	<file src="files/wave/skins/245.png"/>
+  	<file src="files/wave/skins/246.png"/>
+  	<file src="files/wave/skins/247.png"/>
+  	<file src="files/wave/skins/248.png"/>
+  	<file src="files/wave/skins/249.png"/>
+  	<file src="files/wave/skins/250.png"/>
+  	<file src="files/wave/skins/251.png"/>
+  	<file src="files/wave/skins/252.png"/>
+  	<file src="files/wave/skins/253.png"/>
+  	<file src="files/wave/skins/254.png"/>
+  	<file src="files/wave/skins/255.png"/>
+  	<file src="files/wave/skins/256.png"/>
+  	<file src="files/wave/skins/257.png"/>
+  	<file src="files/wave/skins/258.png"/>
+  	<file src="files/wave/skins/259.png"/>
+  	<file src="files/wave/skins/260.png"/>
+  	<file src="files/wave/skins/261.png"/>
+  	<file src="files/wave/skins/262.png"/>
+  	<file src="files/wave/skins/263.png"/>
+  	<file src="files/wave/skins/264.png"/>
+  	<file src="files/wave/skins/266.png"/>
+  	<file src="files/wave/skins/274.png"/>
+  	<file src="files/wave/skins/275.png"/>
+  	<file src="files/wave/skins/276.png"/>
+  	<file src="files/wave/skins/277.png"/>
+  	<file src="files/wave/skins/278.png"/>
+  	<file src="files/wave/skins/279.png"/>
+  	<file src="files/wave/skins/280.png"/>
+  	<file src="files/wave/skins/281.png"/>
+  	<file src="files/wave/skins/282.png"/>
+  	<file src="files/wave/skins/283.png"/>
+  	<file src="files/wave/skins/284.png"/>
+  	<file src="files/wave/skins/285.png"/>
+  	<file src="files/wave/skins/286.png"/>
+	<file src="files/wave/skins/287.png"/>
+  
+	<!-- memes -->
+   	<file src="files/meme/1.png"/>
+   	<file src="files/meme/2.png"/>
+   	<file src="files/meme/3.png"/>
+   	<file src="files/meme/4.png"/>
+   	<file src="files/meme/5.png"/>
+  	<file src="files/meme/6.png"/>
+   	<file src="files/meme/7.png"/>
+   	<file src="files/meme/8.png"/>
+  	<file src="files/meme/9.png"/>
+  	<file src="files/meme/10.png"/>
+  	<file src="files/meme/11.png"/>
+   	<file src="files/meme/12.png"/>
+  	<file src="files/meme/13.png"/>
+  	<file src="files/meme/14.png"/>
+  	<file src="files/meme/15.png"/>
+  	<file src="files/meme/16.png"/>
+  	<file src="files/meme/17.png"/>
+  	<file src="files/meme/18.png"/>
+  	<file src="files/meme/19.png"/>
+  	<file src="files/meme/20.png"/>
+  	<file src="files/meme/21.png"/>
+  	<file src="files/meme/22.png"/>
+  	<file src="files/meme/23.png"/>
+  	<file src="files/meme/24.png"/>
+  	<file src="files/meme/25.png"/>
+  	<file src="files/meme/26.png"/>
+  	<file src="files/meme/27.png"/>
+  	<file src="files/meme/28.png"/>
+  	<file src="files/meme/29.png"/>
+  	<file src="files/meme/30.png"/>
+  	<file src="files/meme/31.png"/>
+  	<file src="files/meme/32.png"/>
+  	<file src="files/meme/33.png"/>
+  	<file src="files/meme/34.png"/>
+  	<file src="files/meme/35.png"/>
+  	<file src="files/meme/36.png"/>
+  	<file src="files/meme/37.png"/>
+  	<file src="files/meme/38.png"/>
+  	<file src="files/meme/39.png"/>
+  	<file src="files/meme/40.png"/>
+  	<file src="files/meme/41.png"/>
+  	<file src="files/meme/42.png"/>
+  	<file src="files/meme/43.png"/>	
+	<file src="files/meme/44.png"/>
+	<file src="files/meme/45.png"/>	
+	<file src="files/meme/46.png"/>	
+	<file src="files/meme/47.png"/>	
+	<file src="files/meme/48.png"/>
+	<file src="files/meme/49.png"/>
+	<file src="files/meme/50.png"/>		
+	<file src="files/meme/51.png"/>
+	<file src="files/meme/52.png"/>  
+ 
+ 
+ 
+   	<file src="files/backlights/1.jpg"/>
+   	<file src="files/backlights/2.jpg"/>
+   	<file src="files/backlights/3.jpg"/>
+   	<file src="files/backlights/4.jpg"/>
+   	<file src="files/backlights/5.jpg"/>
+  	<file src="files/backlights/6.jpg"/>
+   	<file src="files/backlights/7.jpg"/>
+   	<file src="files/backlights/8.jpg"/>
+  	<file src="files/backlights/9.jpg"/>
+  	<file src="files/backlights/10.jpg"/>
+  	<file src="files/backlights/11.jpg"/>
+   	<file src="files/backlights/12.jpg"/>
+  	<file src="files/backlights/13.jpg"/>
+  	<file src="files/backlights/14.jpg"/>
+  	<file src="files/backlights/15.jpg"/>
+  	<file src="files/backlights/16.jpg"/>
+  	<file src="files/backlights/17.jpg"/>
+  	<file src="files/backlights/18.jpg"/>
+  	<file src="files/backlights/19.jpg"/>
+  	<file src="files/backlights/20.jpg"/>
+  	<file src="files/backlights/21.jpg"/>
+  	<file src="files/backlights/22.jpg"/>
+  	<file src="files/backlights/23.jpg"/>
+  	<file src="files/backlights/24.jpg"/>
+  	<file src="files/backlights/25.jpg"/>
+  	<file src="files/backlights/26.jpg"/>
+  	<file src="files/backlights/27.jpg"/>
+  	<file src="files/backlights/28.jpg"/>
+  	<file src="files/backlights/29.jpg"/>
+  	<file src="files/backlights/30.jpg"/>
+  	<file src="files/backlights/31.jpg"/>
+  	<file src="files/backlights/32.jpg"/>
+  	<file src="files/backlights/33.jpg"/>
+  	<file src="files/backlights/34.jpg"/>
+  	<file src="files/backlights/35.jpg"/>
+  	<file src="files/backlights/36.jpg"/>
+  	<file src="files/backlights/37.jpg"/>
+  	<file src="files/backlights/38.jpg"/>
+  	<file src="files/backlights/39.jpg"/>
+  	<file src="files/backlights/40.jpg"/>
+  	<file src="files/backlights/41.jpg"/>
+  	<file src="files/backlights/42.jpg"/>
+  	<file src="files/backlights/43.jpg"/>	
+	<file src="files/backlights/44.jpg"/>
+	<file src="files/backlights/45.jpg"/>	
+	<file src="files/backlights/46.jpg"/>	
+	<file src="files/backlights/47.jpg"/>	
+
+	<file src="files/wave/bg1.png" />
+	<file src="files/wave/icon-donator.png" />
+	<file src="files/wave/icon-home.png" />
+	<file src="files/wave/icon-info.png" />
+	<file src="files/wave/icon-players.png" />
+	<file src="files/wave/icon-settings.png" />
+	<file src="files/wave/icon-shop.png" />
+	<file src="files/wave/icon-trollface.png" />
+	<file src="files/wave/icon-trophy.png" />
+	<file src="files/wave/loading.png" />
+
+	<file src="files/wave/cpicker/h.png" />
+	<file src="files/wave/cpicker/sv.png" />
+	<file src="files/wave/cpicker/cursor.png" />
+	<file src="files/wave/cpicker/blank.png" />
+	
+  	<file src="files/wave/gui/window.png" />
+  	<file src="files/wave/gui/grid.png" />
+  	<file src="files/wave/gui/button.png" />
+  	<file src="files/wave/gui/checkbox.png" />
+  	<file src="files/wave/gui/checkboxcheck.png" />
+  	<file src="files/wave/gui/checkbox_hover.png" />
+  	<file src="files/wave/gui/checkboxcheck_hover.png" />
+  	<file src="files/wave/gui/buttonhover.png" />
+  	<file src="files/wave/gui/progress.png" />
+  	<file src="files/wave/gui/edit.png" />
+  	<file src="files/wave/gui/edit_hover.png" />
+  	<file src="files/wave/gui/memo.png" />
+  	<file src="files/wave/gui/memo_hover.png" />
+  	<file src="files/wave/gui/buttonclicked.png" />
+	
+	<file src="files/wave/gui/close.png" />
+	<file src="files/wave/gui/closehover.png" />
+	
+	<map src="server/mo/mo.map" dimension="6"></map>
+	<map src="server/mo/MTAMonopoly.map" dimension="6"></map>
+	
+	<!-- Shared -->
+	<script src="shared/utils-shared.lua" type="server" />
+	<script src="shared/utils-shared.lua" type="client" />
+	<script src="shared/xml-shared.lua" type="server" />
+	<script src="shared/xml-shared.lua" type="client" />
+	<script src="shared/mo-shared.lua" type="server" />
+	<script src="shared/mo-shared.lua" type="client" />
+	
+	<!-- Server -->
+	<script src="server/utils-server.lua" type="server" />
+	<script src="server/mysql-server.lua" type="server" />
+	<script src="server/log-server.lua" type="server" />
+	<script src="server/html-server.lua" type="server" />
+	
+	<script src="server/core-server.lua" type="server" />
+	<script src="server/dd/dd-main.lua" type="server" />
+	<script src="server/dm/dm-main.lua" type="server" />
+	<script src="server/dm/dm-respawn.lua" type="server" />
+	<script src="server/sh/shooter-main.lua" type="server" />
+	<script src="server/ra/ra-main.lua" type="server" />
+	<script src="server/mo/mo-main.lua" type="server" />
+	<script src="server/fun/fun-main.lua" type="server" />
+	<script src="server/fun/hay/hay-core.lua" type="server" />
+	<script src="server/fun/gg/maps/gg-smallville.lua" type="server" />	
+	<script src="server/fun/gg/maps/gg-arena1.lua" type="server" />	
+	<script src="server/fun/gg/maps/gg-canals.lua" type="server" />	
+	<script src="server/fun/gg/gg-core.lua" type="server" />
+	<script src="server/fun/ware/ware-core.lua" type="server" />
+	<script src="server/fun/ware/ware-games.lua" type="server" />
+	<script src="server/fun/ware/games/game-dildo-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-bomb-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-getoff-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-checkpoint-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-maths-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-carbreak-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-nomove-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-move-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-damjump-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-crouch-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-grenadestayalive-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-kill-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-money-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-punch-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-bike-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-land-server.lua" type="server" />
+	<script src="server/fun/ware/games/game-button-server.lua" type="server" />
+	<script src="server/fun/ware/games/boss-game-lastalive-server.lua" type="server" />
+	<script src="server/fun/rg/maps/rg-jizz.lua" type="server" />	
+	<script src="server/fun/rg/rg-core.lua" type="server" />
+	<script src="server/fun/sumo/maps/su-infinity.lua" type="server" />	
+	<script src="server/fun/sumo/maps/su-4on1.lua" type="server" />	
+	<script src="server/fun/sumo/maps/su-simple.lua" type="server" />	
+	<script src="server/fun/sumo/maps/su-jizzy.lua" type="server" />	
+	<script src="server/fun/sumo/su-core.lua" type="server" />
+	
+	<script src="server/admin-server.lua" type="server" />
+	
+	<script src="server/chatsystem-server.lua" type="server" />	
+	<script src="server/achievement-server.lua" type="server" />
+	<script src="server/player-server.lua" type="server" />
+	<script src="server/commands-server.lua" type="server" />
+	<script src="server/toptimes-server.lua" type="server" />
+	<script src="server/ratings-server.lua" type="server" />
+	
+	<script src="server/ip2c.lua" type="server"/>
+	
+	<!-- Client -->
+	<script src="client/client_anim.lua" type="client" />		
+	<script src="client/textlib.lua" type="client" />	
+	<script src="client/textlib_anim.lua" type="client" />	
+	<script src="client/utils-client.lua" type="client" />	
+	<script src="client/wave/utils/dxgui.lua" type="client"/>
+	<script src="client/wave/utils/clickareas.lua" type="client"/>	
+
+	<script src="client/core-client.lua" type="client" />	
+	<script src="client/login-client.lua" type="client" />	
+	<script src="client/selection-client.lua" type="client" />	
+	<script src="client/minigames-vote-client.lua" type="client" />	
+	<script src="client/notify-client.lua" type="client" />	
+	<script src="client/killmessages-client.lua" type="client" />	
+	<script src="client/achievement-client.lua" type="client" />	
+	<script src="client/racemodes-client.lua" type="client" />
+	<script src="client/spec-client.lua" type="client" />
+	<script src="client/nametags-client.lua" type="client" />	
+	<script src="client/radar-client.lua" type="client" />	
+	<script src="client/tacho-client.lua" type="client" />
+	<script src="client/carfade-client.lua" type="client" />
+	<script src="client/autoafk-client.lua" type="client" />	
+	<script src="client/toptimes-client.lua" type="client" />
+	<script src="client/langselect-client.lua" type="client" />
+	<script src="client/shooter-client.lua" type="client" />	
+	<script src="client/mo-client.lua" type="client" />	
+	
+	<script src="client/adminpanel-client.lua" type="client" />
+	<script src="client/wave/help.lua" type="client"/>	
+	<script src="client/wave/colorpicker.lua" type="client"/>
+	<script src="client/wave/shop.lua" type="client"/>	
+	<script src="client/wave/settings.lua" type="client"/>	
+	<script src="client/wave/donator.lua" type="client"/>
+	<script src="client/wave/meme.lua" type="client"/>
+	<script src="client/wave/main.lua" type="client"/>	
+	
+	<script src="client/fun/hay-client.lua" type="client" />	
+	<script src="client/fun/gg-client.lua" type="client" />
+	<script src="client/fun/su-client.lua" type="client" />	
+	<script src="client/fun/rg-client.lua" type="client" />
+	<script src="client/fun/ware-client.lua" type="client" />	
+	<script src="client/fun/game-carbreak-client.lua" type="client"/>
+	<script src="client/fun/game-button-client.lua" type="client"/>
+	
+	<script src="client/scoreboard-client.lua" type="client" />
+</meta>

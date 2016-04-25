@@ -1,0 +1,12 @@
+<meta>
+	<info author="Sebihunter" type="gamemode" name="Vita3" />
+	<file src="bg1.png" />
+	<file src="loading.png" />	
+	<file src="vitaonline_symbol.png" />
+	
+	<!-- Server -->
+	<script src="server.lua" type="server" />
+	<!-- Client -->
+	<script src="client.lua" type="client" />		
+	
+</meta>

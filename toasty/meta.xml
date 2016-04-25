@@ -1,0 +1,7 @@
+<meta>
+	 <info author="Sebihunter" type="script" name="Toasty" />
+	 <file src="toasty.png" />	
+	 <file src="toasty.mp3" />	
+	 <script src="client.lua" type="client" />
+	 <script src="server.lua" type="server" />
+</meta>

@@ -1,0 +1,15 @@
+<meta>
+	<info author="xownage & Sebihunter" version="1.0.1" name="Download" type="script"/>
+	<min_mta_version server="1.3.0-9.03772" client="1.3.0-9.03772"/>
+	<script src="server.lua" type="server"/>
+	<script src="client.lua" type="client"/>
+
+	<file src="vita_download.png" />
+	<file src="vita_download_progress.png" />
+	<export function="downloadFile" type="client"/>
+	<!-- <export function="downloadFileToClient" type="server"/> -->
+
+	<export function="getServerFileSize" type="server"/>
+	<export function="getClientFileSize" type="client"/>
+
+</meta>

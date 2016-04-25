@@ -1,0 +1,35 @@
+TODO: fix scoreboard
+TODO: Fix FPS Lag
+TODO: rewrite map download as MD said
+TODO: update IP tables
+
+TODO: Shooter kills
+TODO: spawnFunctSU gets called often when lag
+TODO: Custom numberplate for VIP
+TODO: if other player wins map and dies then you see his ped
+TODO: Killmessage for DD, SUMO, SHOOTER, HUNTER and GG
+TODO: rewrite to MTA mysql
+TODO: mapvote in minigames
+
+
+TODOOO: Server lags if something with mysql happens 
+TOOODOOO. sometimes bomb doesn ot have a marker
+TODOO: Minigames: zombie mode
+TODO: Rewrite carfade
+TODO: vote in sumo 
+TODO: fix avoid the bomb not seeing
+TODO: vita ware ending scoreboard improved
+TODO: check in minigames with person who won is also announced in chat. If not do it
+TODO: map loading bugs: countdown 2 mal hörbar
+TODO: SUMO VOTE
+TODO: Donator Signature
+
+TODO FÜR NÄCHSTES UPDATE:
+- Light effects im shop
+
+DEBUG STUFF WARE-CORE and WARE-GAMES
+
+FIX: Ware bossgame can not be finished
+FIX: Problems related to hex colorcode buying
+TWEAK: Rainbow Color more randomised
+BACKEND: Connectivity between Vita3 and the forums
