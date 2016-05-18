@@ -183,7 +183,10 @@ function callClientFunction(funcname, ...)
     if (arg[1]) then
         for key, value in next, arg do arg[key] = tonumber(value) or value end
     end
-    loadstring("return "..funcname)()(unpack(arg))
+    --loadstring("return "..funcname)()(unpack(arg))
+    exec = loadstring("return "..funcname)()
+	if type(exec) ~= "function" then outputDebugString("Failed to call function: " .. tostring(funcname)) return end
+	exec(unpack(arg))
 end
 addEvent("onServerCallsClientFunction", true)
 addEventHandler("onServerCallsClientFunction", resourceRoot, callClientFunction)

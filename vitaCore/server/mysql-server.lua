@@ -45,7 +45,7 @@ function onResourceStartMysqlConnection()
 		return false
 	end
 	
-	if not hasPlayersLoaded == true then
+	if not hasPlayersLoaded then
 		hasPlayersLoaded = true
 		if mysql_ping ( g_mysql["connection"] ) == false then
 			onResourceStopMysqlEnd()
@@ -71,12 +71,12 @@ function onResourceStartMysqlConnection()
 			onResourceStopMysqlEnd()
 			hasPlayersLoaded = false
 			onResourceStartMysqlConnection()
-		end	
+		end
 	end
 end
-addEventHandler("onResourceStart", getResourceRootElement(), onResourceStartMysqlConnection)
+addEventHandler("onResourceStart", resourceRoot, onResourceStartMysqlConnection)
 
 function onResourceStopMysqlEnd()
 	mysql_close(g_mysql["connection"])
 end
-addEventHandler("onResourceStop", getResourceRootElement(), onResourceStopMysqlEnd, false, "low-1")
+addEventHandler("onResourceStop", resourceRoot, onResourceStopMysqlEnd, false, "low-1")

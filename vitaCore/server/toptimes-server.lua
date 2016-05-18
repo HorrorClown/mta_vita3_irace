@@ -5,36 +5,41 @@ Author(s):	Sebihunter
 ]]--
 
 function loadTopTimes(mapname)
-	mapname = string.gsub(tostring(mapname), "'", "")
+	--mapname = string.gsub(tostring(mapname), "'", "")
 	local toptimetable = {}
 	if mysql_ping ( g_mysql["connection"] ) == false then
 		onResourceStopMysqlEnd()
 		onResourceStartMysqlConnection()
 		return loadTopTimes(mapname)
 	end
+
 	local toptimes = mysql_query(g_mysql["connection"], "SELECT * FROM `toptimes` WHERE `mapname` = '"..mapname.."' LIMIT 0, 1")
 	if toptimes then	
 		local row = mysql_fetch_assoc(toptimes)
 		if row then
-			toptimetable = table.load(row["table"])
+			toptimetable = fromJSON(row["table"])
 			mysql_free_result(toptimes)
 		end
 	end
+
+
 	return toptimetable
 end
 
 function saveTopTimes(mapname, ttable)
-	mapname = string.gsub(tostring(mapname), "'", "")
+	--mapname = string.gsub(tostring(mapname), "'", "")
+
 	if mysql_ping ( g_mysql["connection"] ) == false then
 		onResourceStopMysqlEnd()
 		onResourceStartMysqlConnection()
 		saveTopTimes(mapname, ttable)
 	end
+
 	local result = mysql_query(g_mysql["connection"], "SELECT * FROM `toptimes` WHERE `mapname` = '"..mapname.."'")
 	if result and mysql_num_rows(result) ~= 0 then
-		mysql_query(g_mysql["connection"], "UPDATE `toptimes` SET `table` = '"..table.save(ttable).."' WHERE `mapname` = '"..mapname.."' LIMIT 1 ;")	
+		mysql_query(g_mysql["connection"], "UPDATE `toptimes` SET `table` = '"..toJSON(ttable).."' WHERE `mapname` = '"..mapname.."' LIMIT 1 ;")
 	else
-		mysql_query(g_mysql["connection"], "INSERT INTO `toptimes` (`mapname`, `table`) VALUES ( '"..mapname.."', '"..table.save(ttable).."')")
+		mysql_query(g_mysql["connection"], "INSERT INTO `toptimes` (`mapname`, `table`) VALUES ( '"..mapname.."', '"..toJSON(ttable).."')")
 	end
 end
 
@@ -136,7 +141,7 @@ function getPlayerToptimeCount(player, prefix)
 			if result then
 				if not string.find (string.upper (row["mapname"]), prefix) then skip = true end
 			end
-			local toptimeTable = table.load(row["table"])
+			local toptimeTable = fromJSON(row["table"])
 			if toptimeTable and type(toptimeTable) == "table" then
 				for i = 1,12, 1 do
 					if toptimeTable[i] then

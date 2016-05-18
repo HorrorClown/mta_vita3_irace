@@ -2,7 +2,7 @@
 	<info author="Sebihunter" type="gamemode" name="Vita3" />
 	
 	<include resource="race" />
-	<include resource="freecam" />
+	<!--<include resource="freecam" />-->
 	<include resource="vitaDownload" />
 	<include resource="vitaStream" />
 	<!-- Exports -->

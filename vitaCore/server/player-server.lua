@@ -21,7 +21,11 @@ function registerPlayer(player, accname, password)
 		return false
 	end
 
-	mysql_query(g_mysql["connection"], "INSERT INTO `players` (`accountname`) VALUES ('"..accname.."');")
+
+
+	local result = mysql_query(g_mysql["connection"], "INSERT INTO `players` (`accountname`) VALUES ('"..accname.."');")
+	outputConsole(tostring(result))
+	if not result then return end
 	
 	local id = mysql_query(g_mysql["connection"], "SELECT LAST_INSERT_ID(id) AS last FROM players ORDER BY id DESC LIMIT 1;")
 	local lastid = mysql_insert_id(g_mysql["connection"])
@@ -34,16 +38,16 @@ function registerPlayer(player, accname, password)
 	colors["r2"] = 255
 	colors["g2"] = 255
 	colors["b2"] = 255	
-	local mysqlColor = table.save(colors)
+	local mysqlColor = toJSON(colors)
 	
 	local lightcolors = {}
 	lightcolors["rl"] = 255
 	lightcolors["gl"] = 255
 	lightcolors["bl"] = 255
-	local mysqlLighrcolor = table.save(lightcolors)
+	local mysqlLighrcolor = toJSON(lightcolors)
 	
 	local archivements = {}	
-	local mysqlArchivements = table.save(archivements)
+	local mysqlArchivements = toJSON(archivements)
 	
 	local time = getRealTime()
 	local LastActivity = tostring(time.monthday)..":"..tostring(time.month+1)..":"..tostring(time.year+1900).."/"..tostring(time.hour)..":"..tostring(time.minute)
@@ -92,7 +96,7 @@ function registerPlayer(player, accname, password)
 	
 	triggerClientEvent ( player, "addNotification", getRootElement(), 2, 50, 200, 50, "Account successfully created!\nYour password: "..tostring(password))
 
-	local accElement = createElement ( "userAccount" )
+	local accElement = createElement("userAccount")
 	setElementData(accElement, "AccountName", accname)
 	setElementData(accElement, "PlayerName", _getPlayerName(player))
 	setElementData(accElement, "Points", 0)	
@@ -107,13 +111,16 @@ function loginPlayer(_accname, _password, typ, playerSource)
 	if typ == "server" then
 		client = playerSource
 	end
+
 	if _accname and _password then
 		if mysql_ping ( g_mysql["connection"] ) == false then
 			onResourceStopMysqlEnd()
 			onResourceStartMysqlConnection()
 		end
+
 		password = escapeString(_password)
 		accname = escapeString(_accname)
+
 		local player = mysql_query(g_mysql["connection"], "SELECT * FROM `players` WHERE `accountname` = '"..accname.."' LIMIT 0, 1")
 		if player then
 			--while true do
@@ -133,10 +140,11 @@ function loginPlayer(_accname, _password, typ, playerSource)
 				if getElementData(lockedAcc, "name") == _accname then triggerClientEvent ( client, "addNotification", getRootElement(), 1, 200, 50, 50, "Account already in use.") return false end
 			end
 
-			setElementData(client, "Userid", tonumber(row["id"]))
+			setElementData(client, "Userid", tonumber(row["ID"]))
 			setElementData(client, "AccountName", row["accountname"])
 			setElementData(client, "Level", row["level"])
 			setElementData(client, "memeActivated", tonumber(row["memeActivated"]))
+
 			local donatorstring = row["donatordate"]
 			setElementData(client, "donatordate", donatorstring)
 			
@@ -158,45 +166,49 @@ function loginPlayer(_accname, _password, typ, playerSource)
 			else
 				setElementData(client, "isDonator", false)
 			end
-			
-				local accountPassword = tostring(math.random(111111, 999999))
-				if getAccount(tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName"))) then
-					removeAccount(getAccount(tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName"))))
-				end
-				addAccount(tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")), accountPassword)	
-				local account = getAccount(tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
-				
-				if getElementData(client, "Level") == "Admin" then
-					setPlayerTeam(client, adminTeam)
-					aclGroupAddObject(aclGetGroup("Admin"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
-					local players = getElementsByType("player")
-					for _,iPly in pairs(players) do
-						addPlayerArchivement(iPly, 38)
-					end
-				elseif getElementData(client, "Level") == "GlobalModerator" then
-					setPlayerTeam(client, globalTeam)
-					aclGroupAddObject(aclGetGroup("SuperModerator"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))					
-				elseif getElementData(client, "Level") == "Moderator" then
-					setPlayerTeam(client, moderatorTeam)
-					aclGroupAddObject(aclGetGroup("Moderator"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
-				elseif getElementData(client, "Level") == "SeniorMember" then
-					setPlayerTeam(client, seniorTeam)
-					aclGroupAddObject(aclGetGroup("SeniorMember"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))					
-				elseif getElementData(client, "Level") == "Member" then
-					setPlayerTeam(client, memberTeam)
-					aclGroupAddObject(aclGetGroup("Member"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
-				elseif getElementData(client, "Level") == "Recruit" then
-					setPlayerTeam(client, recruitTeam)
-					aclGroupAddObject(aclGetGroup("Recruit"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
-				else
-					setElementData(client, "Level", "User")
-				end
-				if getPlayerTeam(client) == false and getElementData(client, "isDonator") == true then
-					setPlayerTeam(client, donatorTeam)
-				end
-				logOut(client)
-				logIn(client, account, accountPassword)
+
+			--local accountPassword = tostring(math.random(111111, 999999))
+			--if getAccount(tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName"))) then
+			--	removeAccount(getAccount(tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName"))))
 			--end
+			--addAccount(tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")), accountPassword)
+			--local account = getAccount(tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
+
+			if getElementData(client, "Level") == "Admin" then
+				setPlayerTeam(client, adminTeam)
+				--aclGroupAddObject(aclGetGroup("Admin"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
+				local players = getElementsByType("player")
+				for _,iPly in pairs(players) do
+					addPlayerArchivement(iPly, 38)
+				end
+			elseif getElementData(client, "Level") == "GlobalModerator" then
+				setPlayerTeam(client, globalTeam)
+				--aclGroupAddObject(aclGetGroup("SuperModerator"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
+			elseif getElementData(client, "Level") == "Moderator" then
+				setPlayerTeam(client, moderatorTeam)
+				--aclGroupAddObject(aclGetGroup("Moderator"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
+			elseif getElementData(client, "Level") == "SeniorMember" then
+				setPlayerTeam(client, seniorTeam)
+				--aclGroupAddObject(aclGetGroup("SeniorMember"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
+			elseif getElementData(client, "Level") == "Member" then
+				setPlayerTeam(client, memberTeam)
+				--aclGroupAddObject(aclGetGroup("Member"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
+			elseif getElementData(client, "Level") == "Recruit" then
+				setPlayerTeam(client, recruitTeam)
+				--aclGroupAddObject(aclGetGroup("Recruit"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
+			else
+				setElementData(client, "Level", "User")
+			end
+
+			--logOut(client)
+			--logIn(client, account, accountPassword)
+
+			if getPlayerTeam(client) == false and getElementData(client, "isDonator") == true then
+				setPlayerTeam(client, donatorTeam)
+			end
+
+			--end
+
 			setElementData(client, "Skin",  tonumber(row["skin"]))
 			setElementData(client, "Points", tonumber(row["points"]))
 			setElementData(client, "Rank", tonumber(row["rank"]))
@@ -221,16 +233,16 @@ function loginPlayer(_accname, _password, typ, playerSource)
 			end
 			
 			setElementData(client, "Backlights", tonumber(row["backlights"]))
-			
-			local color = table.load(row["vehcolor"])
+
+			local color = fromJSON(row["vehcolor"])
 			setElementData(client, "r1", color["r1"])
 			setElementData(client, "r2", color["r2"])
 			setElementData(client, "g1", color["g1"])
 			setElementData(client, "g2", color["g2"])
 			setElementData(client, "b1", color["b1"])
 			setElementData(client, "b2", color["b2"])
-			
-			local lightcolor = table.load(row["lightcolor"])
+
+			local lightcolor = fromJSON(row["lightcolor"])
 			setElementData(client, "rl", lightcolor["rl"])
 			setElementData(client, "gl", lightcolor["gl"])
 			setElementData(client, "bl", lightcolor["bl"])
@@ -249,7 +261,7 @@ function loginPlayer(_accname, _password, typ, playerSource)
 			setElementData(client, "WinningStreak", tonumber(row["winningstreak"]))
 			setElementData(client, "Rank", tonumber(row["rank"]))
 			
-			local archivements = table.load(row["archivements"])
+			local archivements = fromJSON(row["archivements"])
 			setElementData(client, "Archivements", archivements)
 			
 			--OTHER
@@ -268,7 +280,6 @@ function loginPlayer(_accname, _password, typ, playerSource)
 			
 			--setElementData(client, "country", getPlayerCountry ( client ))
 			if not getElementData(client, "TimeOnServer") then
-			
 				setElementData(client, "TimeOnServer", 0)
 			end
 			
@@ -293,22 +304,21 @@ function loginPlayer(_accname, _password, typ, playerSource)
 			--end
 		mysql_free_result(player)
 		addPlayerArchivement( client, 1 )
-		
-		local accElements = getElementsByType ( "userAccount" )
-		for theKey,accElement in ipairs(accElements) do
-			if getElementData(accElement, "AccountName") == getElementData(client, "AccountName") then 
-				callClientFunction(getRootElement(), "updatePlayerRanks")
-				setElementData(accElement, "PlayerName", _getPlayerName(client))
-				setElementData(accElement, "Level", getElementData(client, "Level"))
-				setElementData(client, "accElement", accElement)
-			end  
-		end
+
+		local accElements = getElementsByType("userAccount")
+			for theKey,accElement in ipairs(accElements) do
+				if getElementData(accElement, "AccountName") == getElementData(client, "AccountName") then
+					callClientFunction(getRootElement(), "updatePlayerRanks")
+					setElementData(accElement, "PlayerName", _getPlayerName(client))
+					setElementData(accElement, "Level", getElementData(client, "Level"))
+					setElementData(client, "accElement", accElement)
+				end
+			end
 		end
 	end
 end
 addEvent("loginPlayer", true)
 addEventHandler("loginPlayer", getRootElement(), loginPlayer)
-
 
 function quitPlayer(reason)
 	addPlayerArchivement(source, 37)
@@ -324,55 +334,56 @@ addEventHandler("onPlayerQuit", getRootElement(), quitPlayer)
 
 function savePlayer(source, reason)
 		if getElementData(source, "isLoggedIn") == true then
-			if mysql_ping ( g_mysql["connection"] ) == false then
-				onResourceStopMysqlEnd()
-				onResourceStartMysqlConnection()
-			end
-			local accid = escapeString(getElementData(source, "Userid"))
-			
-			local atable = getElementData(source, "Archivements")
-			local archivements_save = table.save(atable)
-			
-			local color = {}
-			color["r1"] = getElementData(source, "r1")
-			color["g1"] = getElementData(source, "g1")
-			color["b1"] = getElementData(source, "b1")
-			color["r2"] = getElementData(source, "r2")
-			color["g2"] = getElementData(source, "g2")
-			color["b2"] = getElementData(source, "b2")
-			local mysqlColor = table.save(color)
-			
-			local lightcolor = {}
-			lightcolor["rl"] = getElementData(source, "rl")
-			lightcolor["gl"] = getElementData(source, "gl")
-			lightcolor["bl"] = getElementData(source, "bl")
-			local mysqlLightcolor = table.save(lightcolor)
-			
-			
-			if g_playerstat and g_playerstat[source] then
-				if isTimer(g_playerstat[source]["TimeTimer"])then
-					killTimer(g_playerstat[source]["TimeTimer"])
-				end
-				g_playerstat[source] = nil
-			end
-			
-			local currentTime = getTimestamp()
-			
-			local isDonator = 0
-			if getElementData(source, "isDonator") == true then
-				isDonator = 1
-			end
-			
-			
-			local time = getRealTime()
-			local LastActivity = tostring(time.monthday)..":"..tostring(time.month+1)..":"..tostring(time.year+1900).."/"..tostring(time.hour)..":"..tostring(time.minute)
-			
-			local sourceName = escapeString(_getPlayerName(source))
-			if rollOldNick[source] and rollOldNick[source] ~= false then
-				sourceName = escapeString(tostring(rollOldNick[source]))
-			end
-			
-			local sql = "UPDATE `players` SET `accountname` = '"..tostring(getElementData(source, "AccountName")).."',\
+            if mysql_ping ( g_mysql["connection"] ) == false then
+                onResourceStopMysqlEnd()
+                onResourceStartMysqlConnection()
+            end
+            local accid = getElementData(source, "Userid")
+            outputServerLog("User ID: " .. tostring(accid))
+
+            local atable = getElementData(source, "Archivements")
+            local archivements_save = toJSON(atable)
+
+            local color = {}
+            color["r1"] = getElementData(source, "r1")
+            color["g1"] = getElementData(source, "g1")
+            color["b1"] = getElementData(source, "b1")
+            color["r2"] = getElementData(source, "r2")
+            color["g2"] = getElementData(source, "g2")
+            color["b2"] = getElementData(source, "b2")
+            local mysqlColor = toJSON(color)
+
+            local lightcolor = {}
+            lightcolor["rl"] = getElementData(source, "rl")
+            lightcolor["gl"] = getElementData(source, "gl")
+            lightcolor["bl"] = getElementData(source, "bl")
+            local mysqlLightcolor = toJSON(lightcolor)
+
+
+            if g_playerstat and g_playerstat[source] then
+                if isTimer(g_playerstat[source]["TimeTimer"])then
+                    killTimer(g_playerstat[source]["TimeTimer"])
+                end
+                g_playerstat[source] = nil
+            end
+
+            local currentTime = getTimestamp()
+
+            local isDonator = 0
+            if getElementData(source, "isDonator") == true then
+                isDonator = 1
+            end
+
+
+            local time = getRealTime()
+            local LastActivity = tostring(time.monthday)..":"..tostring(time.month+1)..":"..tostring(time.year+1900).."/"..tostring(time.hour)..":"..tostring(time.minute)
+
+            local sourceName = escapeString(_getPlayerName(source))
+            if rollOldNick[source] and rollOldNick[source] ~= false then
+                sourceName = escapeString(tostring(rollOldNick[source]))
+            end
+
+            local sql = "UPDATE `players` SET `accountname` = '"..tostring(getElementData(source, "AccountName")).."',\
 												`level` = '"..tostring(getElementData(source, "Level")).."',\
 												`skin` = '"..tostring(getElementData(source, "Skin")).."',\
 												`points` = '"..tostring(getElementData(source, "Points")).."',\
@@ -390,7 +401,7 @@ function savePlayer(source, reason)
 												`rawon` = '"..tostring(getElementData(source, "RAWon")).."',\
 												`betcounter` = '"..tostring(getElementData(source, "betCounter")).."',\
 												`playedtimecounter` = '"..tostring(getElementData(source, "playedTimeCounter")).."',\
-												`lastactivity` = '"..tostring(LastActivity).."',\
+												`lastactivity` = NOW(),\
 												`vehcolor` = '"..tostring(mysqlColor).."',\
 												`lightcolor` = '"..tostring(mysqlLightcolor).."', \
 												`timeonserver` = '"..tostring(getElementData(source, "TimeOnServer")).."', \
@@ -412,8 +423,11 @@ function savePlayer(source, reason)
 												`donatordate` = '"..tostring(getElementData(source, "donatordate")).."', \
 												`backlights` = '"..tostring(getElementData(source, "Backlights")).."' \
 										WHERE `id` = '"..accid.."' LIMIT 1 ;"
-			--MySQL_debug:addEntry(tostring(sql))
-			mysql_query(g_mysql["connection"], sql)
+
+             outputServerLog(sql)
+
+            --MySQL_debug:addEntry(tostring(sql))
+			local result = mysql_query(g_mysql["connection"], sql)
 			sql = nil
 			
 			if archivements_save ~= "return {{},}--|" then
@@ -423,7 +437,7 @@ function savePlayer(source, reason)
 				sql = nil
 			end
 
-			local account = getAccount(tostring(getElementData(source, "Userid")).."_"..tostring(getElementData(source, "AccountName")))
+			--[[local account = getAccount(tostring(getElementData(source, "Userid")).."_"..tostring(getElementData(source, "AccountName")))
 			
 			if isObjectInACLGroup ("user."..tostring(getElementData(source, "Userid")).."_"..tostring(getElementData(source, "AccountName")), aclGetGroup ( "Admin" ) ) then
 				aclGroupRemoveObject(aclGetGroup("Admin"), "user."..tostring(getElementData(source, "Userid")).."_"..tostring(getElementData(source, "AccountName")))
@@ -451,7 +465,7 @@ function savePlayer(source, reason)
 				
 			if account then
 				removeAccount(account)
-			end
+			end]]
 			
 			local lockedAccs = getElementsByType ( "lockedAcc" )
 			for theKey,lockedAcc in ipairs(lockedAccs) do
@@ -480,4 +494,4 @@ function vitaResourceStop()
 		savePlayer ( player, "Race restart!")
 	end
 end
-addEventHandler("onResourceStop", getResourceRootElement(getThisResource()),vitaResourceStop)
+addEventHandler("onResourceStop", resourceRoot,vitaResourceStop)

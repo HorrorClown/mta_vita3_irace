@@ -292,33 +292,37 @@ end
 addEvent("clientRequestBanList", true)
 addEventHandler("clientRequestBanList", getRootElement(), clientRequestBanList)
 
-function banSerial ( player, commandname, Value )
-	local targetPlayer
-	if Value== nil then
-		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /banSerial [serial]", player, 255, 0, 0, true )
-	else 
-		if addBan(nil, nil, tostring(Value), player, "SerialBan", 0) then
-			triggerClientEvent ( player, "addNotification", getRootElement(), 3, 18, 88, 97, "Ban successfully added." )
+-- TODO:
+--[[addCommandHandler ( "banSerial",
+	function(player, commandname, Value)
+		local targetPlayer
+		if Value== nil then
+			outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /banSerial [serial]", player, 255, 0, 0, true )
 		else
-			triggerClientEvent ( player, "addNotification", getRootElement(), 1, 200, 50, 50, "Ban could not be added.")
+			if addBan(nil, nil, tostring(Value), player, "SerialBan", 0) then
+				triggerClientEvent ( player, "addNotification", getRootElement(), 3, 18, 88, 97, "Ban successfully added." )
+			else
+				triggerClientEvent ( player, "addNotification", getRootElement(), 1, 200, 50, 50, "Ban could not be added.")
+			end
 		end
 	end
-end
-addCommandHandler ( "banSerial", banSerial )
+)]]
 
-function banIP ( player, commandname, Value )
-	local targetPlayer
-	if Value== nil then
-		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /banIP [IP]", player, 255, 0, 0, true )
-	else 
-		if addBan(tostring(Value), nil, nil, player, "IPBan", 0) then
-			triggerClientEvent ( player, "addNotification", getRootElement(), 3, 18, 88, 97, "Ban successfully added." )
+--TODO:
+--[[addCommandHandler ( "banIP",
+	function(player, commandname, Value)
+		local targetPlayer
+		if Value== nil then
+			outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /banIP [IP]", player, 255, 0, 0, true )
 		else
-			triggerClientEvent ( player, "addNotification", getRootElement(), 1, 200, 50, 50, "Ban could not be added.")
+			if addBan(tostring(Value), nil, nil, player, "IPBan", 0) then
+				triggerClientEvent ( player, "addNotification", getRootElement(), 3, 18, 88, 97, "Ban successfully added." )
+			else
+				triggerClientEvent ( player, "addNotification", getRootElement(), 1, 200, 50, 50, "Ban could not be added.")
+			end
 		end
 	end
-end
-addCommandHandler ( "banIP", banIP )
+)]]
 
 function ban ( player, commandname, toplayer, Value )
 	local targetPlayer
@@ -376,7 +380,7 @@ end
 addCommandHandler ( "blowPlayer", kill )
 addCommandHandler ( "pblow", kill )
 addCommandHandler ( "pkill", kill )
-addCommandHandler ( "killPlayer", kill )
+--addCommandHandler ( "killPlayer", kill )
 
 function kick ( player, commandname, toplayer )
 	local targetPlayer

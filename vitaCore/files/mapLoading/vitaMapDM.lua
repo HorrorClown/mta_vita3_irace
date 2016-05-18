@@ -5,6 +5,8 @@ File: loadMap.lua
 Author:	Sebihunter
 ]]--
 
+local setElementData = setElementData
+
 gChangedModels = {}
 gChangedTXD = {}
 gEventHandlers = {}
@@ -153,6 +155,9 @@ end
 
 _playSound = playSound
 function playSound( soundPath, looped )
+	triggerEvent ( "onMapSoundReceive",getRootElement(), soundPath)
+	if true then return end
+
 	if looped ~= true then looped = false end
 	soundPath = string.gsub(soundPath, "vita%-online%.eu", "sebihunter%.de")
 	soundPath = string.gsub(soundPath, "vita%.gamers%-board%.com", "sebihunter%.de")		
@@ -165,7 +170,7 @@ function playSound( soundPath, looped )
 		else
 			triggerEvent ( "onMapSoundReceive",getRootElement(),"http://85.114.142.22:22005/vitaStream/dm.mp3")
 		end
-		sound = _playSound( "http://sebihunter.de/serverfiles/race/nothing.wav", true)
+		--sound = _playSound( "http://sebihunter.de/serverfiles/race/nothing.wav", true)
 		gMapSounds[#gMapSounds+1] = sound	
 		return sound
 --	else

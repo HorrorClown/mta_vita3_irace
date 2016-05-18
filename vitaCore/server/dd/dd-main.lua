@@ -485,7 +485,7 @@ function downloadMapFinishedDD(player)
 		localRatings = false
 	end
 	callClientFunction(player, "forceMapRating", getElementData(gElementDD, "mapname"), localRatings, gTimesPlayedDD)
-	callClientFunction(player, "allowNewHurry")
+	callClientFunction(player, "allowNewHurryFunc")
 	
 	if gTimesPlayedDD == 0 then addPlayerArchivement(player, 53) end
 

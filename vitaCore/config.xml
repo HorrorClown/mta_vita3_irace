@@ -1,11 +1,11 @@
 <vita>
-	<!-- Hier kommen die MySQL Daten rein, die für das connecten wichtig sind -->
+	<!-- Hier kommen die MySQL Daten rein, die fï¿½r das connecten wichtig sind -->
 	
 	<mysqldata>
 		<host>localhost</host>
 		<user>root</user>
-		<password></password>
-		<table>c0race_test</table>
+		<password>abc123</password>
+		<table>vita3</table>
 	</mysqldata>
 	
 </vita>

@@ -160,7 +160,7 @@ addEventHandler("onPlayerRequestInitialise", getRootElement(), playerRequestInit
 
 function resourceStart()
 	setWaterLevel(0.01)
-	setFPSLimit(50)
+	setFPSLimit(55)
 	setCloudsEnabled(false)
 	for i,v in pairs(getElementsByType("player")) do
 		triggerEvent ( "onPlayerJoin", v )
@@ -169,7 +169,7 @@ function resourceStart()
 	for i,v in ipairs(gRaceModes) do
 		refreshVitaMaps(i)
 		pLogger[i] = Logger.create("logs/"..v.name..".log")
-		if getResourceFromName ( v.res ) then
+		if getResourceFromName(v.res) then
 			deleteResource(v.res)
 		end
 	end
@@ -181,7 +181,7 @@ function resourceStart()
 	
 	
 end
-addEventHandler("onResourceStart", getResourceRootElement(getThisResource()), resourceStart)
+addEventHandler("onResourceStart", resourceRoot, resourceStart)
 
 function resourceStop()
 	for i,v in pairs(getElementsByType("player")) do
@@ -467,8 +467,9 @@ end
 
 function refreshVitaMaps(gamemodeID)
 	local localMaps = {}
-	local prefix = "%["..gRaceModes[gamemodeID].prefix.."%]"
-		
+	--local prefix = "%["..gRaceModes[gamemodeID].prefix.."%]"
+	local prefix = gRaceModes[gamemodeID].prefix
+
 	local resourceTable = getResources()
 	for resourceKey, resourceValue in ipairs(resourceTable) do
 		local name = getResourceName ( resourceValue )

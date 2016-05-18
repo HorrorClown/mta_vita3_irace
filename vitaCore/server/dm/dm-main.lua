@@ -79,7 +79,6 @@ function loadMapDM(mapname, force)
 			return false
 		end
 	end
-	outputServerLog("loadMapDM: "..tostring(mapname))
 	
 	if gRedoCounterDM - 1 > 0 then
 		gRedoCounterDM = gRedoCounterDM - 1
@@ -105,8 +104,7 @@ function loadMapDM(mapname, force)
 	end		
 	
 	local resource = getResourceFromName ( mapname )
-	
-	
+
 	if not getResourceFromName ( "vitaMapDM" ) then
 		createResource ( "vitaMapDM" )
 	end
@@ -127,8 +125,8 @@ function loadMapDM(mapname, force)
 	
 	mapNode = xmlCreateChild(mapXML, "script")
 	xmlNodeSetAttribute(mapNode, "src", "vitaMap.lua")
-	xmlNodeSetAttribute(mapNode, "type", "client")	
-	fileCopy ( "files/mapLoading/vitaMapDM.lua", ":vitaMapDM/vitaMap.lua", true )
+	xmlNodeSetAttribute(mapNode, "type", "client")
+	fileCopy("files/mapLoading/vitaMapDM.lua", ":vitaMapDM/vitaMap.lua", true)
 	
 	xmlSaveFile(mapXML)
 	xmlUnloadFile(mapXML)
@@ -136,11 +134,11 @@ function loadMapDM(mapname, force)
 	mapXML = xmlCreateFile ( ":vitaMapDM/meta2.xml" ,"meta" )
 	table.insert(gMapFilesDM, "meta2.xml")
 	
-	local metaXML = xmlLoadFile ( ":"..mapname.."/meta.xml" )
+	local metaXML = xmlLoadFile(":" .. mapname .. "/meta.xml")
 	if metaXML then
 		local i = 0
 		while true do 
-			local xmlNode = xmlFindChild ( metaXML, "map", i)
+			local xmlNode = xmlFindChild(metaXML, "map", i)
 			if not xmlNode then
 				break
 			else
@@ -189,7 +187,6 @@ function loadMapDM(mapname, force)
 					xmlUnloadFile(mapfile)
 				end				
 				i = i + 1
-				
 			end
 		end
 		
@@ -210,8 +207,8 @@ function loadMapDM(mapname, force)
 				--Check if the file has been already added to the meta.xml - Some mappers are so stupid to add scripts 2 times which can fail ;)
 				local metaLineExists = false
 				for i,v in ipairs(temporaryTable) do if v == copyFile then metaLineExists = true end end
-				
-				if metaLineExists == false and xmlNodeGetAttribute(xmlNode, "type") == "client" then
+
+				if not metaLineExists and (xmlNodeGetAttribute(xmlNode, "type") == "client" or xmlNodeGetAttribute(xmlNode, "type") == "shared") then
 					fileCopy ( ":"..mapname.."/"..copyFile, ":vitaMapDM/"..copyFile, true )
 					table.insert(gMapFilesDM, copyFile)
 					mapNode = xmlCreateChild(mapXML, "file")
@@ -296,10 +293,11 @@ function loadMapDM(mapname, force)
 	fileClose(hFile)
 	gMetaDM = buffer
 
-	gToptimesDM = loadTopTimes(getElementData(gElementDM, "mapname"))
-	gTimesPlayedDM, gRatingsDM = loadRatings(getElementData(gElementDM, "mapname"))
-	
 	setElementData(gElementDM, "map", mapname)
+
+	gToptimesDM = loadTopTimes(mapname)
+	gTimesPlayedDM, gRatingsDM = loadRatings(mapname)
+
 	if mapname == getElementData(gElementDM, "nextmap") then
 		setElementData(gElementDM, "nextmap", "random")
 	end
@@ -335,9 +333,9 @@ function unloadMapDM()
 		gStartTimerDM = false
 	end
 	gIsDMRunning = false
-	saveTopTimes(getElementData(gElementDM, "mapname"), gToptimesDM)
+	saveTopTimes(getElementData(gElementDM, "map"), gToptimesDM)
 	gTimesPlayedDM = gTimesPlayedDM+1
-	saveRatings(getElementData(gElementDM, "mapname"), gTimesPlayedDM, gRatingsDM)
+	saveRatings(getElementData(gElementDM, "map"), gTimesPlayedDM, gRatingsDM)
 	--stopResource(getResourceFromName("vitaMapDM"))
 	setElementData(gElementDM, "map", "none")
 	setElementData(gElementDM, "mapname", "loading...")
@@ -382,7 +380,6 @@ end
 function joinDM(player)
 	if getPlayerGameMode(player) == gGamemodeDM then return false end
 	if #getGamemodePlayers(gGamemodeDM) >= gRaceModes[gGamemodeDM].maxplayers then triggerClientEvent ( player, "addNotification", getRootElement(), 1, 200, 50, 50, "This gamemode is currently full.") return false end
-	
 	local loadsNewMap = false
 	if #getGamemodePlayers(gGamemodeDM) == 0 then
 		loadsNewMap = true
@@ -494,7 +491,7 @@ addEventHandler("quitDM", getRootElement(), quitDM)
 function downloadMapFinishedDM(player)
 	sendToptimes(player, gToptimesDM)
 	callClientFunction(player, "forceToptimesOpen")
-	callClientFunction(player, "allowNewHurry")
+	callClientFunction(player, "allowNewHurryFunc")
 	
 	local localRatings = 0
 	for i,v in ipairs(gRatingsDM) do
@@ -570,9 +567,8 @@ function killDMPlayer(player, noSpectate)
 			break
 		end                                                             
 	end
-	
-	if (#getAliveGamemodePlayers(gGamemodeDM) ~= 1 and #getAliveGamemodePlayers(gGamemodeDM) ~= 0) and getElementData(player, "AFK") == false and gIsDMRunning == true and getElementData(player, "state") == "alive" then
-		local onlinePlayers = 0
+
+	if (#getAliveGamemodePlayers(gGamemodeDM) ~= 1 and #getAliveGamemodePlayers(gGamemodeDM) ~= 0) and getElementData(player, "AFK") == false and gIsDMRunning == true and getElementData(player, "state") == "alive" then		local onlinePlayers = 0
 		local players = getGamemodePlayers(gGamemodeDM)
 		for theKey,thePlayer in pairs(players) do
 			onlinePlayers = onlinePlayers + 1
@@ -593,7 +589,7 @@ function killDMPlayer(player, noSpectate)
 		--if isTimer ( WinTimer ) then
 		--	killTimer ( WinTimer )
 		--end	
-	end	
+	end
 	
 	if getElementData(player, "state") == "alive" then
 		if #gRankingboardPlayersDM == 0 then

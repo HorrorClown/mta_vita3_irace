@@ -604,7 +604,7 @@ function downloadMapFinishedRA(player)
 	callClientFunction(player, "forceMapRating", getElementData(gElementRA, "mapname"), localRatings, gTimesPlayedRA)
 	sendToptimes(player, gToptimesRA)
 	callClientFunction(player, "forceToptimesOpen")
-	callClientFunction(player, "allowNewHurry")
+	callClientFunction(player, "allowNewHurryFunc")
 
 	if gTimesPlayedRA == 0 then addPlayerArchivement(player, 53) end
 	

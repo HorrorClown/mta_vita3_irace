@@ -352,8 +352,8 @@ function hideHurry()
 	guiLabelSetColor(g_GUI.timeleft, 255, 255, 255)
 end
 
-function allowNewHurry()
-	allowNewHurry()
+function allowNewHurryFunc()
+	allowNewHurry = true
 end
 
 function onClientColShapeHit( element, matchingDimension )
