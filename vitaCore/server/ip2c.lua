@@ -128,7 +128,9 @@ function loadIPGroupsWorker ()
 	collectgarbage("collect")
 
 	-- Update currently connected players
-	for user,info in pairs( aPlayers ) do
+	if not aPlayers then return false end
+
+	for user, info in pairs(aPlayers) do
 		info["country"] = getPlayerCountry ( user )
 
 		-- Send info to all admins

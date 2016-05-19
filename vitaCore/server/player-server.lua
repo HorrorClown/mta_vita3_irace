@@ -306,7 +306,7 @@ function loginPlayer(_accname, _password, typ, playerSource)
 		addPlayerArchivement( client, 1 )
 
 		local accElements = getElementsByType("userAccount")
-			for theKey,accElement in ipairs(accElements) do
+			for theKey, accElement in ipairs(accElements) do
 				if getElementData(accElement, "AccountName") == getElementData(client, "AccountName") then
 					callClientFunction(getRootElement(), "updatePlayerRanks")
 					setElementData(accElement, "PlayerName", _getPlayerName(client))
@@ -317,8 +317,8 @@ function loginPlayer(_accname, _password, typ, playerSource)
 		end
 	end
 end
-addEvent("loginPlayer", true)
-addEventHandler("loginPlayer", getRootElement(), loginPlayer)
+--addEvent("loginPlayer", true)
+--addEventHandler("loginPlayer", getRootElement(), loginPlayer)
 
 function quitPlayer(reason)
 	addPlayerArchivement(source, 37)

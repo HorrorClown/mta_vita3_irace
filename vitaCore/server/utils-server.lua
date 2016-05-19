@@ -4,6 +4,13 @@ File: utils-server.lua
 Author(s):	Sebihunter
 ]]--
 
+function critical_error(errmsg)
+	outputDebugString("[CRITICAL ERROR] "..tostring(errmsg))
+	outputDebugString("[CRITICAL ERROR] iR2.0 Script will now halt")
+	stopResource(getThisResource())
+	error("Critical Error")
+end
+
 --calls a server function. Not triggerable by client!
 function callServerFunction(funcname, ...)
     local arg = { ... }

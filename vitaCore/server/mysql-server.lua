@@ -4,6 +4,32 @@ File: mysql-server.lua
 Author(s):	Werni
 			Sebihunter
 ]]--
+
+
+--New
+addEventHandler("onResourceStart", resourceRoot,
+    function()
+        sql = MySQL:new(MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PW, MYSQL_DB)
+        --sql:setPrefix("ir")
+
+        -- Loading account elements
+        -- Todo: Needs improvements in further versions
+        local result = sql:queryFetch("SELECT * FROM players ORDER BY id ASC")
+        if result then
+            for _, row in pairs(result) do
+                local accElement = createElement("userAccount")
+                setElementData(accElement, "AccountName", row.accountname)
+                setElementData(accElement, "Points", tonumber(row.points))
+                setElementData(accElement, "PlayerName", row.playerName)
+                setElementData(accElement, "Level", row.level)
+            end
+        else
+            outputDebugString("Failed to load account elements")
+        end
+    end
+)
+
+--Old
 g_mysql = {}
 local hasPlayersLoaded = false
 
@@ -45,7 +71,7 @@ function onResourceStartMysqlConnection()
 		return false
 	end
 	
-	if not hasPlayersLoaded then
+	--[[if not hasPlayersLoaded then
 		hasPlayersLoaded = true
 		if mysql_ping ( g_mysql["connection"] ) == false then
 			onResourceStopMysqlEnd()
@@ -72,7 +98,7 @@ function onResourceStartMysqlConnection()
 			hasPlayersLoaded = false
 			onResourceStartMysqlConnection()
 		end
-	end
+	end]]
 end
 addEventHandler("onResourceStart", resourceRoot, onResourceStartMysqlConnection)
 
