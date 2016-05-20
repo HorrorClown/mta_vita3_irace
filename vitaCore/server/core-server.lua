@@ -75,14 +75,15 @@ RandomMes = {
 	[1] = "Read and obey the rules (Show the help with 'F1')!",
 	[2] = "Low FPS? Try disabling graphical features in the userpanel.",
 	[3] = "The main chat is english only. You can access the language chat with 'L'.",
-	[4] = "Post your Map at 'race.vita-online.eu'.",
-	[5] = "Apply at 'race.vita-online.eu'.",
+	[4] = "Post your Map at 'irace-mta.de'.",
+	[5] = "Apply at 'irace-mta.de'.",
 	[6] = "Press 'U' for the userpanel and shop.",
-	[7] = "If you want to help donate at 'race.vita-online.eu'.",
+	[7] = "If you want to help donate at 'irace-mta.de'.",
 	[8] = "Use 'F2' to change the carfade options, 'F3' to leave the mode.",
 	[9] = "To start a player versus player (PVP) war use /pvp [name] [money]."
 }
-setTimer( function() outputChatBox(":SERVER: #FFFFFF"..RandomMes[math.random(1, #RandomMes)], getRootElement(), 255, 0, 0, true) end, 150000, 0 )
+--Todo: discuss about an alternate
+--setTimer( function() outputChatBox(":SERVER: #FFFFFF"..RandomMes[math.random(1, #RandomMes)], getRootElement(), 255, 0, 0, true) end, 150000, 0 )
 
 pLogger = {}
 
