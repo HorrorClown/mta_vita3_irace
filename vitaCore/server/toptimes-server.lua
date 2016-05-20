@@ -48,15 +48,19 @@ function addNewToptime(ttable, accname, ttime)
 		if v.name == accname then
 			if v.time > ttime then
 				v.time = ttime
+				v.date = getRealTime().timestamp
 				sortToptimes(ttable)
 				return true
 			end
 			return false
 		end
 	end
+	
 	local playertable = {}
 	playertable.name = accname
 	playertable.time = ttime
+	playertable.date = getRealTime().timestamp
+	
 	ttable[#ttable+1] = playertable
 	sortToptimes(ttable)
 	return true
