@@ -99,19 +99,19 @@ addEventHandler("priorReceiveAllTheMaps", getRootElement(),
 			for i,v in pairs(maps) do
 				local realname = v.realname:gsub(" %[", "%[")
 				realname = realname:gsub("%] ", "%]")
-				if string.find (string.upper (tostring(v.name)), "%[RACE%]") ~= nil then
+				if string.find (string.upper (tostring(v.name)), "RACE") ~= nil then
 					gAllTheMapsRA[#gAllTheMapsRA+1] = {}
 					gAllTheMapsRA[#gAllTheMapsRA].text = realname
 					gAllTheMapsRA[#gAllTheMapsRA].data = v.name
-				elseif string.find (string.upper (tostring(v.name)), "%[DD%]") ~= nil then
+				elseif string.find (string.upper (tostring(v.name)), "DD") ~= nil then
 					gAllTheMapsDD[#gAllTheMapsDD+1] = {}
 					gAllTheMapsDD[#gAllTheMapsDD].text = realname
 					gAllTheMapsDD[#gAllTheMapsDD].data = v.name				
-				elseif string.find (string.upper (tostring(v.name)), "%[DM%]") ~= nil then
+				elseif string.find (string.upper (tostring(v.name)), "DM") ~= nil then
 					gAllTheMapsDM[#gAllTheMapsDM+1] = {}
 					gAllTheMapsDM[#gAllTheMapsDM].text = realname
 					gAllTheMapsDM[#gAllTheMapsDM].data = v.name		
-				elseif string.find (string.upper (tostring(v.name)), "%[SHOOTER%]") ~= nil then
+				elseif string.find (string.upper (tostring(v.name)), "SHOOTER") ~= nil then
 					gAllTheMapsSH[#gAllTheMapsSH+1] = {}
 					gAllTheMapsSH[#gAllTheMapsSH].text = realname
 					gAllTheMapsSH[#gAllTheMapsSH].data = v.name							
@@ -506,11 +506,11 @@ addEventHandler( "playWinsound", getRootElement(), playWinsound )
 
 gVitaMapMusic = false
 function onMapSoundReceive(url)
-	outputDebugString("CLIENT: Received music "..url)
+	--outputDebugString("CLIENT: Received music "..url)
 	if isElement(gVitaMapMusic) then stopSound(gVitaMapMusic) end
 	
 	gVitaMapMusic = playSound ( url, true )
-	outputDebugString("CLIENT: Played music "..tostring(gVitaMapMusic))
+	--outputDebugString("CLIENT: Played music "..tostring(gVitaMapMusic))
 	if getElementData(getLocalPlayer(), "disableMusic") == true or gWinsound and isElement(gWinsound) then
 		outputDebugString("CLIENT: Paused")
 		setSoundPaused(gVitaMapMusic, true)
@@ -521,7 +521,7 @@ addEventHandler( "onMapSoundReceive", getRootElement(),onMapSoundReceive )
 
 function onMapSoundStop()
 	if isElement(gVitaMapMusic) then
-		outputDebugString("CLIENT: Stopped")
+		--outputDebugString("CLIENT: Stopped")
 		stopSound(gVitaMapMusic)
 	end
 end
