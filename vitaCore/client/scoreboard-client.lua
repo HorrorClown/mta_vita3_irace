@@ -5,6 +5,11 @@ Author(s):	Jake
 			Sebihunter
 ]]--
 
+-- Define draw functions local
+local dxDrawText = dxDrawText
+local dxDrawRectangle = dxDrawRectangle
+local dxDrawLine = dxDrawLine
+
 scdatas = {}
 
 ---Other values---
@@ -170,7 +175,8 @@ function drawScoreboard()
 	local gameMode = scdatas.gameMode
 	---Some newly added settings--
 	--scdatas.y/2 - scdatas.height/2 + 30 + ( 20 * scdatas.rowid)
-	scdatas.titletext = "Vita Race | race.vita-online.eu | "..gRaceModes[gameMode].name
+	--scdatas.titletext = "Vita Race | race.vita-online.eu | "..gRaceModes[gameMode].name
+	scdatas.titletext = ("iRace 2.0 | irace-mta.de | powered by Vita3 | %s"):format(gRaceModes[gameMode].name)
 	
 	---Draws the Title---
 	dxDrawRectangle(scdatas.x/2 - scdatas.width/2, scdatas.y/2 - scdatas.height/2, scdatas.width, 50, tocolor(0,0,0,200))
@@ -178,7 +184,9 @@ function drawScoreboard()
 	dxDrawLine ( scdatas.x/2 - scdatas.width/2, scdatas.y/2 - scdatas.height/2, scdatas.x/2 - scdatas.width/2, scdatas.y/2 - scdatas.height/2+50, tocolor(119,119,119,255), 1, false )
 	dxDrawLine ( scdatas.x/2 + scdatas.width/2, scdatas.y/2 - scdatas.height/2, scdatas.x/2 + scdatas.width/2, scdatas.y/2 - scdatas.height/2+50, tocolor(119,119,119,255), 1, false )
 	dxDrawText(scdatas.titletext,scdatas.x/2-scdatas.width/2 + 10, scdatas.y/2 - scdatas.height/2 + 10, scdatas.x, scdatas.y, tocolor(175,175,175,255), 1, "default-bold", "left", "top", false, false, true, true)
-	dxDrawText("Server: "..#getElementsByType ("player" ).."/128 - Gamemode: "..#getGamemodePlayers(gameMode).."/"..gRaceModes[gameMode].maxplayers,scdatas.x/2-scdatas.width/2 + 10, scdatas.y/2 - scdatas.height/2 + 10, scdatas.x/2+scdatas.width/2-10, scdatas.y, tocolor(175,175,175,255), 1, "default-bold", "right", "top", false, false, true, true)
+	
+	--dxDrawText("Server: "..#getElementsByType ("player" ).."/128 - Gamemode: "..#getGamemodePlayers(gameMode).."/"..gRaceModes[gameMode].maxplayers,scdatas.x/2-scdatas.width/2 + 10, scdatas.y/2 - scdatas.height/2 + 10, scdatas.x/2+scdatas.width/2-10, scdatas.y, tocolor(175,175,175,255), 1, "default-bold", "right", "top", false, false, true, true)
+	dxDrawText(("Server: %s/128 - Gamemode: %s/%s"):format(#getElementsByType("player"), #getGamemodePlayers(gameMode), gRaceModes[gameMode].maxPlayers), scdatas.x/2-scdatas.width/2 + 10, scdatas.y/2 - scdatas.height/2 + 10, scdatas.x/2+scdatas.width/2-10, scdatas.y, tocolor(175,175,175,255), 1, "default-bold", "right", "top", false, false, true, true)
 	
 	dxDrawText("Name",scdatas.x/2-scdatas.width/2 + 10, scdatas.y/2 - scdatas.height/2 + 30, scdatas.x, scdatas.y, tocolor(175,175,175,255), 1, "default-bold", "left", "top", false, false, true, true)
 	dxDrawText("Rank",scdatas.x/2 - scdatas.width/2 + 300, scdatas.y/2 - scdatas.height/2 + 30, scdatas.x, scdatas.y, tocolor(175,175,175,255), 1, "default-bold", "left", "top", false, false, true, true)
