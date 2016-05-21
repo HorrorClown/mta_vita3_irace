@@ -186,9 +186,9 @@ function drawScoreboard()
 	dxDrawText(scdatas.titletext,scdatas.x/2-scdatas.width/2 + 10, scdatas.y/2 - scdatas.height/2 + 10, scdatas.x, scdatas.y, tocolor(175,175,175,255), 1, "default-bold", "left", "top", false, false, true, true)
 	
 	--dxDrawText("Server: "..#getElementsByType ("player" ).."/128 - Gamemode: "..#getGamemodePlayers(gameMode).."/"..gRaceModes[gameMode].maxplayers,scdatas.x/2-scdatas.width/2 + 10, scdatas.y/2 - scdatas.height/2 + 10, scdatas.x/2+scdatas.width/2-10, scdatas.y, tocolor(175,175,175,255), 1, "default-bold", "right", "top", false, false, true, true)
-	dxDrawText(("Server: %s/128 - Gamemode: %s/%s"):format(#getElementsByType("player"), #getGamemodePlayers(gameMode), gRaceModes[gameMode].maxPlayers), scdatas.x/2-scdatas.width/2 + 10, scdatas.y/2 - scdatas.height/2 + 10, scdatas.x/2+scdatas.width/2-10, scdatas.y, tocolor(175,175,175,255), 1, "default-bold", "right", "top", false, false, true, true)
+	dxDrawText(("Server: %s/128 - Gamemode: %s/%s"):format(#getElementsByType("player"), #getGamemodePlayers(gameMode), gRaceModes[gameMode].maxplayers), scdatas.x/2-scdatas.width/2 + 10, scdatas.y/2 - scdatas.height/2 + 10, scdatas.x/2+scdatas.width/2-10, scdatas.y, tocolor(175,175,175,255), 1, "default-bold", "right", "top", false, false, true, true)
 	
-	dxDrawText("Name",scdatas.x/2-scdatas.width/2 + 10, scdatas.y/2 - scdatas.height/2 + 30, scdatas.x, scdatas.y, tocolor(175,175,175,255), 1, "default-bold", "left", "top", false, false, true, true)
+	dxDrawText("Name",scdatas.x/2-scdatas.width/2 + 10, scdatas.y/2 - scdatas.height/2 + 30, scdatas.x, scdatas.y																										, tocolor(175,175,175,255), 1, "default-bold", "left", "top", false, false, true, true)
 	dxDrawText("Rank",scdatas.x/2 - scdatas.width/2 + 300, scdatas.y/2 - scdatas.height/2 + 30, scdatas.x, scdatas.y, tocolor(175,175,175,255), 1, "default-bold", "left", "top", false, false, true, true)
 	dxDrawText("Money",scdatas.x/2 - scdatas.width/2 + 350, scdatas.y/2 - scdatas.height/2 + 30, scdatas.x, scdatas.y, tocolor(175,175,175,255), 1,  "default-bold", "left", "top", false, false, true, true)
 	dxDrawText("Level",scdatas.x/2 - scdatas.width/2 + 460, scdatas.y/2 - scdatas.height/2 + 30, scdatas.x, scdatas.y, tocolor(175,175,175,255), 1,  "default-bold", "left", "top", false, false, true, true)

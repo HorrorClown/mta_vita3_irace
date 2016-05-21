@@ -18,6 +18,9 @@
     <script src="shared/classes/Object.lua" type="shared"/>
     <script src="shared/classes/Singleton.lua" type="shared"/>
 
+    <script src="shared/async.lua" type="shared"/>
+    <script src="shared/debug.lua" type = "shared"/>
+
 	<script src="shared/utils-shared.lua" type="server" />
 	<script src="shared/utils-shared.lua" type="client" />
 	<script src="shared/xml-shared.lua" type="server" />
@@ -31,12 +34,19 @@
     <script src="server/classes/Storage/SQL.lua" type="server"/>
     <script src="server/classes/Storage/MySQL.lua" type="server"/>
 
+    <script src="server/classes/Core.lua" type="server" />
+
     <!-- Player -->
     <script src="server/classes/Player/Account.lua" type="server"/>
+    <script src="server/classes/Player/DatabasePlayer.lua" type="server"/>
     <script src="server/classes/Player/Player.lua" type="server"/>
+    <script src="server/classes/Player/PlayerManager.lua" type="server"/>
+
+    <script src="server/Main.lua" type="server" />
+
+    <!-- =================================================================-->
 
 	<script src="server/utils-server.lua" type="server" />
-	<script src="server/mysql-server.lua" type="server" />
 	<script src="server/log-server.lua" type="server" />
 	<script src="server/html-server.lua" type="server" />
 	

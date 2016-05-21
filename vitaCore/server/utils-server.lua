@@ -31,13 +31,6 @@ function callClientFunction(client, funcname, ...)
     triggerClientEvent(client, "onServerCallsClientFunction", resourceRoot, funcname, unpack(arg or {}))
 end
 
-
-function escapeString(theString)
-	if type(theString) ~= "string" then return theString end
-	return mysql_escape_string(g_mysql["connection"], theString)
-end
-
-
 function setRedoCounter(gamemode, value)
 	if gamemode == 1 then
 		gRedoCounterSH = value

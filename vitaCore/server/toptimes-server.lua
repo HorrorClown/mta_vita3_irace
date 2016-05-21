@@ -5,42 +5,21 @@ Author(s):	Sebihunter
 ]]--
 
 function loadTopTimes(mapname)
-	--mapname = string.gsub(tostring(mapname), "'", "")
-	local toptimetable = {}
-	if mysql_ping ( g_mysql["connection"] ) == false then
-		onResourceStopMysqlEnd()
-		onResourceStartMysqlConnection()
-		return loadTopTimes(mapname)
+	local result = sql:queryFetchSingle("SELECT * FROM toptimes WHERE mapname = ?", mapname)
+	if result then
+		return fromJSON(result.table)
+	else
+		return {}
 	end
-
-	local toptimes = mysql_query(g_mysql["connection"], "SELECT * FROM `toptimes` WHERE `mapname` = '"..mapname.."' LIMIT 0, 1")
-	if toptimes then	
-		local row = mysql_fetch_assoc(toptimes)
-		if row then
-			toptimetable = fromJSON(row["table"])
-			mysql_free_result(toptimes)
-		end
-	end
-
-
-	return toptimetable
 end
 
 function saveTopTimes(mapname, ttable)
-	--mapname = string.gsub(tostring(mapname), "'", "")
-
-	if mysql_ping ( g_mysql["connection"] ) == false then
-		onResourceStopMysqlEnd()
-		onResourceStartMysqlConnection()
-		saveTopTimes(mapname, ttable)
-	end
-
-	local result = mysql_query(g_mysql["connection"], "SELECT * FROM `toptimes` WHERE `mapname` = '"..mapname.."'")
-	if result and mysql_num_rows(result) ~= 0 then
-		mysql_query(g_mysql["connection"], "UPDATE `toptimes` SET `table` = '"..toJSON(ttable).."' WHERE `mapname` = '"..mapname.."' LIMIT 1 ;")
-	else
-		mysql_query(g_mysql["connection"], "INSERT INTO `toptimes` (`mapname`, `table`) VALUES ( '"..mapname.."', '"..toJSON(ttable).."')")
-	end
+    local result = sql:queryFetchSingle("SELECT id FROM toptimes WHERE mapname = ?", mapname)
+    if result and result.id then
+        sql:queryExec("UPDATE toptimes SET `table` = ? WHERE mapname = ?", toJSON(ttable), mapname)
+    else
+        sql:queryExec("INSERT INTO toptimes (mapname, `table`) VALUES (?, ?)", mapname, toJSON(ttable))
+    end
 end
 
 function addNewToptime(ttable, accname, ttime)
@@ -127,36 +106,23 @@ function sendToptimes(player, ttable)
 end
 
 function getPlayerToptimeCount(player, prefix)
-	local toptimeCount = 0
+    local toptimeCount = 0
 
-	if mysql_ping ( g_mysql["connection"] ) == false then
-		onResourceStopMysqlEnd()
-		hasPlayersLoaded = false
-		onResourceStartMysqlConnection()
-		return getPlayerToptimeCount(player, prefix)
-	end	
-	
-	local result = mysql_query(g_mysql["connection"], "SELECT * FROM `toptimes` ORDER BY `id` ASC")
-	if result then
-		while true do
-			local row = mysql_fetch_assoc(result)
-			if not row then break end
-			local skip = false
-			if result then
-				if not string.find (string.upper (row["mapname"]), prefix) then skip = true end
-			end
-			local toptimeTable = fromJSON(row["table"])
-			if toptimeTable and type(toptimeTable) == "table" then
-				for i = 1,12, 1 do
-					if toptimeTable[i] then
-						if toptimeTable[i].name == getElementData(player, "AccountName") and skip == false then
-							toptimeCount = toptimeCount+1
-						end
-					end
-				end
-			end
-		end
-		mysql_free_result(result)
-	end
-	return toptimeCount
+    local result = sql:queryFetch("SELECT * FROM toptimes ORDER BY id ASC")
+    if result then
+        for _, v in pairs(result) do
+            if string.find(v.mapname, prefix) then
+                local toptimeTable = fromJSON(v.table)
+                if toptimeTable and type(toptimeTable) == "table" then
+                    for i = 1, 12 do
+                        if toptimeTable[i] and toptimeTable[i].name == getElementData(player, "AccountName") then
+                            toptimeCount = toptimeCount + 1
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    return toptimeCount
 end

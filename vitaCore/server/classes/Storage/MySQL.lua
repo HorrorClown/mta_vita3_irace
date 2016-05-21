@@ -1,10 +1,3 @@
---
--- PewX
--- Using: IntelliJ IDEA 15 Ultimate
--- Date: 19.05.2016 - Time: 18:53
--- pewx.de // iGaming-mta.de // iRace-mta.de // iSurvival.de // mtasa.de
---
-
 MySQL = inherit(SQL)
 
 function MySQL:constructor(host, port, user, password, database, unixpath)
