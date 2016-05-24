@@ -216,10 +216,18 @@ addCommandHandler ( "spin", spin )
 function commandRateMap(player, commandName, rating)
 	local gameMode = getPlayerGameMode(player)
 	if gameMode ~= 0 and gameMode ~= 4 and gameMode ~= 6 then
-		if not rating or not tonumber(rating) or tonumber(rating) > 10 or tonumber(rating) < 0 then
-			outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /rate [0-10]", player, 255, 0, 0, true )
+		local rating = tonumber(rating)
+
+		if not rating or rating < 0 or rating > 1 then
+			outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /rate [0-1]", player, 255, 0, 0, true )
 			return false
 		end
+
+		--[[if not rating or not tonumber(rating) or tonumber(rating) > 1 or tonumber(rating) < 0 then
+			outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /rate [0-1]", player, 255, 0, 0, true )
+			return false
+		end]]
+
 		if getElementData(getGamemodeElement(gameMode), "map") == "none" then
 			outputChatBox ( "#FF0000:ERROR: #FFFFFFA map must be running in order to rate it.", player, 255, 0, 0, true )
 			return false
@@ -231,9 +239,29 @@ function commandRateMap(player, commandName, rating)
 		elseif gameMode == 2 then ratingElement = gRatingsDD
 		elseif gameMode == 3 then ratingElement = gRatingsRA
 		elseif gameMode == 5 then ratingElement = gRatingsDM end
-		rating = math.round(tonumber(rating))
-		
-		for i,v in ipairs(ratingElement) do 
+		--rating = math.round(tonumber(rating))
+
+		outputChatBox((":MAPRATING: #FFFFFFYou %s this map now!"):format(rating == 1 and "like" or "dislike"), player, 255, 255, 0, true)
+
+		for _, v in pairs(ratingElement) do
+			if v.PlayerID == player.m_ID then
+				v.Rating = rating
+				if gameMode == 1 then gRatingsSH = ratingElement
+				elseif gameMode == 2 then gRatingsDD = ratingElement
+				elseif gameMode == 3 then gRatingsRA = ratingElement
+				elseif gameMode == 5 then gRatingsDM = ratingElement end
+
+				return
+			end
+		end
+
+		table.insert(ratingElement, {PlayerID = player.m_ID, Rating = rating})
+		if gameMode == 1 then gRatingsSH = ratingElement
+		elseif gameMode == 2 then gRatingsDD = ratingElement
+		elseif gameMode == 3 then gRatingsRA = ratingElement
+		elseif gameMode == 5 then gRatingsDM = ratingElement end
+
+		--[[for i,v in ipairs(ratingElement) do
 			local anus = split( v,":" )
 			if anus[1] == getElementData(player, "AccountName") then
 				ratingElement[i] = getElementData(player, "AccountName")..":"..rating
@@ -251,7 +279,7 @@ function commandRateMap(player, commandName, rating)
 		elseif gameMode == 2 then gRatingsDD = ratingElement
 		elseif gameMode == 3 then gRatingsRA = ratingElement
 		elseif gameMode == 5 then gRatingsDM = ratingElement end			
-		return true
+		return true]]
 	end
 end
 addCommandHandler ( "rate", commandRateMap)

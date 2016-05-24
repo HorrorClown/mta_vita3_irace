@@ -6,6 +6,9 @@ Author(s):	Sebihunter
 
 --REMOVED: loadMapDMTimer
 
+local databaseMapDM = false
+local timesPlayed = 0
+
 gGamemodeDM = 5
 gElementDM = createElement("elementDM")
 gIsDMRunning = false
@@ -15,8 +18,6 @@ gHasHunterDM = false
 countdownTimerDM = false
 gMetaDM = false
 gRedoCounterDM = 0
-gToptimesDM = {}
-gTimesPlayedDM = 0
 gRatingsDM = {}
 gMapFilesDM = {}
 gMapMusicDM = false
@@ -295,8 +296,10 @@ function loadMapDM(mapname, force)
 
 	setElementData(gElementDM, "map", mapname)
 
-	gToptimesDM = loadTopTimes(mapname)
-	gTimesPlayedDM, gRatingsDM = loadRatings(mapname)
+	databaseMapDM = DatabaseMap:new(mapname)
+	timesPlayed = databaseMapDM.m_Timesplayed
+	gRatingsDM = databaseMapDM.m_Ratings
+
 
 	if mapname == getElementData(gElementDM, "nextmap") then
 		setElementData(gElementDM, "nextmap", "random")
@@ -333,9 +336,14 @@ function unloadMapDM()
 		gStartTimerDM = false
 	end
 	gIsDMRunning = false
-	saveTopTimes(getElementData(gElementDM, "map"), gToptimesDM)
-	gTimesPlayedDM = gTimesPlayedDM+1
-	saveRatings(getElementData(gElementDM, "map"), gTimesPlayedDM, gRatingsDM)
+
+	if databaseMapDM then
+		databaseMapDM.m_Ratings = gRatingsDM
+		databaseMapDM.m_Timesplayed = databaseMapDM.m_Timesplayed + 1
+		databaseMapDM:delete()
+		databaseMapDM = false
+	end
+
 	--stopResource(getResourceFromName("vitaMapDM"))
 	setElementData(gElementDM, "map", "none")
 	setElementData(gElementDM, "mapname", "loading...")
@@ -365,7 +373,7 @@ function unloadMapDM()
 	
 	for i,player in pairs(getGamemodePlayers(gGamemodeDM)) do
 		setElementData(player, "state", "dead")
-		sendToptimes(player, false)
+		--sendToptimes(player, false)
 		triggerClientEvent ( player, "stopMapDM", getRootElement() )
 		callClientFunction(player, "hideHurry")
 		triggerClientEvent ( player, "onMapSoundStop", player )
@@ -392,8 +400,9 @@ function joinDM(player)
 	bindKey ( player, "n", "down", respawnPlayerDM, false )
 	bindKey ( player, "space", "down", respawnPlayerDM, false )
 	bindKey ( player, "c", "down", respawnPlayerDM, true )
-	
-	sendToptimes(player, false)
+
+    databaseMapDM:sendToptimes(player)
+    --sendToptimes(player, false)
 	setElementData(player, "gameMode", gGamemodeDM)
 	setElementData(player, "mapname", getElementData(gElementDM, "mapname"))
 	setElementData(player, "nextmap", getElementData(gElementDM, "nextmap"))
@@ -456,7 +465,7 @@ function quitDM(player)
 	end
 	
 	toggleControl ( player, "vehicle_secondary_fire", true )
-	sendToptimes(player, false)
+	--sendToptimes(player, false)
 	setElementData(player, "ghostmod", false )
 	setElementData(player, "winline", nil)
 	setElementData(player, "winline2", nil)
@@ -489,23 +498,19 @@ addEvent("quitDM", true)
 addEventHandler("quitDM", getRootElement(), quitDM)
 
 function downloadMapFinishedDM(player)
-	sendToptimes(player, gToptimesDM)
+    databaseMapDM:sendToptimes(player)
 	callClientFunction(player, "forceToptimesOpen")
 	callClientFunction(player, "allowNewHurryFunc")
-	
-	local localRatings = 0
-	for i,v in ipairs(gRatingsDM) do
-		local anus = split( v ,":" )
-		localRatings = localRatings + tonumber(anus[2])
+
+	local mapRating = {likes = 0, dislikes = 0}
+	for _, PlayerRate in pairs(gRatingsDM) do
+		mapRating.likes = mapRating.likes + PlayerRate.Rating
 	end
-	if localRatings ~= 0 then
-		localRatings = math.round(localRatings/#gRatingsDM,1)
-	else
-		localRatings = false
-	end
-	callClientFunction(player, "forceMapRating", getElementData(gElementDM, "mapname"), localRatings, gTimesPlayedDM)
+	mapRating.dislikes = #gRatingsDM - mapRating.likes
+
+	callClientFunction(player, "forceMapRating", getElementData(gElementDM, "mapname"), mapRating, timesPlayed)
 	
-	if gTimesPlayedDM == 0 then addPlayerArchivement(player, 53) end
+	if timesPlayed == 0 then addPlayerArchivement(player, 53) end
 	
 	if gIsDMRunning == false then
 		setElementData(player, "state", "ready")
@@ -981,23 +986,26 @@ function playerGotHunter()
 	outputChatBox("#996633:Points: #ffffff You recieved 50 extra-points for reaching the Hunter.", player, 255, 255, 255, true)
 	setElementData(player, "Points", getElementData(player, "Points")+50)
 	
-	local hasToptime = getPlayerToptimeInformation(gToptimesDM, getElementData(source, "AccountName"))
-	local toptimeAdded = addNewToptime(gToptimesDM, getElementData(player, "AccountName"), getTickCount()-getElementData(gElementDM, "startTick"))
+
+	local toptimeAdded = databaseMapDM:addNewToptime(player.m_ID, getTickCount() - getElementData(gElementDM, "startTick"))
+
 	if toptimeAdded == true then
 		callClientFunction(player, "forceToptimesOpen")
-		local tInformation = getPlayerToptimeInformation(gToptimesDM, getElementData(player, "AccountName"))
-		outputChatBoxToGamemode(":TOPTIME:#FFFFFF ".._getPlayerName(player).."#FFFFFF finished the map ("..msToTimeStr(tInformation.time)..") and got toptime position "..tInformation.id..".",gGamemodeDM, 148,214,132, true)
-		if tInformation.id <= 12 and (hasToptime == false or hasToptime.id > 12) == false then
+		local tInformation, tPosition = databaseMapDM:getToptimeFromPlayer(player.m_ID)
+
+		outputChatBoxToGamemode(":TOPTIME:#FFFFFF ".._getPlayerName(player).."#FFFFFF finished the map ("..msToTimeStr(tInformation.time)..") and got toptime position "..tPosition..".",gGamemodeDM, 148,214,132, true)
+
+        if tPosition <= 12 and (tInformation == false or tPosition) == false then
 			setElementData(source, "TopTimes", getElementData(source, "TopTimes")+1)
 			setElementData(source, "TopTimeCounter", getElementData(source, "TopTimeCounter")+1)	
 		end	
-		if tInformation.id <= 12 and (hasToptime ~= false and hasToptime.id <= 12) then
+		if tPosition <= 12 and (tInformation ~= false and tPosition <= 12) then
 			addPlayerArchivement(source, 59)
 		end		
 	end
 	
-	for i,v in pairs(getGamemodePlayers(gGamemodeDM)) do
-		sendToptimes(v, gToptimesDM)
+	for _, v in pairs(getGamemodePlayers(gGamemodeDM)) do
+		databaseMapDM:sendToptimes(v)
 	end
 		
 	setElementData(player, "hunterReachedCounter", getElementData(player, "hunterReachedCounter")+1)

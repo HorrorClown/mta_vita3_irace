@@ -469,9 +469,11 @@ function mapratingsRender()
 	if ratingRating == false then
 		dxDrawText( "map not yet rated", screenWidth/2-tx, screenHeight-160, screenWidth/2+tx, screenHeight, tocolor(255,255,255,255), 1, "default-bold", "center", "top", true, false)
 	else
-		dxDrawText( "rated "..ratingRating.."/10", screenWidth/2-tx, screenHeight-160, screenWidth/2+tx, screenHeight, tocolor(255,255,255,255), 1, "default-bold", "center", "top", true, false)
+		--dxDrawText( "rated "..ratingRating.."/10", screenWidth/2-tx, screenHeight-160, screenWidth/2+tx, screenHeight, tocolor(255,255,255,255), 1, "default-bold", "center", "top", true, false)
+		dxDrawText(("Likes: %s / Dislikes: %s"):format(ratingRating.likes, ratingRating.dislikes), screenWidth/2-tx, screenHeight-160, screenWidth/2+tx, screenHeight, tocolor(255,255,255,255), 1, "default-bold", "center", "top", true, false)
 	end
-	dxDrawText( "rate this map with /rate [0-10]", screenWidth/2-tx, screenHeight-130, screenWidth/2+tx, screenHeight, tocolor(255,255,255,255), 1, "default", "center", "top", true, false)
+	--Todo: remove rate command text
+	dxDrawText( "rate this map with /rate [0-1]", screenWidth/2-tx, screenHeight-130, screenWidth/2+tx, screenHeight, tocolor(255,255,255,255), 1, "default", "center", "top", true, false)
 end
 
 function chatCheckPulse()

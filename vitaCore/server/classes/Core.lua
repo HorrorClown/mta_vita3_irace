@@ -7,7 +7,8 @@ function Core:constructor()
     core = self
 
     sql = MySQL:new(MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PW, MYSQL_DB)
-    --sql:setPrefix("ir")
+    --board = MySQL:new(MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PW, MYSQL_DB)
+    sql:setPrefix("ir") --sync
 
     self:loadAccountElements()
 

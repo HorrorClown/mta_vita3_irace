@@ -5,6 +5,10 @@ Author(s):	Sebihunter
 ]]--
 
 function deletetime ( player, commandname, Value )
+	--Todo: Anpassen an DatabaseMap Klasse
+	outputChatBox ( "#FF0000:ERROR: #FFFFFFThis function is not ready now.", player, 255, 0, 0, true )
+	if true then return false end
+
 	Value = tonumber(Value)
 	if Value== nil then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /deletetime [ID]", player, 255, 0, 0, true )

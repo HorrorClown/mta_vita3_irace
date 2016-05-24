@@ -15,6 +15,7 @@ function Account.login(player, username, password)
     end
 
     player.m_Account = Account:new(userAccount.ID, userAccount.accountname, player)
+    Player.Map[userAccount.ID] = player
 end
 addEvent("loginPlayer", true)
 addEventHandler("loginPlayer", getRootElement(), function(...) Account.login(client, ...) end)
@@ -51,4 +52,16 @@ function Account:constructor(id, username, player)
     player.m_ID = self.m_ID
 
     player:load()
+end
+
+function Account.getNameFromId(id)
+    --[[sql:queryFetchSingle(Async.waitFor(self), "SELECT Name FROM ??_account WHERE Id = ?", sql:getPrefix(), id)
+    local row = Async.wait()]]
+    local player = Player.getFromID(id)
+    if player and isElement(player) then
+        return player:getName()
+    end
+
+    local row = sql:queryFetchSingle("SELECT playerName FROM ??_account WHERE Id = ?", sql:getPrefix(), id)
+    return row and row.Name
 end

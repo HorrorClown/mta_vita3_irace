@@ -113,11 +113,11 @@ function DatabasePlayer:load()
         setElementData(self, "Wheels", tonumber(userData.wheels))
     end
 
-    local toptimeCount = getPlayerToptimeCount(self, "DM")
+    local toptimeCount = DatabaseMap.getPlayerToptimeCount(self, "DM")
     setElementData(self, "TopTimes", toptimeCount)
     setElementData(self, "TopTimeCounter", toptimeCount)
 
-    toptimeCount = getPlayerToptimeCount(self, "RACE")
+    toptimeCount = DatabaseMap.getPlayerToptimeCount(self, "RACE")
     setElementData(self, "TopTimesRA", toptimeCount)
 
     syncArchivmentTableForPlayer(self)
