@@ -4,6 +4,8 @@ File: login-client.lua
 Author(s):	Sebihunter
 ]]--
 
+local passwordHash
+
 function startLogin()
 	gLoginGUI = {}
 	
@@ -20,7 +22,8 @@ function startLogin()
 			vitaNode = xmlFindChild(vitaXML, "username", 0)
 			guiSetText(gLoginGUI["edit_name"], xmlNodeGetValue(vitaNode))
 			vitaNode = xmlFindChild(vitaXML, "password", 0)
-			guiSetText(gLoginGUI["edit_password"], xmlNodeGetValue(vitaNode))		
+			passwordHash = xmlNodeGetValue(vitaNode)
+			guiSetText(gLoginGUI["edit_password"], passwordHash)
 			guiCheckBoxSetSelected(gLoginGUI["checkbox"], true)
 		end
 		xmlUnloadFile(vitaXML)
@@ -94,8 +97,6 @@ function startLogin()
 
 	showLogin()
 end
-addEvent("startLogin", true)
-addEventHandler("startLogin", getRootElement(), startLogin)
 
 function showLogin()
 	hideGUIComponents("nextMap", "mapdisplay", "spectators", "money", "initiate", "timeleft", "timepassed")
@@ -112,33 +113,73 @@ function showLogin()
 	addEventHandler("onClientRender", getRootElement(), renderLogin)
 	bindKey ( "enter", "down", pressEnterLogin)
 end
-addEvent("showLogin", true)                                          
-addEventHandler("showLogin", getRootElement(), showLogin)
+
+local waitForReceive = false
 
 function loginAttempt()
-	if guiGetText(gLoginGUI["edit_name"]) == "" or guiGetText(gLoginGUI["edit_password"]) == "" then addNotification(1, 200, 50, 50, "Provided data is incomplete.") return false end
-	local vitaXML = xmlLoadFile("vita_settings.xml")
-	if vitaXML then
-		if guiCheckBoxGetSelected(gLoginGUI["checkbox"]) == true then
-			local vitaNode = xmlFindChild(vitaXML, "saved", 0)
-			xmlNodeSetValue ( vitaNode, "1")			
-			vitaNode = xmlFindChild(vitaXML, "username", 0)
-			xmlNodeSetValue ( vitaNode, guiGetText(gLoginGUI["edit_name"]))
-			vitaNode = xmlFindChild(vitaXML, "password", 0)
-			xmlNodeSetValue ( vitaNode, guiGetText(gLoginGUI["edit_password"]))				
-		else
-			local vitaNode = xmlFindChild(vitaXML, "saved", 0)
-			xmlNodeSetValue ( vitaNode, "0")			
-			vitaNode = xmlFindChild(vitaXML, "username", 0)
-			xmlNodeSetValue ( vitaNode, "")
-			vitaNode = xmlFindChild(vitaXML, "password", 0)
-			xmlNodeSetValue ( vitaNode, "")				
-		end
-		xmlSaveFile(vitaXML)
-		xmlUnloadFile(vitaXML)
+	local editName = guiGetText(gLoginGUI["edit_name"])
+	local editPassword = guiGetText(gLoginGUI["edit_password"])
+	if editName == "" or editPassword == "" then addNotification(1, 200, 50, 50, "Provided data is incomplete.") return false end
+
+	if waitForReceive then return false end
+	waitForReceive = true
+
+	if passwordHash and passwordHash == editPassword then
+		triggerServerEvent("accountlogin", root, editName, "", editPassword)
+	else
+		triggerServerEvent("accountlogin", root, editName, editPassword)
 	end
-	triggerServerEvent("loginPlayer", getRootElement(), guiGetText(gLoginGUI["edit_name"]), guiGetText(gLoginGUI["edit_password"]))
 end
+
+addEvent("loginfailed", true)
+addEventHandler("loginfailed", root,
+	function(text)
+		addNotification(1, 200, 50, 50, text)
+		waitForReceive = false
+	end
+)
+
+addEvent("loginsuccess", true)
+addEventHandler("loginsuccess", root,
+	function(pwhash)
+		addNotification(2, 50, 200, 50, "Successfully logged in")
+
+		local vitaXML = xmlLoadFile("vita_settings.xml")
+		if vitaXML then
+			if guiCheckBoxGetSelected(gLoginGUI["checkbox"]) == true then
+				local vitaNode = xmlFindChild(vitaXML, "saved", 0)
+				xmlNodeSetValue ( vitaNode, "1")
+				vitaNode = xmlFindChild(vitaXML, "username", 0)
+				xmlNodeSetValue ( vitaNode, guiGetText(gLoginGUI["edit_name"]))
+				vitaNode = xmlFindChild(vitaXML, "password", 0)
+				xmlNodeSetValue ( vitaNode, pwhash)
+			else
+				local vitaNode = xmlFindChild(vitaXML, "saved", 0)
+				xmlNodeSetValue ( vitaNode, "0")
+				vitaNode = xmlFindChild(vitaXML, "username", 0)
+				xmlNodeSetValue ( vitaNode, "")
+				vitaNode = xmlFindChild(vitaXML, "password", 0)
+				xmlNodeSetValue ( vitaNode, "")
+			end
+			xmlSaveFile(vitaXML)
+			xmlUnloadFile(vitaXML)
+		end
+
+		initSettings()
+		showChat(true)
+		--showCursor(false)
+		--vitaBackgroundToggle(false)
+		bindKey ( "m", "down", toggleVitaMusic )
+		unbindKey ( "enter", "down", pressEnterLogin)
+
+
+		for _,v in pairs(gLoginGUI) do
+			--guiSetVisible(v, false)
+			destroyElement(v)
+		end
+		removeEventHandler("onClientRender", getRootElement(), renderLogin)
+	end
+)
 
 function pressEnterLogin(key, keyState)
 	if keyState == "down" then
@@ -181,8 +222,8 @@ function renderLogin()
 	dxDrawText("Remember data?", screenWidth/2+140+1+21,screenHeight/2+42+1,screenWidth, screenHeight, tocolor(0,0,0,150), 1, "default-bold", "left", "top", false, false, false, true)
 	dxDrawText("Remember data?", screenWidth/2+140+21,screenHeight/2+42,screenWidth, screenHeight, tocolor(255,255,255,255), 1, "default-bold", "left", "top", false, false, false, true)	
 	
-	dxDrawText("© Vita 2011-2016", screenWidth/2+130+1,screenHeight/2+200+1,screenWidth/2+361+1, screenHeight, tocolor(0,0,0,150), 1, "default", "center", "top", false, false, false, true)
-	dxDrawText("© Vita 2011-2016", screenWidth/2+130,screenHeight/2+200,screenWidth/2+361, screenHeight, tocolor(255,255,255,255), 1, "default", "center", "top", false, false, false, true)		
+	dxDrawText("ï¿½ Vita 2011-2016", screenWidth/2+130+1,screenHeight/2+200+1,screenWidth/2+361+1, screenHeight, tocolor(0,0,0,150), 1, "default", "center", "top", false, false, false, true)
+	dxDrawText("ï¿½ Vita 2011-2016", screenWidth/2+130,screenHeight/2+200,screenWidth/2+361, screenHeight, tocolor(255,255,255,255), 1, "default", "center", "top", false, false, false, true)		
 	
 	dxDrawImage(screenWidth/2+138,screenHeight/2+130, 146, 41, getElementData(gLoginGUI["btn_register"], "IMG"), 0,0,0, tocolor(255,255,255,255), true)
 	if getElementData(gLoginGUI["btn_register"], "isHovering") == true then
@@ -199,18 +240,3 @@ function renderLogin()
 		dxDrawText("WARNING: You are running on a resolution lower than 1024x786.\nSome GUI may be placed or appear incorrectly.", 0, screenHeight-100, screenWidth, screenHeight, tocolor(255,0,0,255), 0.5, ms_bold, "center", "top", false, false, true)
 	end
 end
-
-function hideLogin()
-	initSettings()
-	showChat(true)
-	showCursor(false)
-	--vitaBackgroundToggle(false)
-	bindKey ( "m", "down", toggleVitaMusic )
-	for i,v in pairs(gLoginGUI) do
-		guiSetVisible(v, false)	
-	end
-	unbindKey ( "enter", "down", pressEnterLogin)
-	removeEventHandler("onClientRender", getRootElement(), renderLogin)
-end
-addEvent("hideLogin", true)
-addEventHandler("hideLogin", getRootElement(), hideLogin)

@@ -484,7 +484,8 @@ function refreshVitaMaps(gamemodeID)
 end
 
 function refreshMapsCMD()
-	refreshVitaMaps()
+	--Todo: Rename command (this is a hardcoded mta command)
+	--Todo: Check admin state, refresh resources, refreshVitaMaps (don't forget gamemodeID)
 end
 addCommandHandler("refresh", refreshMapsCMD)
 
@@ -579,4 +580,4 @@ addEventHandler("onPlayerDamage", getRootElement(),
 )
 
 
-addEvent (  "requestLODSClient", true )
+addEvent("requestLODsClient", true)

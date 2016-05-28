@@ -15,7 +15,8 @@ function checkMain()
 	setElementData(getLocalPlayer(), "warnAFK", false)
 	return
    end
-   if isPedInVehicle ( getLocalPlayer() ) and getElementVelocity ( getPedOccupiedVehicle ( getLocalPlayer() ) ) ~= false then
+   --if isPedInVehicle ( getLocalPlayer() ) and getElementVelocity ( getPedOccupiedVehicle ( getLocalPlayer() ) ) ~= false then
+   if getPedOccupiedVehicle(localPlayer) and getElementVelocity(getPedOccupiedVehicle(localPlayer)) then
     v = getElementVelocity ( getPedOccupiedVehicle ( getLocalPlayer() ) )
     if(v == 0) and getElementData(getLocalPlayer(), "AFK") ~= true then
 		if not isTimer(afktimer) then

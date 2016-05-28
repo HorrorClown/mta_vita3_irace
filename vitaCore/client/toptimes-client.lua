@@ -37,7 +37,7 @@ function toptimeRender()
 		local isInToptime = false
 		for i = 1, 12, 1 do
 			if toptimeTable[i] then
-				if toptimeTable[i].PlayerID == getElementData(getLocalPlayer(), "Userid") then	--Todo: use LokalPlayer class
+				if toptimeTable[i].PlayerID == localPlayer:getID() then
 					isInToptime = true
 					dxDrawText ( i..".",screenWidth-345+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, tocolor(255,255,200,255), 1, "default-bold", "left")
 					dxDrawText ( tostring(msToTimeStr(toptimeTable[i].time)),screenWidth-305+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, tocolor(255,255,200,255), 1, "default-bold", "left")
@@ -58,7 +58,7 @@ function toptimeRender()
 			local hasToptime = false
 			if #toptimeTable > 12 then
 				for i = 13,#toptimeTable, 1 do
-					if toptimeTable[i].PlayerID == getElementData(getLocalPlayer(), "Userid") then	--Todo: use LokalPlayer class
+					if toptimeTable[i].PlayerID == localPlayer:getID() then
 						hasToptime = true
 						dxDrawText ( i..".",screenWidth-345+toptimeX, screenHeight/3+50+13*13, screenWidth, screenHeight/3+80, tocolor(255,255,200,255), 1, "default-bold", "left")
 						dxDrawText ( tostring(msToTimeStr(toptimeTable[i].time)),screenWidth-305+toptimeX, screenHeight/3+50+13*13, screenWidth, screenHeight/3+80, tocolor(255,255,200,255), 1, "default-bold", "left")

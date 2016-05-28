@@ -1,7 +1,7 @@
 DatabasePlayer = inherit(Object)
 
 function DatabasePlayer:load()
-    local userData = sql:asyncQueryFetchSingle("SELECT * FROM players WHERE ID = ?", self.m_ID)
+    local userData = sql:queryFetchSingle("SELECT * FROM ??_player WHERE ID = ?", sql:getPrefix(), self.m_ID)
 
     local donatorstring = userData.donatordate
     setElementData(self, "donatordate", donatorstring)
@@ -67,11 +67,10 @@ function DatabasePlayer:load()
     setElementData(self, "gl", lightcolor["gl"])
     setElementData(self, "bl", lightcolor["bl"])
 
-    setElementData(self, "accName", username)
     setElementData(self, "winningCounter", 0)
     setElementData(self, "hunterReachedCounter", 0)
     setElementData(self, "Userid", tonumber(userData.ID))
-    setElementData(self, "AccountName", userData.accountname)
+    setElementData(self, "AccountName", self.m_Accountname)
     setElementData(self, "Level", userData.level)
     setElementData(self, "MemeActivated", tonumber(userData.memeActivated))
     setElementData(self, "Skin",  tonumber(userData.skin))
@@ -122,22 +121,16 @@ function DatabasePlayer:load()
 
     syncArchivmentTableForPlayer(self)
 
-    g_playerstat[self] = {}
-    g_playerstat[self]["TimeTimer"] = setTimer(
+    self.m_PlayTimeTimer = setTimer(
         function(player)
             if getElementData(player, "TimeOnServer") then
-                setElementData(player, "TimeOnServer", getElementData(player, "TimeOnServer")+1)
+                setElementData(player, "TimeOnServer", getElementData(player, "TimeOnServer") + 1)
             end
         end, 1000, 0, self)
 
-    self:triggerEvent("addNotification", 2, 50, 200, 50, "Successfully logged in")
-    self:triggerEvent("hideLogin")
+    --self:triggerEvent("addNotification", 2, 50, 200, 50, "Successfully logged in")
     sendModesToClient(self)
     addPlayerArchivement(self, 1)
-
-    local accElement = createElement("lockedAcc")
-    setElementData(accElement, "name", username)
-    setElementData(accElement, "player", self)
 
     local accElements = getElementsByType("userAccount")
     for _, accElement in ipairs(accElements) do
@@ -146,6 +139,7 @@ function DatabasePlayer:load()
             setElementData(accElement, "PlayerName", _getPlayerName(self))
             setElementData(accElement, "Level", getElementData(self, "Level"))
             setElementData(self, "accElement", accElement)
+            return
         end
     end
 end
@@ -153,9 +147,7 @@ end
 function DatabasePlayer:save()
     if getElementData(self, "isLoggedIn") == true then
 
-        local accid = getElementData(self, "Userid")
-        local atable = getElementData(self, "Archivements")
-        local archivements_save = toJSON(atable)
+        local archivements_save = toJSON(getElementData(self, "Archivements"))
 
         local color = {}
         color["r1"] = getElementData(self, "r1")
@@ -173,11 +165,8 @@ function DatabasePlayer:save()
         local mysqlLightcolor = toJSON(lightcolor)
 
 
-        if g_playerstat and g_playerstat[self] then
-            if isTimer(g_playerstat[self]["TimeTimer"])then
-                killTimer(g_playerstat[self]["TimeTimer"])
-            end
-            g_playerstat[self] = nil
+        if isTimer(self.m_PlayTimeTimer) then
+            killTimer(self.m_PlayTimeTimer)
         end
 
         local isDonator = 0
@@ -185,24 +174,11 @@ function DatabasePlayer:save()
             isDonator = 1
         end
 
-        local time = getRealTime()
-        local LastActivity = tostring(time.monthday)..":"..tostring(time.month+1)..":"..tostring(time.year+1900).."/"..tostring(time.hour)..":"..tostring(time.minute)
-
-        sql:queryExec("UPDATE players SET accountname = ?, level = ?, skin = ?, points = ?, rank = ?, money = ?, wonmaps = ?, playedmaps = ?, ddmaps = ?, dmmaps = ?, shmaps = ?, ramaps = ?, ddwon = ?, dmwon = ?, shwon = ?, rawon = ?, betcounter = ?, playedtimecounter = ?, lastactivity = NOW(), vehcolor = ?, lightcolor = ?, timeonserver = ?, toptimes = ?, toptimesra = ?, km = ?, winningstreak = ?, memeActivated = ?, ddWinrate = ?, dmWinrate = ?, shWinrate = ?, raWinrate = ?, playerName = ?, isDonator = ?, usedHorn = ?, wheels = ?, shooterkills = ?, ddkills = ?, donatordate = ?, backlights = ?, archivements = ? WHERE id = ?",
-            self:getData("AccountName"), self:getData("Level"), self:getData("Skin"), self:getData("Points"), self:getData("Rank"), self:getData("Money"), self:getData("WonMaps"), self:getData("PlayedMaps"), self:getData("DDMaps"), self:getData("DMMaps"), self:getData("SHMaps"), self:getData("RAMaps"), self:getData("DDWon"), self:getData("DMWon"), self:getData("SHWon"), self:getData("RAWon"), self:getData("betCounter"), self:getData("playedTimeCounter"), mysqlColor, mysqlLightcolor, self:getData("TimeOnServer"), self:getData("TopTimes"), self:getData("TopTimesRA"), self:getData("KM"), self:getData("WinningStreak"), self:getData("memeActivated"), math.round(self:getData("DDWon")/self:getData("DDMaps")*100,2), math.round(self:getData("DMWon")/self:getData("DMMaps")*100,2), math.round(self:getData("SHWon")/self:getData("SHMaps")*100,2), math.round(self:getData("RAWon")/self:getData("RAMaps")*100,2), self.name, isDonator, self:getData("usedHorn"), self:getData("Wheels"), self:getData("shooterkills"),	self:getData("ddkills"), self:getData("donatordate"), self:getData("Backlights"), archivements_save, accid)
-
-
-        local lockedAccs = getElementsByType ( "lockedAcc" )
-        for theKey,lockedAcc in ipairs(lockedAccs) do
-            if getElementData(lockedAcc, "name") == getElementData(self, "accName") then
-                destroyElement(lockedAcc)
-            end
-        end
-
-        setElementData(self, "accName", nil)
+        sql:queryExec("UPDATE ??_player SET level = ?, skin = ?, points = ?, rank = ?, money = ?, wonmaps = ?, playedmaps = ?, ddmaps = ?, dmmaps = ?, shmaps = ?, ramaps = ?, ddwon = ?, dmwon = ?, shwon = ?, rawon = ?, betcounter = ?, playedtimecounter = ?, vehcolor = ?, lightcolor = ?, timeonserver = ?, toptimes = ?, toptimesra = ?, km = ?, winningstreak = ?, memeActivated = ?, ddWinrate = ?, dmWinrate = ?, shWinrate = ?, raWinrate = ?, isDonator = ?, usedHorn = ?, wheels = ?, shooterkills = ?, ddkills = ?, donatordate = ?, backlights = ?, archivements = ? WHERE ID = ?", sql:getPrefix(),
+            self:getData("Level"), self:getData("Skin"), self:getData("Points"), self:getData("Rank"), self:getData("Money"), self:getData("WonMaps"), self:getData("PlayedMaps"), self:getData("DDMaps"), self:getData("DMMaps"), self:getData("SHMaps"), self:getData("RAMaps"), self:getData("DDWon"), self:getData("DMWon"), self:getData("SHWon"), self:getData("RAWon"), self:getData("betCounter"), self:getData("playedTimeCounter"), mysqlColor, mysqlLightcolor, self:getData("TimeOnServer"), self:getData("TopTimes"), self:getData("TopTimesRA"), self:getData("KM"), self:getData("WinningStreak"), self:getData("memeActivated"), math.round(self:getData("DDWon")/self:getData("DDMaps")*100,2), math.round(self:getData("DMWon")/self:getData("DMMaps")*100,2), math.round(self:getData("SHWon")/self:getData("SHMaps")*100,2), math.round(self:getData("RAWon")/self:getData("RAMaps")*100,2), isDonator, self:getData("usedHorn"), self:getData("Wheels"), self:getData("shooterkills"),	self:getData("ddkills"), self:getData("donatordate"), self:getData("Backlights"), archivements_save, self.m_ID)
     end
 end
 
 -- Short getters TODO
 function DatabasePlayer:getID()         return self.m_ID        end
-function DatabasePlayer:isLoggedIn()    return self.m_ID ~= nil  end
+function DatabasePlayer:isLoggedIn()    return self.m_ID ~= -1  end

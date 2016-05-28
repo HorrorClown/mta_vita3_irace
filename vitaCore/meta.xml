@@ -2,22 +2,12 @@
 	<info author="Sebihunter" type="gamemode" name="Vita3" />
     <oop>true</oop>
 
-	<include resource="race" />
-	<!--<include resource="freecam" />-->
-	<include resource="vitaDownload" />
-	<include resource="vitaStream" />
-	<!-- Exports -->
-	!--<export function="htmlIsPlayerLoggedIn" http="true" />
-	<export function="htmlGiveDonator" http="true" />-->
-	
-	<map src="server/mo/mo.map" dimension="6" />
-	<map src="server/mo/MTAMonopoly.map" dimension="6" />
-	
 	<!-- Shared -->
     <script src="shared/classlib.lua" type="shared"/>
     <script src="shared/classes/Object.lua" type="shared"/>
     <script src="shared/classes/Singleton.lua" type="shared"/>
 
+    <script src="shared/utils.lua" type = "shared" />
     <script src="shared/async.lua" type="shared"/>
     <script src="shared/debug.lua" type = "shared"/>
 
@@ -27,12 +17,14 @@
 	<script src="shared/xml-shared.lua" type="client" />
 	<script src="shared/mo-shared.lua" type="server" />
 	<script src="shared/mo-shared.lua" type="client" />
-	
+
 	<!-- Server -->
     <script src="server/constants/main.lua" type="server"/>
 
     <script src="server/classes/Storage/SQL.lua" type="server"/>
     <script src="server/classes/Storage/MySQL.lua" type="server"/>
+    <script src="server/classes/Storage/iConnect/iConnect.lua" type="server"/>
+    <script src="server/classes/Storage/iConnect/serialize.lua" type="server"/>
 
     <script src="server/classes/Core.lua" type="server" />
     <script src="server/classes/DatabaseMap.lua" type="server" />
@@ -96,14 +88,15 @@
 	
 	<script src="server/chatsystem-server.lua" type="server" />	
 	<script src="server/achievement-server.lua" type="server" />
-	<script src="server/player-server.lua" type="server" />
 	<script src="server/commands-server.lua" type="server" />
-	<!--<script src="server/toptimes-server.lua" type="server" />-->
-	<script src="server/ratings-server.lua" type="server" />
 	
 	<script src="server/ip2c.lua" type="server"/>
 	
 	<!-- Client -->
+    <script src = "client/classes/Core.lua" type = "client" />
+    <script src = "client/classes/LocalPlayer.lua" type = "client"/>
+    <script src = "client/constants/Main.lua" type = "client" />
+
 	<script src="client/client_anim.lua" type="client" />		
 	<script src="client/textlib.lua" type="client" />	
 	<script src="client/textlib_anim.lua" type="client" />	
@@ -148,6 +141,8 @@
 	<script src="client/fun/game-button-client.lua" type="client"/>
 	
 	<script src="client/scoreboard-client.lua" type="client" />
+
+    <script src="client/Main.lua" type="client" cache="false" />
 
     <!-- Files -->
     <file src="files/clock.png" />
@@ -935,4 +930,18 @@
 
     <file src="files/wave/gui/close.png" />
     <file src="files/wave/gui/closehover.png" />
+
+    <!-- Maps -->
+    <map src="server/mo/mo.map" dimension="6" />
+    <map src="server/mo/MTAMonopoly.map" dimension="6" />
+
+    <!-- Exports -->
+    <!--<export function="htmlIsPlayerLoggedIn" http="true" />
+    <export function="htmlGiveDonator" http="true" />-->
+
+    <!-- Includes -->
+    <include resource="race" />
+    <!--<include resource="freecam" />-->
+    <include resource="vitaDownload" />
+    <include resource="vitaStream" />
 </meta>

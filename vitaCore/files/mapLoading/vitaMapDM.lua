@@ -497,9 +497,10 @@ function onDownloadFinish ( file )
 						buffer = buffer .."".. fileRead(hFile, 500)
 					end
 				end
+
 				local commandFunction, errorMsg = loadstring(buffer)
 				if commandFunction == nil then
-					outputDebugString(errorMsg,1)
+					outputDebugString(("Failed to load script: %s | Error: %s"):format(file, tostring(errorMsg)))
 				else
 					pcall(commandFunction)
 				end

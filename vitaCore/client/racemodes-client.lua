@@ -356,11 +356,12 @@ function allowNewHurryFunc()
 	allowNewHurry = true
 end
 
+local lastNitroTick = 0
 function onClientColShapeHit( element, matchingDimension )
 	local veh = getPedOccupiedVehicle(getLocalPlayer())
 	if not veh then return false end
     if ( element == veh ) then 
-        if matchingDimension == true then
+        if matchingDimension then
 			local pickup = getElementData(source, "pickup")
 			if pickup then
 				local data = { }
@@ -368,11 +369,14 @@ function onClientColShapeHit( element, matchingDimension )
 				data.vehicle = getElementData(pickup, "vehicle")
 				
 				if data.type == "nitro" then
-					setTimer(function(veh)
-						addVehicleUpgrade(veh, 1010)
-					end, 100,1, veh)
+					addVehicleUpgrade(veh, 1010)
 					playSoundFrontEnd(46)
-					triggerServerEvent('syncVehicleNitro', getLocalPlayer())
+
+					lastNitroTick = getTickCount()
+					--setTimer(function(veh)
+					--	addVehicleUpgrade(veh, 1010)
+					--end, 100,1, veh)
+					--triggerServerEvent('syncVehicleNitro', getLocalPlayer())
 				elseif data.type == "repair" then
 					fixVehicle(veh)
 					playSoundFrontEnd(46)	
@@ -384,9 +388,9 @@ function onClientColShapeHit( element, matchingDimension )
 						end
 						
 						--Use a timer to fake lag. I know this is horrible but some maps rely on that little lag on vehiclechange if they should work properly
-						setTimer(changeVehicle, 100,1, veh, data.vehicle)
+						setTimer(changeVehicle, 50, 1, veh, data.vehicle)
 					end
-				end					
+				end
 			end
 		end
     end
@@ -398,12 +402,17 @@ function changeVehicle(veh, model)
 		if model ~= getElementModel(veh) then
 			alignVehicleWithUp(veh)
 			setElementModel(veh, model)
+			changeVehicleClient(veh)
+			if getTickCount() - lastNitroTick < 100 then
+				addVehicleUpgrade(veh, 1010)
+			end
+			playSoundFrontEnd(46)
+
+			triggerServerEvent('syncVehicleModel', getLocalPlayer(), model)
+
 			if getElementData(getLocalPlayer(), "Wheels") and  getElementData(getLocalPlayer(), "Wheels") ~= 0 then
 				addVehicleUpgrade ( veh, getElementData(getLocalPlayer(), "Wheels") )
 			end
-			playSoundFrontEnd(46)
-			changeVehicleClient(veh)
-			triggerServerEvent('syncVehicleModel', getLocalPlayer(), model)
 			if getPlayerGameMode(getLocalPlayer()) == 5 and model == 425 then --DM Gamemode
 				triggerServerEvent('playerGotHunter', getLocalPlayer())
 			end	
