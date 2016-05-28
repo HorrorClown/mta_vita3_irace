@@ -155,7 +155,7 @@ end
 
 _playSound = playSound
 function playSound( soundPath, looped )
-	triggerEvent ( "onMapSoundReceive",getRootElement(), soundPath)
+	triggerEvent ( "onMapSoundReceive", root, soundPath)
 	if true then return end
 
 	if looped ~= true then looped = false end

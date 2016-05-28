@@ -48,9 +48,9 @@ end
 countdownImage = false
 function countdownClientFunc(id)
 	if id == 4 then
-		g_dxGUI.initiate:visible(true)
-		setTimer(function() g_dxGUI.initiate:color(math.random(0,255), math.random(0,255), math.random(0,255), 255) end, 200, 10)
-		setTimer(function() g_dxGUI.initiate:visible(false) end, 2000, 1)
+		--g_dxGUI.initiate:visible(true)
+		--setTimer(function() g_dxGUI.initiate:color(math.random(0,255), math.random(0,255), math.random(0,255), 255) end, 200, 10)
+		--setTimer(function() g_dxGUI.initiate:visible(false) end, 2000, 1)
 	else
 		local countdownWidth = resAdjust(474)
 		local countdownHeight = resAdjust(204)
@@ -84,7 +84,7 @@ function countdownClientFunc(id)
 			Animation.createAndPlay(
 				countdownImage,
 				{ from = 0, to = 1, time = 1000, fn = zoomFades, width = countdownWidth, height = countdownHeight }
-			)	
+			)
 		end
 		
 		setTimer(function(countdownImage)

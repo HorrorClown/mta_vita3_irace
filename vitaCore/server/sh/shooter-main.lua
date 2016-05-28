@@ -4,6 +4,9 @@ File: dd-main.lua
 Author(s):	Sebihunter
 ]]--
 
+local databaseMapSH = false
+local timesPlayed = 0
+
 gGamemodeSH = 1
 gElementSH = createElement("elementSH")
 gIsSHRunning = false
@@ -12,7 +15,6 @@ gSHMapTimer = false
 gMetaSH = false
 gRedoCounterSH = 0
 countdownTimerSH = false
-gTimesPlayedSH = 0
 gRatingsSH = {}
 gMapFilesSH = {}
 gMapMusicSH = false
@@ -294,9 +296,11 @@ function loadMapSH(mapname, force)
 	end
 	fileClose(hFile)
 	gMetaSH = buffer
-	
-	gTimesPlayedSH, gRatingsSH = loadRatings(getElementData(gElementDM, "mapname"))
-	
+
+	databaseMapSH = DatabaseMap:new(mapname)
+	timesPlayed = databaseMapSH.m_Timesplayed
+	gRatingsSH = databaseMapSH.m_Ratings
+
 	setElementData(gElementSH, "map", mapname)
 	if mapname == getElementData(gElementSH, "nextmap") then
 		setElementData(gElementSH, "nextmap", "random")
@@ -332,8 +336,13 @@ function unloadMapSH()
 		gStartTimerSH = false
 	end
 	if gShooterWaitTimer and isTimer(gShooterWaitTimer) then killTimer(gShooterWaitTimer) end
-	gTimesPlayedSH = gTimesPlayedSH+1
-	saveRatings(getElementData(gElementDM, "mapname"), gTimesPlayedSH, gRatingsSH)
+
+	if databaseMapSH then
+		databaseMapSH.m_Ratings = gRatingsSH
+		databaseMapSH.m_Timesplayed = databaseMapSH.m_Timesplayed + 1
+		databaseMapSH:delete()
+		databaseMapSH = false
+	end
 	
 	gIsSHRunning = false
 	--stopResource(getResourceFromName("vitaMapSH"))
@@ -484,20 +493,16 @@ addEvent("quitSH", true)
 addEventHandler("quitSH", getRootElement(), quitSH)
 
 function downloadMapFinishedSH(player)
-	local localRatings = 0
-	for i,v in ipairs(gRatingsSH) do
-		local anus = split( v,":" )
-		localRatings = localRatings + tonumber(anus[2])
+	local mapRating = {likes = 0, dislikes = 0}
+	for _, PlayerRate in pairs(gRatingsSH) do
+		mapRating.likes = mapRating.likes + PlayerRate.Rating
 	end
-	if localRatings ~= 0 then
-		localRatings = math.round(localRatings/#gRatingsSH,1)
-	else
-		localRatings = false
-	end
-	callClientFunction(player, "forceMapRating", getElementData(gElementSH, "mapname"), localRatings, gTimesPlayedSH)
+	mapRating.dislikes = #gRatingsSH - mapRating.likes
+
+	callClientFunction(player, "forceMapRating", getElementData(gElementSH, "mapname"), mapRating, timesPlayed)
 	callClientFunction(player, "allowNewHurryFunc")
 	
-	if gTimesPlayedSH == 0 then addPlayerArchivement(player, 53) end
+	if timesPlayed == 0 then addPlayerArchivement(player, 53) end
 
 	if gIsSHRunning == false then
 		setElementData(player, "state", "ready")
@@ -921,7 +926,7 @@ function countdownFuncSH(id)
 			if id == 0 then
 				callClientFunction(v, "countdownClientFunc", id)
 				callClientFunction(v, "playSound", "files/audio/0.mp3")
-				setCameraTarget ( v, v )
+                if getElementData(v, "mapCamera") == true then setCameraTarget(v, v) end
 				if getElementData(v, "state") == "ready" then
 					setElementData(v, "state", "alive")
 					if isElement(getPlayerRaceVeh(v)) then

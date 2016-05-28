@@ -57,10 +57,10 @@ addEventHandler ("onPlayerConnect", getRootElement(), checkIfValidated)]]
 gRaceModes = {
 	[1] = { name = "Shooter", img="files/selection/vitaSH.png", imghover = "files/selection/vitaSHhover.png", res = "vitaMapSH", joinfunc = "joinSH", quitfunc = "quitSH", loadfunc = "loadMapSH",  element="elementSH", killfunc="killSHPlayer", maxplayers = 32, prefix="SHOOTER", maps = {} },
 	[2] = { name = "Destruction Derby", img="files/selection/vitaDD.png", imghover = "files/selection/vitaDDhover.png", res = "vitaMapDD", joinfunc = "joinDD", quitfunc = "quitDD", loadfunc = "loadMapDD", element="elementDD", killfunc="killDDPlayer", maxplayers = 32, prefix="DD", maps = {} },
-	[3] = { name = "Race", img="files/selection/vitaRA.png", imghover = "files/selection/vitaRAhover.png", res = "vitaMapRA", joinfunc = "joinRA", quitfunc = "quitRA", loadfunc = "loadMapRA", element="elementRA", killfunc="killRAPlayer", maxplayers = 32, prefix="RACE", maps = {} },
-	[4] = { name = "Minigames", img="files/selection/vitaFUN.png", imghover = "files/selection/vitaFUNhover.png", res = "vitaMapFUN", joinfunc = "joinFUN", quitfunc = "quitFUN", loadfunc = "loadModeFUN", element="elementFUN", killfunc="killFUNPlayer", maxplayers = 32, prefix="FUN", maps = {} },
+	--[3] = { name = "Race", img="files/selection/vitaRA.png", imghover = "files/selection/vitaRAhover.png", res = "vitaMapRA", joinfunc = "joinRA", quitfunc = "quitRA", loadfunc = "loadMapRA", element="elementRA", killfunc="killRAPlayer", maxplayers = 32, prefix="RACE", maps = {} },
+	--[4] = { name = "Minigames", img="files/selection/vitaFUN.png", imghover = "files/selection/vitaFUNhover.png", res = "vitaMapFUN", joinfunc = "joinFUN", quitfunc = "quitFUN", loadfunc = "loadModeFUN", element="elementFUN", killfunc="killFUNPlayer", maxplayers = 32, prefix="FUN", maps = {} },
 	[5] = { name = "Deathmatch", img="files/selection/vitaDM.png", imghover = "files/selection/vitaDMhover.png", res = "vitaMapDM", joinfunc = "joinDM", quitfunc = "quitDM", loadfunc = "loadMapDM", element="elementDM", killfunc="killDMPlayer", maxplayers = 32, prefix="DM", maps = {} },
-	[6] = { name = "Monopoly", img="files/selection/vitaNone.png", imghover = "files/selection/vitaNonehover.png", res = "vitaMapMO", joinfunc = "joinMO", quitfunc = "quitMO", loadfunc = "loadMapMO", element="elementMO", killfunc="killMOPlayer", maxplayers = 32, prefix="MO", maps = {} }
+	--[6] = { name = "Monopoly", img="files/selection/vitaNone.png", imghover = "files/selection/vitaNonehover.png", res = "vitaMapMO", joinfunc = "joinMO", quitfunc = "quitMO", loadfunc = "loadMapMO", element="elementMO", killfunc="killMOPlayer", maxplayers = 32, prefix="MO", maps = {} }
 }
 
 recruitTeam = createTeam ( "Recruit", 0, 51, 221 )
@@ -167,7 +167,7 @@ function resourceStart()
 		triggerEvent ( "onPlayerJoin", v )
 	end
 	
-	for i,v in ipairs(gRaceModes) do
+	for i, v in pairs(gRaceModes) do
 		refreshVitaMaps(i)
 		pLogger[i] = Logger.create("logs/"..v.name..".log")
 		if getResourceFromName(v.res) then
@@ -462,7 +462,10 @@ function refreshVitaMaps(gamemodeID)
 		local name = getResourceName ( resourceValue )
 		local maptype = getResourceInfo ( resourceValue, "type" )
 		local mapname = getResourceInfo ( resourceValue, "name" )
-		if string.find (string.upper (name), prefix) ~= nil and maptype == "map" then
+
+		local fstart, fend = string.find(string.upper(name), prefix)
+
+		if fstart == 1 and maptype == "map" then
 			localMaps[#localMaps+1] = {}
 			localMaps[#localMaps].name = name			--Resourcename
 			localMaps[#localMaps].mapname = mapname		--displayname

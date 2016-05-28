@@ -926,7 +926,7 @@ function countdownFuncDM(id)
 			if id == 0 then
 				callClientFunction(v, "countdownClientFunc", id)
 				callClientFunction(v, "playSound", "files/audio/0.mp3")
-				setCameraTarget ( v, v )
+				if getElementData(v, "mapCamera") == true then setCameraTarget(v, v) end
 				if getElementData(v, "state") == "ready" then
 					setElementData(v, "state", "alive")
 					if isElement(getPlayerRaceVeh(v)) then

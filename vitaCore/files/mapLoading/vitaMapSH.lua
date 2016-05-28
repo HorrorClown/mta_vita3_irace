@@ -153,6 +153,9 @@ end
 
 _playSound = playSound
 function playSound( soundPath, looped )
+	triggerEvent ( "onMapSoundReceive", root, soundPath)
+	if true then return end
+
 	if looped ~= true then looped = false end
 	soundPath = string.gsub(soundPath, "vita%-online%.eu", "sebihunter%.de")
 	soundPath = string.gsub(soundPath, "vita%.gamers%-board%.com", "sebihunter%.de")		

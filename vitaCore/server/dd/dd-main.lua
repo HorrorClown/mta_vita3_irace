@@ -4,6 +4,9 @@ File: dd-main.lua
 Author(s):	Sebihunter
 ]]--
 
+local databaseMapDD = false
+local timesPlayed = 0
+
 gGamemodeDD = 2
 gElementDD = createElement("elementDD")
 gIsDDRunning = false
@@ -12,7 +15,6 @@ gDDMapTimer = false
 gMetaDD = false
 gRedoCounterDD = 0
 countdownTimerDD = false
-gTimesPlayedDD = 0
 gRatingsDD = {}
 gMapFilesDD = {}
 gMapMusicDD = false
@@ -291,9 +293,11 @@ function loadMapDD(mapname, force)
 	end
 	fileClose(hFile)
 	gMetaDD = buffer
-	
-	gTimesPlayedDD, gRatingsDD = loadRatings(getElementData(gElementDM, "mapname"))
-	
+
+	databaseMapDD = DatabaseMap:new(mapname)
+	timesPlayed = databaseMapDD.m_Timesplayed
+	gRatingsDD = databaseMapDD.m_Ratings
+
 	setElementData(gElementDD, "map", mapname)
 	if mapname == getElementData(gElementDD, "nextmap") then
 		setElementData(gElementDD, "nextmap", "random")
@@ -328,9 +332,14 @@ function unloadMapDD()
 		killTimer(gStartTimerDD)
 		gStartTimerDD = false
 	end
-	gTimesPlayedDD = gTimesPlayedDD+1
-	saveRatings(getElementData(gElementDM, "mapname"), gTimesPlayedDD, gRatingsDD)
-	
+
+	if databaseMapDD then
+		databaseMapDD.m_Ratings = gRatingsDD
+		databaseMapDD.m_Timesplayed = databaseMapDD.m_Timesplayed + 1
+		databaseMapDD:delete()
+		databaseMapDD = false
+	end
+
 	gIsDDRunning = false
 	--stopResource(getResourceFromName("vitaMapDD"))
 	setElementData(gElementDD, "map", "none")
@@ -474,20 +483,16 @@ addEvent("quitDD", true)
 addEventHandler("quitDD", getRootElement(), quitDD)
 
 function downloadMapFinishedDD(player)
-	local localRatings = 0
-	for i,v in ipairs(gRatingsDD) do
-		local anus = split( v ,":" )
-		localRatings = localRatings + tonumber(anus[2])
+	local mapRating = {likes = 0, dislikes = 0}
+	for _, PlayerRate in pairs(gRatingsDD) do
+		mapRating.likes = mapRating.likes + PlayerRate.Rating
 	end
-	if localRatings ~= 0 then
-		localRatings = math.round(localRatings/#gRatingsDD,1)
-	else
-		localRatings = false
-	end
-	callClientFunction(player, "forceMapRating", getElementData(gElementDD, "mapname"), localRatings, gTimesPlayedDD)
+	mapRating.dislikes = #gRatingsDD - mapRating.likes
+
+	callClientFunction(player, "forceMapRating", getElementData(gElementDD, "mapname"), mapRating, timesPlayed)
 	callClientFunction(player, "allowNewHurryFunc")
 	
-	if gTimesPlayedDD == 0 then addPlayerArchivement(player, 53) end
+	if timesPlayed == 0 then addPlayerArchivement(player, 53) end
 
 	if gIsDDRunning == false then
 		setElementData(player, "state", "ready")
@@ -910,11 +915,11 @@ function countdownFuncDD(id)
 			if id == 0 then
 				callClientFunction(v, "countdownClientFunc", id)
 				callClientFunction(v, "playSound", "files/audio/0.mp3")
-				setCameraTarget ( v, v )
+				if getElementData(v, "mapCamera") == true then setCameraTarget(v, v) end
 				if getElementData(v, "state") == "ready" then
 					setElementData(v, "state", "alive")
 					if isElement(getPlayerRaceVeh(v)) then
-						setVehicleDamageProof ( getPlayerRaceVeh(v), false )
+						setVehicleDamageProof(getPlayerRaceVeh(v), false)
 						setElementFrozen(getPlayerRaceVeh(v), false)
 					end
 				else

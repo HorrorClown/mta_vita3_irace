@@ -12,11 +12,13 @@ function startSelection(modes)
 	local moveUp = 1
 	local moveDown = 1		
 	
-	local totalHeight = #gRaceModes*100
-	
-	for i,v in ipairs(modes) do
+	local totalHeight = table.size(gRaceModes)*200
+
+	local heightFix = 1 --Use this because i = 1, 2, 5 | Not all gamemodes active!
+	for i,v in pairs(modes) do
+		heightFix = heightFix + 1
 		gSelectionGUI[i] = {}
-		gSelectionGUI[i].img = guiCreateStaticImage (  screenWidth/2-369, screenHeight/2-totalHeight/2+100*(i-1), 738, 100, v.img, false )
+		gSelectionGUI[i].img = guiCreateStaticImage (  screenWidth/2-369, screenHeight/2-totalHeight/2+100*(heightFix-1), 738, 100, v.img, false )
 		--[[if i == 1 then
 			gSelectionGUI[i].img = guiCreateStaticImage (  screenWidth/2-369, screenHeight/2, 738, 100, v.img, false )
 		elseif i/2 == math.floor(i/2) then
@@ -31,11 +33,10 @@ function startSelection(modes)
 		setElementData(gSelectionGUI[i].img, "isHovering", false)
 		setElementData(gSelectionGUI[i].img, "joinfunc", v.joinfunc)
 		
-		for i2,v2 in ipairs(getElementsByType(tostring(v.element))) do
+		for _, v2 in ipairs(getElementsByType(tostring(v.element))) do
 			gRaceModes[i].realelement = v2
 			break
 		end
-		
 		
 		addEventHandler( "onClientMouseEnter", gSelectionGUI[i].img, 
 			function(aX, aY)
@@ -56,7 +57,7 @@ function startSelection(modes)
 	end
 	
 	for i,v in pairs(gSelectionGUI) do
-		guiSetVisible(gSelectionGUI[i].img, false)	
+		--guiSetVisible(gSelectionGUI[i].img, false)
 	end	
 	
  	
