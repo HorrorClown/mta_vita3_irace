@@ -440,26 +440,12 @@ function setNextMap(id, mapname)
 	if getElementData(gameModeElement, "map") ~= "none" and getElementData(gameModeElement, "map") ~= "random" then
 		local resource = getResourceFromName ( mapname )
 		if resource then
-			local maptype = getResourceInfo ( resource, "type" )
-			if string.find (string.upper (mapname), "%["..gRaceModes[id].prefix.."%]") ~= nil and maptype == "map" then
-				local metaXML = xmlLoadFile ( ":"..mapname.."/meta.xml" )
-				if metaXML then
-					setElementData(gameModeElement, "nextmap", mapname)
-				
-					local xmlInfo= xmlFindChild ( metaXML, "info", 0)
-					if xmlInfo then 
-						local realMapname = xmlNodeGetAttribute(xmlInfo, "name")
-						if realMapname then
-							setElementData(gameModeElement, "nextmapname", realMapname)
-						else
-							setElementData(gameModeElement, "nextmapname", mapname)
-						end
-					else
-						setElementData(gameModeElement, "nextmapname", mapname)
-					end			
-					xmlUnloadFile(metaXML)
-					return true
-				end
+			local maptype = getResourceInfo(resource, "type")
+			local displayname = getResourceInfo(resource, "name")
+			if string.find (string.upper (mapname), gRaceModes[id].prefix) ~= nil and maptype == "map" then
+				setElementData(gameModeElement, "nextmap", mapname)
+				setElementData(gameModeElement, "nextmapname", displayname or mapname)
+				return true
 			end
 		end
 	end
@@ -475,10 +461,12 @@ function refreshVitaMaps(gamemodeID)
 	for resourceKey, resourceValue in ipairs(resourceTable) do
 		local name = getResourceName ( resourceValue )
 		local maptype = getResourceInfo ( resourceValue, "type" )
+		local mapname = getResourceInfo ( resourceValue, "name" )
 		if string.find (string.upper (name), prefix) ~= nil and maptype == "map" then
 			localMaps[#localMaps+1] = {}
-			localMaps[#localMaps].name = name
-		end			
+			localMaps[#localMaps].name = name			--Resourcename
+			localMaps[#localMaps].mapname = mapname		--displayname
+		end
 	end
 	gRaceModes[gamemodeID].maps = localMaps
 end

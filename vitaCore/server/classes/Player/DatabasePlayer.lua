@@ -105,7 +105,7 @@ function DatabasePlayer:load()
     setElementData(self, "AFK", false)
     setElementData(self, "ghostmod", false)
     setElementData(self, "isLoggedIn", true)
-    setElementData(self, "country", getPlayerCountry(client))
+    setElementData(self, "country", getPlayerCountry(self))
     setElementData(self, "usedHorn", tonumber(userData.usedHorn))
 
     if userData.wheels and tonumber(userData.wheels) ~= 0 then

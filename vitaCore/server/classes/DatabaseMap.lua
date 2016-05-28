@@ -27,7 +27,7 @@ end
 
 function DatabaseMap:updatePlayernames()
     for _, Toptime in pairs(self.m_Toptimes) do
-        Toptime.name = Account.getNameFromId(Toptime.PlayerID)
+        Toptime.name = Account.getNameFromID(Toptime.PlayerID)
     end
 end
 
@@ -114,14 +114,14 @@ end
 function DatabaseMap.getPlayerToptimeCount(player, prefix)
     local toptimeCount = 0
 
-    local result = sql:queryFetch("SELECT * FROM toptimes ORDER BY ID ASC")
+    local result = sql:queryFetch("SELECT mapname, toptimes FROM ??_maps ORDER BY ID ASC", sql:getPrefix())
     if result then
         for _, v in pairs(result) do
             if string.find(v.mapname, prefix) then
-                local toptimeTable = fromJSON(v.table)
+                local toptimeTable = fromJSON(v.toptimes)
                 if toptimeTable and type(toptimeTable) == "table" then
                     for i = 1, 12 do
-                        if toptimeTable[i] and toptimeTable[i].name == getElementData(player, "AccountName") then
+                        if toptimeTable[i] and toptimeTable[i].PlayerID == player.m_ID then
                             toptimeCount = toptimeCount + 1
                         end
                     end

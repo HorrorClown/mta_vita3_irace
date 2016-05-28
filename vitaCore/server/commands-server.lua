@@ -288,7 +288,7 @@ function buyRedoMap(player, commandName)
 	local gameMode = getPlayerGameMode(player)
 	if gameMode ~= 0 and gameMode ~= 4 and gameMode ~= 6 then
 		local gameModeElement = getGamemodeElement(gameMode)
-		if getElementData(getLocalPlayer(), "hackyMapBought") then return triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "You have to wait before buying the next map" ) end
+		if getElementData(player, "hackyMapBought") then return triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "You have to wait before buying the next map" ) end --sync
 		if getElementData(gameModeElement, "map") ~= "none" and getElementData(gameModeElement, "nextmap") == "random" then
 			if getRedoCounter(getPlayerGameMode(player)) == 0 then
 				if getPlayerMoney(player) >= 3000 or getDonatorBonusState(player, "map", 4) then
@@ -332,7 +332,7 @@ function buySetMap(player, commandName, ...)
 				return
 			end
 		end	
-		if getElementData(getLocalPlayer(), "hackyMapBought") then return triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "You have to wait before buying the next map" ) end
+		if getElementData(player, "hackyMapBought") then return triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "You have to wait before buying the next map" ) end
 		local gameModeElement = getGamemodeElement(gameMode)
 		if getElementData(gameModeElement, "map") ~= "none" and getElementData(gameModeElement, "nextmap") == "random" then
 			if getPlayerMoney(player) >= 6000 or getDonatorBonusState(player, "map", 4) then

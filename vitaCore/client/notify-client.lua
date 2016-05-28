@@ -46,11 +46,11 @@ function renderNotifications()
 			end
 			
 			
-			local width = dxGetTextWidth ( v.text, 1, "default-bold")
+			local width = dxGetTextWidth ( v.text, 1, "default-bold", true)
 			local doubleLined = split(v.text, "\n") 
 			if doubleLined[2] ~= nil then
-				local lineOne = dxGetTextWidth ( doubleLined[1], 1, "default-bold")
-				local lineTwo = dxGetTextWidth ( doubleLined[2], 1, "default-bold")
+				local lineOne = dxGetTextWidth ( doubleLined[1], 1, "default-bold", true)
+				local lineTwo = dxGetTextWidth ( doubleLined[2], 1, "default-bold", true)
 				if lineOne > lineTwo then width = lineOne else width = lineTwo end
 			end
 			
@@ -62,7 +62,7 @@ function renderNotifications()
 				dxDrawText ( doubleLined[1], screenWidth-width-14, 10+16+60*iDraw-6+movingSpace, screenWidth, screenHeight, tocolor ( 255, 255, 255, v.alpha ), 1, "default-bold", "left", "top", false, false, true )	
 				dxDrawText ( doubleLined[2], screenWidth-width-14, 10+16+60*iDraw+7+movingSpace, screenWidth, screenHeight, tocolor ( 255, 255, 255, v.alpha ), 1, "default-bold", "left", "top", false, false, true )	
 			else
-				dxDrawText ( v.text, screenWidth-width-14, 10+16+60*iDraw+movingSpace, screenWidth, screenHeight, tocolor ( 255, 255, 255, v.alpha ), 1, "default-bold", "left", "top", false, false, true )	
+				dxDrawText ( v.text, screenWidth-width-14, 10+16+60*iDraw+movingSpace, screenWidth, screenHeight, tocolor ( 255, 255, 255, v.alpha ), 1, "default-bold", "left", "top", false, false, true, true)
 			end
 		else
 			if v.alpha > 0 then

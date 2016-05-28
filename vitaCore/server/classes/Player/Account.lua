@@ -46,7 +46,7 @@ function Account.login(player, username, password, pwhash)
     sql:queryExec("UPDATE ??_account SET LastSerial = ?, LastLogin = NOW() WHERE ID = ?", sql:getPrefix(), player.serial, boardResult.ingameID)
 
     player:triggerEvent("loginsuccess", pwhash)
-    player.ms_Account = Account:new(boardResult.ingameID, boardResult.username, player)
+    player.ms_Account = Account:new(boardResult.ingameID, boardResult.userID, boardResult.username, player)
     Player.Map[boardResult.ingameID] = player
 end
 addEvent("accountlogin", true)
@@ -56,18 +56,21 @@ function Account.register()
 
 end
 
-function Account:constructor(id, accountname, player)
+function Account:constructor(id, forumID, accountname, player)
     self.m_ID = id
+    self.m_ForumID = forumID
     self.m_Accountname = accountname
     self.m_Player = player
+
     player.m_ID = self.m_ID
+    player.m_ForumID = self.m_ForumID
     player.m_Accountname = self.m_Accountname
 
     player:load()
     player:triggerEvent("retrieveInfo", {ID = id, Accountname = accountname})
 end
 
-function Account.getNameFromId(id)
+function Account.getNameFromID(id)
     local player = Player.getFromID(id)
     if player and isElement(player) then
         return player:getName()

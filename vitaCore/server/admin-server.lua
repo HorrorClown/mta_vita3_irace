@@ -75,7 +75,6 @@ function skipMap(player, commandName)
 end
 addCommandHandler ( "skipMap", skipMap )
 
-
 function redoMap(player, commandName)
 	local gameMode = getPlayerGameMode(player)
 	if gameMode ~= 0 and gameMode ~= gGamemodeFUN and gameMode ~= gGamemodeMO then
@@ -87,7 +86,7 @@ function redoMap(player, commandName)
 					for i,v in ipairs(getGamemodePlayers(getPlayerGameMode(player))) do
 						triggerClientEvent ( v, "addNotification", getRootElement(), 3, 18, 88, 97, "Mapredo set by "..getPlayerName(player).."." )
 					end
-					--outputChatBoxToGamemode ( "#125861:ADMIN:#FFFFFF "..getPlayerName(player).." #FFFFFFhas set the map to be replayed as next map.",gameMode, 255, 0, 0, true)	
+					--outputChatBoxToGamemode ( "#125861:ADMIN:#FFFFFF "..getPlayerName(player).." #FFFFFFhas set the map to be replayed as next map.",gameMode, 255, 0, 0, true)
 				end
 			else
 				triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map has already been redone." )
@@ -125,26 +124,29 @@ function fixMap(player, commandName, ...)
 	if mapname == "" then
 		triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map could not be found." )
 		return
-	end	
-	local resourcename = getMapNameByRealName(mapname)
-	if getResourceFromName ( mapname ) then resourcename = mapname end
-	if resourcename ~= false then	
-		if string.find(resourcename, "fix-") or string.find(resourcename, "delete-") then
-			triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map could not be found." )
-		else
-			if renameResource(resourcename, "fix-"..getElementData(player, "AccountName").."-"..resourcename) then
-				for i,v in ipairs(getGamemodePlayers(getPlayerGameMode(player))) do
-					triggerClientEvent ( v, "addNotification", getRootElement(), 3, 18, 88, 97, "Mapresource "..resourcename.." has been marked to be fixed by "..getPlayerName(player).."." )
-				end
-			else
-				triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map could not be marked to be fixed." )
-			end
+	end
+
+	local resource = getResourceFromName(mapname) or getResourceFromName(getMapNameByRealName(mapname))
+	if resource then
+		local resourcename = getResourceName(resource)
+		local displayname = getResourceInfo(resource, "name")
+
+		sql:queryFetchSingle(Async.waitFor(self), "SELECT userID, info FROM ??_markedmaps WHERE resourcename = ?", sql:getPrefix(), resourcename)
+		local result = Async.wait()
+
+		if result and result.userID and result.info then
+			player:triggerEvent("addNotification", 1, 255, 0, 0, ("Map is already marked to %s by %s"):format(result.info, Account.getNameFromID(result.userID)))
+			return false
 		end
+
+		sql:queryExec("INSERT INTO ??_markedmaps (resourcename, displayname, userID, info, date) VALUES (?, ?, ?, ?, NOW())", sql:getPrefix(), resourcename, displayname, player.m_ID, "fix")
+
+		triggerClientEvent(getGamemodePlayers(getPlayerGameMode(player)), "addNotification", root, 3, 18, 88, 97, ("Map %s has been marked to be fixed by %s"):format(displayname, player.name))
 	else
-		triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map could not be found." )
+		player:triggerEvent("addNotification", 1, 255,0,0, "Map could not be found." )
 	end
 end
-addCommandHandler ( "fixMap", fixMap )
+addCommandHandler("fixMap", function(...) Async.create(fixMap)(...) end)
 
 function deleteMap(player, commandName, ...)
 	local mapname = table.concat(arg, " ")
@@ -152,25 +154,27 @@ function deleteMap(player, commandName, ...)
 		triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map could not be found." )
 		return
 	end
-	local resourcename = getMapNameByRealName(mapname)
-	if getResourceFromName ( mapname ) then resourcename = mapname end
-	if resourcename ~= false then	
-		if string.find(resourcename, "fix-") or string.find(resourcename, "delete-") then
-			triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map could not be found." )
-		else
-			if renameResource(resourcename, "delete-"..getElementData(player, "AccountName").."-"..resourcename) then
-				for i,v in ipairs(getGamemodePlayers(getPlayerGameMode(player))) do
-					triggerClientEvent ( v, "addNotification", getRootElement(), 3, 18, 88, 97, "Mapresource "..resourcename.." has been marked to be deleted by "..getPlayerName(player).."." )
-				end
-			else
-				triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map could not be marked to be deleted." )
-			end
+	local resource = getResourceFromName(mapname) or getResourceFromName(getMapNameByRealName(mapname))
+	if resource then
+		local resourcename = getResourceName(resource)
+		local displayname = getResourceInfo(resource, "name")
+
+		sql:queryFetchSingle(Async.waitFor(self), "SELECT userID, info FROM ??_markedmaps WHERE resourcename = ?", sql:getPrefix(), resourcename)
+		local result = Async.wait()
+
+		if result and result.userID and result.info then
+			player:triggerEvent("addNotification", 1, 255, 0, 0, ("Map is already marked to %s by %s"):format(result.info, Account.getNameFromID(result.userID)))
+			return false
 		end
+
+		sql:queryExec("INSERT INTO ??_markedmaps (resourcename, displayname, userID, info, date) VALUES (?, ?, ?, ?, NOW())", sql:getPrefix(), resourcename, displayname, player.m_ID, "delete")
+
+		triggerClientEvent(getGamemodePlayers(getPlayerGameMode(player)), "addNotification", root, 3, 18, 88, 97, ("Map %s has been marked to be deleted by %s"):format(displayname, player.name))
 	else
-		triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map could not be found." )
+		player:triggerEvent("addNotification", 1, 255,0,0, "Map could not be found." )
 	end
 end
-addCommandHandler ( "deleteMap", deleteMap )
+addCommandHandler("deleteMap", function(...) Async.create(deleteMap)(...) end)
 
 function badumtss (source)
 	outputChatBoxToGamemode ( "#FF5435~Ba Dum Tss~", getPlayerGameMode(source), 255, 0, 0, true )
