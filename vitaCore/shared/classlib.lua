@@ -7,7 +7,7 @@
 --\\
 SERVER = triggerServerEvent == nil
 CLIENT = not SERVER
-DEBUG = DEBUG or false
+DEBUG = true--DEBUG or false
 
 function enew(element, class, ...)
     -- DEBUG: Validate that we are not instantiating a class with pure virtual methods

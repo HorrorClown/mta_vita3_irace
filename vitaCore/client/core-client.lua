@@ -140,7 +140,8 @@ addEventHandler("priorReceiveAllTheMaps", getRootElement(),
 		end
 	)	
 		removeEventHandler ( "onClientRender", getRootElement(), notInitialisedRender)
-		startLogin()
+		--startLogin()
+		LoginGUI:new()
 	end
 )
 
