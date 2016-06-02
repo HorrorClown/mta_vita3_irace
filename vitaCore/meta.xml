@@ -99,8 +99,10 @@
     <script src = "client/constants/Main.lua" type = "client" cache = "false"/>
 
     <!-- GUI System -->
+    <script src="client/classes/GUI/Animation.lua" type="client" cache="false"/>
     <script src="client/classes/GUI/GUIManager.lua" type="client" cache="false"/>
     <script src="client/classes/GUI/GUIEdit.lua" type="client" cache="false"/>
+    <script src="client/classes/GUI/GUILabel.lua" type="client" cache="false"/>
     <script src="client/classes/GUI/GUIButton.lua" type="client" cache="false"/>
 
     <!-- GUI Forms -->

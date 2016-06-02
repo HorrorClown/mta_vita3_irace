@@ -245,8 +245,8 @@ function GUIEdit:onEditKey(key, bDown)
     end
 end
 
-function GUIEdit:render()
-    dxDrawRectangle(self.diffX, self.diffY, self.w, self.h, tocolor(255, 255, 255))
+function GUIEdit:render(offset)
+    dxDrawRectangle(self.diffX, self.diffY + offset, self.w, self.h, tocolor(255, 255, 255, self.alpha))
 
     self.lineColor = tocolor(100, 100, 100, self.alpha)
     self.textColor = tocolor(0, 0, 0, self.alpha)
@@ -255,11 +255,11 @@ function GUIEdit:render()
         local tw = dxGetTextWidth(self.masked and string.rep("•", self.text:len()) or self.text, 1, "default")
         if self.markedAll then
             self.textColor = tocolor(255, 255, 255, self.alpha)
-            dxDrawRectangle(self.diffX + 5, self.diffY + 4, tw, self.h - 8, tocolor(0, 170, 255, self.alpha))
+            dxDrawRectangle(self.diffX + 5, self.diffY + 4 + offset, tw, self.h - 8, tocolor(0, 170, 255, self.alpha))
         else
             if getTickCount()%1000 > 500 or isTimer(self.doTimer) then
                 local cp = dxGetTextWidth(self.masked and string.rep("•", self.caretPos) or self.text:sub(0, self.caretPos), 1, "default")
-                dxDrawRectangle(self.diffX + 5 + cp, self.diffY + 4, 1, self.h - 8, tocolor(0, 0, 0, self.alpha))
+                dxDrawRectangle(self.diffX + 5 + cp, self.diffY + 4 + offset, 1, self.h - 8, tocolor(0, 0, 0, self.alpha))
             end
         end
     else
@@ -267,6 +267,6 @@ function GUIEdit:render()
     end
 
     --dxDrawLine(self.diffX, self.diffY + self.h, self.diffY + self.w, self.diffY + self.h, self.lineColor, 2)
-    if self.text == "" and not self.clicked then dxDrawText(self.title, self.diffX + 5, self.diffY, self.diffY + self.w, self.diffY + self.h, tocolor(120, 120, 120, self.alpha), 1, "default", "left", "center") end
-    dxDrawText(self.masked and string.rep("•", self.text:len()) or self.text, self.diffX + 5, self.diffY, self.diffX + self.w, self.diffY + self.h, self.textColor, 1, "default", "left", "center", true)
+    if self.text == "" and not self.clicked then dxDrawText(self.title, self.diffX + 5, self.diffY + offset, self.diffX + self.w, self.diffY + self.h + offset, tocolor(120, 120, 120, self.alpha), 1, "default", "left", "center") end
+    dxDrawText(self.masked and string.rep("•", self.text:len()) or self.text, self.diffX + 5, self.diffY + offset, self.diffX + self.w, self.diffY + self.h + offset, self.textColor, 1, "default", "left", "center", true)
 end

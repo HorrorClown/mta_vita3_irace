@@ -47,6 +47,12 @@ function GUIManager:onClick(btn, st)
     end
 end
 
+function GUIManager:performClick()
+    for _, aFunc in ipairs(self.clickExecute) do
+        aFunc(self)
+    end
+end
+
 function GUIManager:addClickFunction(fCallFunc)
     table.insert(self.clickExecute, bind(fCallFunc, self))
     --if not self.onClickFunc then self.onClickFunc = bind(self.onClick, self) end
