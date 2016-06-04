@@ -16,6 +16,8 @@ function GUILabel:constructor(sText, nDiffX, nDiffY, nWidth, nHeight, parent)
     self.parent = parent
     self.m_AlignX = "left"
     self.m_AlignY = "top"
+    self.m_Font = "default"
+    self.m_Size = 1
     self.clickExecute = {}
 
     self.hoverFunc = bind(self.onHover, self)
@@ -55,6 +57,18 @@ function GUILabel:setAlign(x, y)
     self.m_AlignY = y or self.m_AlignY
 end
 
+function GUILabel:setFont(font)
+    self.m_Font = font
+end
+
+function GUILabel:setSize(size)
+    self.m_Size = size
+end
+
+function GUILabel:setText(text)
+    self.text = text
+end
+
 function GUILabel:render(offset)
-    dxDrawText(self.text, self.diffX, self.diffY + offset, self.diffX + self.w, self.diffY + self.h + offset, tocolor(255, 255, 255), 1, "default", self.m_AlignX, self.m_AlignY, false, false, false, true)
+    dxDrawText(self.text, self.diffX, self.diffY + offset, self.diffX + self.w, self.diffY + self.h + offset, tocolor(255, 255, 255), self.m_Size, self.m_Font, self.m_AlignX, self.m_AlignY, false, false, false, true)
 end

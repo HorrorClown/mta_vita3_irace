@@ -140,8 +140,18 @@ addEventHandler("priorReceiveAllTheMaps", getRootElement(),
 		end
 	)	
 		removeEventHandler ( "onClientRender", getRootElement(), notInitialisedRender)
-		--startLogin()
-		LoginGUI:new()
+
+		local lgi = LoginGUI:new()
+
+		local username = core:get("Login", "username", "")
+		local pwhash = core:get("Login", "password", "")
+		local avatar = core:get("Login", "avatar", false)
+
+		lgi.m_Editbox_Username:setText(username)
+		lgi.m_Editbox_Password:setText(pwhash)
+		lgi.usePasswordHash = pwhash
+		lgi.useCustomAvatar = avatar
+		lgi:updateRenderTarget()
 	end
 )
 

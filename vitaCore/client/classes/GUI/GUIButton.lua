@@ -8,6 +8,7 @@ GUIButton = inherit(GUIManager)
 
 --Todo: Parameter >color< zum table machen mit dem Aufbau {["normal"] = {r,g,b,a}, ["hover"] = {r,g,b,a}, ["disabled"] = {r,g,b,a}}
 function GUIButton:constructor(sTitle, nDiffX, nDiffY, nWidth, nHeight, color, parent)
+    self.m_Enabled = true
     self.title = sTitle
     self.diffX = nDiffX
     self.diffY = nDiffY
@@ -29,7 +30,7 @@ function GUIButton:destructor()
 end
 
 function GUIButton:onHover()
-    if not self.parent.isActive then return end
+    if not self.m_Enabled then return end
 
     local startX, startY = self.parent:getPosition()
     local oldColor = self.drawColor

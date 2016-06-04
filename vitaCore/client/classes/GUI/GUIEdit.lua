@@ -10,6 +10,7 @@ string.len = utf8.len
 GUIEdit = inherit(GUIManager)
 
 function GUIEdit:constructor(sTitle, nDiffX, nDiffY, nWidth, nHeight, bNumeric, bMasked, parent)
+    self.m_Enabled = true
     self.title = sTitle
     self.text = ""
     self.caretPos = 0

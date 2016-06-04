@@ -3,7 +3,7 @@ Account = inherit(Object)
 function Account.login(player, username, password, pwhash)
     if (not username or not password) and not pwhash then return false end
 
-    board:queryFetchSingle(Async.waitFor(self), ("SELECT userID, ingameID, username, password FROM ??_user WHERE %s = ?"):format(username:find("@") and "email" or "username"), board:getPrefix(), username)
+    board:queryFetchSingle(Async.waitFor(self), ("SELECT userID, ingameID, username, password, avatarID, disableAvatar FROM ??_user WHERE %s = ?"):format(username:find("@") and "email" or "username"), board:getPrefix(), username)
     local boardResult = Async.wait()
     if not boardResult or not boardResult.userID then
         --player:triggerEvent("addNotification", 1, 200, 50, 50, "Invalid username or password")
@@ -45,16 +45,19 @@ function Account.login(player, username, password, pwhash)
 
     sql:queryExec("UPDATE ??_account SET LastSerial = ?, LastLogin = NOW() WHERE ID = ?", sql:getPrefix(), player.serial, boardResult.ingameID)
 
-    player:triggerEvent("loginsuccess", pwhash)
+    if boardResult.disableAvatar == 0 then
+       local result = board:queryFetchSingle("SELECT fileHash FROM ??_user_avatar WHERE avatarID = ?", board:getPrefix(), boardResult.avatarID)
+        if result and result.fileHash then
+            boardResult.avatarFileHash = result.fileHash
+        end
+    end
+
+    player:triggerEvent("loginsuccess", pwhash, boardResult.avatarFileHash, boardResult.avatarID)
     player.ms_Account = Account:new(boardResult.ingameID, boardResult.userID, boardResult.username, player)
     Player.Map[boardResult.ingameID] = player
 end
 addEvent("accountlogin", true)
 addEventHandler("accountlogin", getRootElement(), function(...) Async.create(Account.login)(client, ...) end)
-
-function Account.register()
-
-end
 
 function Account:constructor(id, forumID, accountname, player)
     self.m_ID = id
@@ -68,6 +71,7 @@ function Account:constructor(id, forumID, accountname, player)
 
     player:load()
     player:triggerEvent("retrieveInfo", {ID = id, Accountname = accountname})
+    --player:updateAvatar()
 end
 
 function Account.getNameFromID(id)

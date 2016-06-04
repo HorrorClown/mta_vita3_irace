@@ -59,8 +59,7 @@ function startSelection(modes)
 	for i,v in pairs(gSelectionGUI) do
 		--guiSetVisible(gSelectionGUI[i].img, false)
 	end	
-	
- 	
+
 	if getElementData(getLocalPlayer(), "language") ~= 1 then
 		showSelection()
 	else

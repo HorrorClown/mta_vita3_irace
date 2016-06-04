@@ -36,7 +36,7 @@ end
 
 function GUIManager:onClick(btn, st)
     if btn == "left" and st == "down" then
-        if not self.parent.isActive then return end
+        if not self.m_Enabled then return end
 
         local startX, startY = self.parent:getPosition()
         if isHover(startX + self.diffX, startY + self.diffY, self.w, self.h) then
@@ -83,6 +83,10 @@ end
 
 function GUIManager:removeClickHandler()
     removeEventHandler("onClientClick", root, self.onClickFunc)
+end
+
+function GUIManager:setEnabled(enabled)
+    self.m_Enabled = enabled
 end
 
 function GUIManager:registerWindow(eWindow)

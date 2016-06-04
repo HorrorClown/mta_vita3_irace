@@ -7,6 +7,7 @@
     <script src="shared/classlib.lua" type="shared" cache = "false"/>
     <script src="shared/classes/Object.lua" type="shared" cache = "false"/>
     <script src="shared/classes/Singleton.lua" type="shared" cache = "false"/>
+    <script src="shared/classes/ConfigXML.lua" type="shared" cache = "false"/>
 
     <script src="shared/utils.lua" type = "shared" cache = "false"/>
     <script src="shared/async.lua" type="shared" cache = "false"/>
@@ -104,6 +105,7 @@
     <script src="client/classes/GUI/GUIEdit.lua" type="client" cache="false"/>
     <script src="client/classes/GUI/GUILabel.lua" type="client" cache="false"/>
     <script src="client/classes/GUI/GUIButton.lua" type="client" cache="false"/>
+    <script src="client/classes/GUI/GUIFont.lua" type="client" cache="false"/>
 
     <!-- GUI Forms -->
     <script src="client/classes/GUIForms/LoginGUI.lua" type="client" cache="false"/>
@@ -116,7 +118,7 @@
 	<script src="client/wave/utils/clickareas.lua" type="client"/>	
 
 	<script src="client/core-client.lua" type="client" />	
-	<script src="client/login-client.lua" type="client" />	
+	<!--<script src="client/login-client.lua" type="client" />-->
 	<script src="client/selection-client.lua" type="client" />	
 	<script src="client/minigames-vote-client.lua" type="client" />	
 	<script src="client/notify-client.lua" type="client" />	
@@ -156,6 +158,14 @@
     <script src="client/Main.lua" type="client" cache="false" />
 
     <!-- Files -->
+
+    <!-- Fonts -->
+    <file src="files/fonts/segoeui.ttf" />
+    <file src="files/fonts/FontAwesome.otf" />
+    <file src="files/fonts/JosefinSans-Regular.ttf" />
+    <file src="files/fonts/JosefinSans-Thin.ttf" />
+
+    <!--============================================-->
     <file src="files/clock.png" />
     <file src="files/metro.ttf" />
     <file src="files/metro_bold.ttf" />
