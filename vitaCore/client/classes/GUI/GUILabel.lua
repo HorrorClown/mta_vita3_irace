@@ -27,6 +27,7 @@ end
 
 function GUILabel:destructor()
     removeEventHandler("onClientCursorMove", root, self.hoverFunc)
+    self:removeClickHandler()
 end
 
 function GUILabel:onHover()

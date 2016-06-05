@@ -12,6 +12,7 @@ function Core:constructor()
     board:setPrefix("wcf1")
 
     self:loadAccountElements()
+    self:generatePackage()
 
     -- Instantiate classes (Create objects)
     PlayerManager:new()
@@ -43,4 +44,19 @@ function Core:loadAccountElements()
     else
         critical_error("Failed to load account elements")
     end
+end
+
+function Core:generatePackage()
+    local files = {}
+    local xml = XML.load("meta.xml")
+    for _, v in pairs(xml:getChildren()) do
+        if v:getName() == "irFile" then
+           table.insert(files, v:getAttribute("src"))
+        end
+    end
+
+    outputServerLog("Files for package: " .. tostring(#files))
+
+    Package.save("ir.data", files)
+    Provider:getSingleton():offerFile("ir.data")
 end

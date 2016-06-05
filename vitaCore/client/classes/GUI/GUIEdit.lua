@@ -49,9 +49,11 @@ function GUIEdit:constructor(sTitle, nDiffX, nDiffY, nWidth, nHeight, bNumeric, 
 end
 
 function GUIEdit:destructor()
+    if isTimer(self.updateTimer) then killTimer(self.updateTimer) end
     removeEventHandler("onClientClick", root, self.clickFunc)
     removeEventHandler("onClientCharacter", root, self.editFunc)
     removeEventHandler("onClientKey", root, self.keyFunc)
+    self:removeClickHandler()
 end
 
 function GUIEdit:getText()

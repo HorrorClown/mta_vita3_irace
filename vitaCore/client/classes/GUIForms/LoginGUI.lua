@@ -12,59 +12,37 @@ function LoginGUI:constructor()
 
     self.m_SubAlpha = 0
     self.m_OffsetY = -self.HEIGHT
-    self.isActive = false
     self.m_ContentStartX = 0
     self.m_ContentStartY = self.HEIGHT
 
-    self.rt_Background = DxRenderTarget(screenWidth, self.HEIGHT, true)
     self.rt_Login = DxRenderTarget(screenWidth, self.HEIGHT, true)
-    self.m_Browser = Browser(screenWidth, screenHeight, false)
 
     self:createGUI()
     self:initAnimations()
 
-
-    addEventHandler("onClientBrowserCreated", self.m_Browser,
-        function()
-            local url = core:get("Login", "video", "http://pewx.de/res/irace/GUI/backgrounds/background.html")
-            self.m_Browser:loadURL(url)
-            self.m_Browser:setVolume(0)
-        end
-    )
-
-    self.fn_ToggleSound =
-        function()
-            if self.m_Browser:getVolume() == 1 then
-                self.m_Browser:setVolume(0)
-            else
-                self.m_Browser:setVolume(1)
-            end
-        end
-    bindKey("m", "down", self.fn_ToggleSound)
-
     self.HEIGHT = 0
-    self:updateRenderTarget()
+    --self:updateRenderTarget()
 
-    self.fn_Render = bind(self.render, self)
-
-    addEventHandler("onClientRender", root, self.fn_Render)
-
+   -- self.fn_Render = bind(self.render, self)
+    --addEventHandler("onClientRender", root, self.fn_Render)
 
     self.m_MainAnimation:startAnimation(1500, "OutQuad", screenHeight/3)
 
     setTimer(function()
         self.m_MovingAnimation:startAnimation(750, "OutQuad", 0, 255)
-        self.isActive = true
     end, 750, 1)
 end
 
 function LoginGUI:destructor()
-    self.m_Browser:destroy()
+    self.m_Editbox_Username:destructor()
+    self.m_Editbox_Password:destructor()
+    self.m_Button_Submit:destructor()
+    self.m_Label_Register:destructor()
+
+    self.m_MovingAnimation:delete()
+    self.m_MainAnimation:delete()
     self.rt_Login:destroy()
-    self.rt_Background:destroy()
     removeEventHandler("onClientKey", root, self.fn_SubmitEnter)
-    removeEventHandler("onClientRender", root, self.fn_Render)
-    unbindKey("m", "down", self.fn_ToggleSound)
 end
 
 function LoginGUI:initAnimations()
@@ -73,12 +51,6 @@ function LoginGUI:initAnimations()
 end
 
 function LoginGUI:createGUI()
-    self.rt_Background:setAsTarget()
-    dxDrawRectangle(0, 0, screenWidth, self.HEIGHT, tocolor(20, 20, 20, 220))
-    dxDrawRectangle(0, 0, screenWidth, 1, self.WHITE)
-    dxDrawRectangle(0, self.HEIGHT-1, screenWidth, 1, self.WHITE)
-    dxSetRenderTarget()
-
     -- Username & Password
     self.m_EditStartX = screenWidth/2-128
     self.m_EditStartY = 175
@@ -167,14 +139,16 @@ function LoginGUI:createGUI()
 end
 
 function LoginGUI:updateRenderTarget()
-    self.rt_Login:setAsTarget(true)
+    outputChatBox("update loginGUI rendertarget")
+    LoginBackground:getSingleton().rt_Background:setAsTarget(true)
+    LoginBackground.drawBackground()
     --Avatar
     local avatar = {startX = screenWidth/2-64, startY = 30 + self.m_OffsetY, width = 128, height = 128}
     dxDrawRectangle(avatar.startX, avatar.startY, avatar.width, avatar.height, tocolor(0, 0, 0, 180, self.m_SubAlpha))
     dxDrawRectangle(avatar.startX + 1, avatar.startY + 1, avatar.width - 2, avatar.height - 2, tocolor(255, 255, 255, 230/255*self.m_SubAlpha))
     dxDrawImage(avatar.startX + 2, avatar.startY + 2, avatar.width - 4, avatar.height - 4, self.useCustomAvatar and "files/_avatar.png" or "files/avatar.png", 0, 0, 0, tocolor(255, 255, 255, self.m_SubAlpha))
 
-    if self.usePasswordHash and self.usePasswordHash == self.m_Editbox_Password:getText() then
+    if self.usePasswordHash ~= "" and self.usePasswordHash == self.m_Editbox_Password:getText() then
         self.m_Editbox_Password:setProperty("diffY", self.m_EditStartY)
         self.m_Button_Submit:setProperty("diffY", self.m_EditStartY)
         self.m_Label_Register:setText(("Welcome back %s!"):format(localPlayer.name))
@@ -195,28 +169,18 @@ function LoginGUI:updateRenderTarget()
     dxSetRenderTarget()
 end
 
-function LoginGUI:render()
-    dxDrawImage(0, 0, screenWidth, screenHeight, self.m_Browser)
-    dxDrawRectangle(0, 0, screenWidth, 15, tocolor(0, 0, 0))
-    dxDrawRectangle(0, screenHeight-15, screenWidth, 15, tocolor(0, 0, 0))
-
-
+--[[function LoginGUI:render()
     if self.m_ShowRegisterBrowser then
         dxDrawRectangle(0, 0, screenWidth, screenHeight, tocolor(0, 0, 0, 220))
         local browserStartX = screenWidth/2 - self.m_BrowserWidth/2
         local browserStartY = screenHeight/2 - self.m_BrowserHeight/2
-        dxDrawImage(0, screenHeight/2-self.HEIGHT/2, screenWidth, self.HEIGHT, self.rt_Background, 0, 0, 0, tocolor(255, 255, 255, self.m_SubAlpha))
         dxDrawRectangle(browserStartX - 6, browserStartY - 6, self.m_BrowserWidth + 12, self.m_BrowserHeight + 12, tocolor(255, 255, 255, 255))
         dxDrawRectangle(browserStartX - 5, browserStartY - 5, self.m_BrowserWidth + 10, self.m_BrowserHeight + 10, tocolor(20, 20, 20, 200))
         dxDrawImage(browserStartX, browserStartY, self.m_BrowserWidth, self.m_BrowserHeight, self.m_RegisterBrowser)
     else
-        dxDrawImage(0, screenHeight/2-self.HEIGHT/2, screenWidth, self.HEIGHT, self.rt_Background, 0, 0, 0, tocolor(255, 255, 255, self.m_SubAlpha))
         dxDrawImage(0, screenHeight/2-self.HEIGHT/2, screenWidth, self.HEIGHT, self.rt_Login, 0, 0, 0, tocolor(255, 255, 255, self.m_SubAlpha))
     end
-
-    dxDrawText("Press 'm' to toggle sound", 0, 0, screenWidth, screenHeight, self.WHITE, 1, "clear", "center", "bottom")
-    dxDrawText("Powered by Vita3 (vita-online.eu)", 0, 0, screenWidth, screenHeight, self.WHITE, 1, "clear", "left", "bottom")
-end
+end]]
 
 function LoginGUI:getPosition()
     return self.m_ContentStartX, self.m_ContentStartY
@@ -244,7 +208,7 @@ end
 addEvent("loginfailed", true)
 addEventHandler("loginfailed", root,
     function(text)
-        LoginGUI:getSingleton().m_Button_Submit:setEnabled(true)
+        --LoginGUI:getSingleton().m_Button_Submit:setEnabled(true)
         addNotification(1, 200, 50, 50, text)
     end
 )
@@ -263,6 +227,8 @@ addEventHandler("loginsuccess", root,
         core:set("Login", "password", pwhash)
 
         delete(LoginGUI:getSingleton())
+        delete(DownloadGUI:getSingleton())
+        delete(LoginBackground:getSingleton())
 
         showChat(true)
         bindKey("m", "down", toggleVitaMusic)

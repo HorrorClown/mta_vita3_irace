@@ -15,9 +15,7 @@ showChatIcons = true
 isStopSound = false
 showMapInfo = true
 tachoEnabled = true
-
 tireSmoke = false
-tireShader = dxCreateShader ( "files/shader/texreplace.fx" )
 
 function initSettings()		
 	local xmlRoot = xmlLoadFile("vita_settings.xml")

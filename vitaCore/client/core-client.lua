@@ -15,31 +15,12 @@ addEvent("loadMapRA", true)
 addEvent("stopMapRA", true)
 
 screenWidth, screenHeight = guiGetScreenSize ( )
- 
-g_ModelForPickupType = { nitro = 2221, repair = 2222, vehiclechange = 2223 }
-
-myriad_10 = dxCreateFont( "files/myriadproregular.ttf", 10)
-myriad_8 = dxCreateFont( "files/myriadproregular.ttf", 8)
-
-ms = dxCreateFont( "files/metro.ttf", screenHeight*(screenHeight/(screenHeight*20)))
-ms_bold = dxCreateFont( "files/metro_bold.ttf", screenHeight*(screenHeight/(screenHeight*20)))
-ms_bold_12 =  dxCreateFont( "files/metro_bold.ttf", 12)
-ms_bold_10 =  dxCreateFont( "files/metro_bold.ttf", 10)
-ms_gui = guiCreateFont ( "files/metro.ttf", 20 )
-ms_bold_gui = guiCreateFont ( "files/metro_bold.ttf", 20 )	
-
 
 function onClientResourceStart()
 	guiSetInputMode("no_binds_when_editing")
 	--Check if settings exist, if not then create it
-	if xmlLoadFile("vita_settings.xml") == false then
+	--[[if xmlLoadFile("vita_settings.xml") == false then
 		local vitaXML = xmlCreateFile("vita_settings.xml","settings")
-		local vitaNode = xmlCreateChild(vitaXML, "saved")
-		xmlNodeSetValue ( vitaNode, "0" )
-		vitaNode = xmlCreateChild(vitaXML, "username")
-		xmlNodeSetValue ( vitaNode, "" )
-		vitaNode = xmlCreateChild(vitaXML, "password")
-		xmlNodeSetValue ( vitaNode, "" )		
 			
 		local xmlRoot = xmlLoadFile(":race/login.xml")
 		if xmlRoot then
@@ -62,13 +43,13 @@ function onClientResourceStart()
 		end
 		xmlSaveFile(vitaXML)
 		xmlUnloadFile(vitaXML)
-	end
+	end]]
 
 	
 	racemodesClientStart()
 	showChat(false)
 	fadeCamera(true)
-	showCursor(false)
+	--showCursor(false)
 	setCameraMatrix(1468.8785400391, -919.25317382813, 100.153465271, 1468.388671875, -918.42474365234, 99.881813049316)
 	showPlayerHudComponent("all", false)
 	showPlayerHudComponent("crosshair", true)
@@ -77,14 +58,8 @@ function onClientResourceStart()
 	
 	g_PickupStartTick = getTickCount()
 	
-	for name,id in pairs(g_ModelForPickupType) do
-		engineImportTXD(engineLoadTXD('files/models/' .. name .. '.txd'), id)
-		engineReplaceModel(engineLoadDFF('files/models/' .. name .. '.dff', id), id)
-		engineSetModelLODDistance( id, 60 )
-	end
-	
 	triggerServerEvent ( "onPlayerRequestInitialise", getLocalPlayer() )
-	addEventHandler ( "onClientRender", getRootElement(), notInitialisedRender)
+	--addEventHandler ( "onClientRender", getRootElement(), notInitialisedRender)
 end
 addEventHandler("onClientResourceStart", getResourceRootElement(getThisResource()), onClientResourceStart)
 
@@ -139,19 +114,8 @@ addEventHandler("priorReceiveAllTheMaps", getRootElement(),
 			return a.text < b.text
 		end
 	)	
-		removeEventHandler ( "onClientRender", getRootElement(), notInitialisedRender)
+		--removeEventHandler ( "onClientRender", getRootElement(), notInitialisedRender)
 
-		local lgi = LoginGUI:new()
-
-		local username = core:get("Login", "username", "")
-		local pwhash = core:get("Login", "password", "")
-		local avatar = core:get("Login", "avatar", false)
-
-		lgi.m_Editbox_Username:setText(username)
-		lgi.m_Editbox_Password:setText(pwhash)
-		lgi.usePasswordHash = pwhash
-		lgi.useCustomAvatar = avatar
-		lgi:updateRenderTarget()
 	end
 )
 

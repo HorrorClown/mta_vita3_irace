@@ -27,6 +27,7 @@ end
 
 function GUIButton:destructor()
     removeEventHandler("onClientCursorMove", root, self.hoverFunc)
+    self:removeClickHandler()
 end
 
 function GUIButton:onHover()
