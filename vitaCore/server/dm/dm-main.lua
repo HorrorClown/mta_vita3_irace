@@ -985,21 +985,21 @@ function playerGotHunter()
 	toggleControl ( player, "vehicle_secondary_fire", false )
 	outputChatBox("#996633:Points: #ffffff You recieved 50 extra-points for reaching the Hunter.", player, 255, 255, 255, true)
 	setElementData(player, "Points", getElementData(player, "Points")+50)
-	
 
+	local hastToptime = databaseMapDM:getToptimeFromPlayer(player.m_ID)
 	local toptimeAdded = databaseMapDM:addNewToptime(player.m_ID, getTickCount() - getElementData(gElementDM, "startTick"))
 
 	if toptimeAdded == true then
 		callClientFunction(player, "forceToptimesOpen")
-		local tInformation, tPosition = databaseMapDM:getToptimeFromPlayer(player.m_ID)
 
+		local tInformation, tPosition = databaseMapDM:getToptimeFromPlayer(player.m_ID)
 		outputChatBoxToGamemode(":TOPTIME:#FFFFFF ".._getPlayerName(player).."#FFFFFF finished the map ("..msToTimeStr(tInformation.time)..") and got toptime position "..tPosition..".",gGamemodeDM, 148,214,132, true)
 
-        if tPosition <= 12 and (tInformation == false or tPosition) == false then
+        if tPosition <= 12 and (hastToptime == false or tPosition) == false then
 			setElementData(source, "TopTimes", getElementData(source, "TopTimes")+1)
 			setElementData(source, "TopTimeCounter", getElementData(source, "TopTimeCounter")+1)	
 		end	
-		if tPosition <= 12 and (tInformation ~= false and tPosition <= 12) then
+		if tPosition <= 12 and (hastToptime ~= false and hastToptime <= 12) then
 			addPlayerArchivement(source, 59)
 		end		
 	end

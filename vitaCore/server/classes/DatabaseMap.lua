@@ -16,7 +16,8 @@ function DatabaseMap:constructor(sMapname)
         self.m_Toptimes = {}
         self.m_Ratings = {}
         self.m_Timesplayed = 0
-        sql:queryExec("INSERT INTO ??_maps (mapname, toptimes, ratings, timesplayed) VALUES (?, ?, ?, ?)", sql:getPrefix(), self.m_Mapname, toJSON(self.m_Toptimes), toJSON(self.m_Ratings), self.m_Timesplayed)
+        local _, _, insertID = sql:queryFetch("INSERT INTO ??_maps (mapname, toptimes, ratings, timesplayed) VALUES (?, ?, ?, ?)", sql:getPrefix(), self.m_Mapname, toJSON(self.m_Toptimes), toJSON(self.m_Ratings), self.m_Timesplayed)
+        self.m_MapID = insertID
         return
     end
 end
@@ -49,6 +50,7 @@ function DatabaseMap:addNewToptime(PlayerID, time)
     local newHuntertime = {}
     newHuntertime.PlayerID = PlayerID
     newHuntertime.time = time
+    newHuntertime.name = Account.getNameFromID(PlayerID)
     newHuntertime.date = getRealTime().timestmap
 
     table.insert(self.m_Toptimes, newHuntertime)

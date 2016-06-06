@@ -21,8 +21,6 @@ function Core:destructor()
 end
 
 function Core:ready()
-    outputChatBox("Core -> Ready")
-
     ms = dxCreateFont( "files/fonts/metro.ttf", screenHeight*(screenHeight/(screenHeight*20)))
     ms_bold = dxCreateFont( "files/fonts/metro_bold.ttf", screenHeight*(screenHeight/(screenHeight*20)))
     ms_bold_12 =  dxCreateFont( "files/fonts/metro_bold.ttf", 12)

@@ -241,8 +241,8 @@ gAttachedSounds = {}
 
 function playSoundAttachedToElement(element, soundFile)
 	gAttachedSounds[element] = {}
-	localPlayer = getLocalPlayer()
-	if getCameraTarget () then localPlayer = getCameraTarget () end	
+	--localPlayer = getLocalPlayer()
+	--if getCameraTarget () then localPlayer = getCameraTarget () end
 	local x, y, z = getElementPosition(element)
 	local distance = getDistanceBetweenPoints3D(x, y, z, getElementPosition(localPlayer))
 	distance = distance * 2
@@ -264,8 +264,8 @@ end
 setTimer(function ()
 	for k,v in pairs(gAttachedSounds) do
 		if v.sound then
-			localPlayer = getLocalPlayer()
-			if getCameraTarget () then localPlayer = getCameraTarget () end
+			--localPlayer = getLocalPlayer()
+			--f getCameraTarget () then localPlayer = getCameraTarget () end
 			local x, y, z = getElementPosition(k)
 			local distance = getDistanceBetweenPoints3D(x, y, z, getElementPosition(localPlayer))
 			distance = distance * 2
