@@ -139,7 +139,6 @@ function LoginGUI:createGUI()
 end
 
 function LoginGUI:updateRenderTarget()
-    outputChatBox("update loginGUI rendertarget")
     LoginBackground:getSingleton().rt_Background:setAsTarget(true)
     LoginBackground.drawBackground()
     --Avatar

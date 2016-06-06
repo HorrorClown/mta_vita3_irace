@@ -36,6 +36,12 @@ function Account.login(player, username, password, pwhash)
         boardResult.ingameID = ID
         sql:queryExec("INSERT INTO ??_player (ID, archivements) VALUES (?, ?)", sql:getPrefix(), ID, toJSON({}))
         board:queryExec("UPDATE ??_user SET ingameID = ? WHERE userID = ?", board:getPrefix(), ID, boardResult.userID)
+
+        local accElement = createElement("userAccount")
+        setElementData(accElement, "AccountName", boardResult.username)
+        setElementData(accElement, "PlayerName", player.name)
+        setElementData(accElement, "Points", 0)
+        setElementData(accElement, "Level", "User")
     end
 
     if Player.getFromID(boardResult.ingameID) then
