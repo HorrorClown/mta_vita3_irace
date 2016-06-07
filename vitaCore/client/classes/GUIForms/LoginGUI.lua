@@ -233,5 +233,7 @@ addEventHandler("loginsuccess", root,
         bindKey("m", "down", toggleVitaMusic)
 
         LoginGUI.downloadAvatar(avatarID, avatarFileHash)
+
+        core:afterLogin()
     end
 )

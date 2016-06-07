@@ -11,8 +11,3 @@ end
 function Object:load(...)
     return load(self, ...)
 end
-
-function Object:getId()
-    return self.m_Id
-end
-

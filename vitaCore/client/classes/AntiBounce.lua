@@ -4,11 +4,13 @@
 -- Date: 06.06.2016 - Time: 23:44
 -- pewx.de // pewbox.org // iGaming-mta.de // iRace-mta.de // iSurvival.de // mtasa.de
 --
-local AntiBounce = inherit(Object)
+AntiBounce = inherit(Singleton)
 
 function AntiBounce:constructor()
+    self.m_Enabled = core:get("AntiBounce", "enabled", true)
     self.m_PreventBounceUpdateDelay = false
     self.m_Colliding = false
+    self.m_BouncePrevented = 0
     self.m_TurnDiffX = 0
     self.m_TurnDiffY = 0
     self.m_TurnDiffZ = 0
@@ -24,16 +26,19 @@ function AntiBounce:constructor()
 end
 
 function AntiBounce:destructor()
-
+    removeEventHandler("onClientPreRender", root, self.fn_PreRender)
 end
 
 function AntiBounce:toggleAntiBounce()
+    self.m_Enabled = not self.m_Enabled
+    core:set("AntiBounce", "enabled", self.m_Enabled)
+    addNotification(2, 0, 200, 0, ("AntiBounce %s"):format(self.m_Enabled and "enabled" or "disabled"))
 
-end
-
-function AntiBounce:vehicleCollision()
-
-
+    if self.m_Enabled then
+        addEventHandler("onClientPreRender", root, self.fn_PreRender)
+    else
+        removeEventHandler("onClientPreRender", root, self.fn_PreRender)
+    end
 end
 
 function AntiBounce:preRender()
@@ -47,7 +52,7 @@ function AntiBounce:preRender()
 
     local normalX, normalY, normalZ = AntiBounce.isVehicleOnGround(vehicle)
     if normalX and not self.m_Colliding then
-        AntiBounce.preventBounce(vehicle, normalX, normalY, normalZ)
+        self:preventBounce(vehicle, normalX, normalY, normalZ)
         self.m_Colliding = true
     elseif not normalX then
         self.m_Colliding = false
@@ -59,8 +64,29 @@ function AntiBounce:preRender()
     end
 end
 
-function AntiBounce.preventBounce(vehicle, normalX, normalY, normalZ)
+function AntiBounce:preventBounce(vehicle, normalX, normalY, normalZ)
+    local matrix = getElementMatrix(vehicle)
+    local positionRight = getMatrixRight(matrix)
+    local positionLeft = getMatrixLeft(matrix)
+    local positionDown = getMatrixDown(matrix)
+    local normVec = {-normalX, -normalY, -normalZ }
 
+    local vx, vy, vz = getElementVelocity(vehicle)
+    local velVec = {vx, vy, vz}
+    normalizeVector(velVec)
+
+    local angleNormVel = getAngle(normVec, velVec)
+
+    local angleRight = getAngle(positionRight, normVec)
+    local angleLeft = getAngle(positionLeft, normVec)
+    local angleDown = getAngle(positionDown, normVec)
+
+    local tx, ty, tz = math.abs(self.m_TurnDiffX), math.abs(self.m_TurnDiffY), math.abs(self.m_TurnDiffZ)
+    if(angleRight > 75 and angleLeft > 75 and angleDown < 75 and (ty > 0.03 or tz > 0.03) and angleNormVel < 75)then
+        self.m_BouncePrevented = self.m_BouncePrevented + 1
+        self.m_PreventBounceUpdateDelay = true
+        vehicle:setTurnVelocity(0, 0, 0)
+    end
 end
 
 function AntiBounce.isVehicleOnGround(vehicle)
@@ -152,4 +178,44 @@ function AntiBounce.getVehicleTurnVelocity(vehicle)
     local ty = turnX * m[2][1] + turnY * m[2][2] + turnZ * m[2][3]
     local tz = turnX * m[3][1] + turnY * m[3][2] + turnZ * m[3][3]
     return tx, ty, tz
+end
+
+function getMatrixRight(m)
+    return {m[1][1], m[1][2], m[1][3]}
+end
+
+function getMatrixLeft(m)
+    return {-m[1][1], -m[1][2], -m[1][3]}
+end
+
+function getMatrixDown(m)
+    return {-m[3][1], -m[3][2], -m[3][3]}
+end
+
+function getVectorDotProduct(vec, vec2)
+    return vec[1]*vec2[1] + vec[2]*vec2[2] + vec[3]*vec2[3]
+end
+
+function getVectorLength(vec)
+    return math.sqrt(vec[1]*vec[1] + vec[2]*vec[2] + vec[3]*vec[3])
+end
+
+function normalizeVector(vec)
+    local length = getVectorLength(vec)
+    vec[1] = vec[1] / length
+    vec[2] = vec[2] / length
+    vec[3] = vec[3] / length
+end
+
+function getPositionFromElementOffset(element,offX,offY,offZ)
+    local m = getElementMatrix ( element )  -- Get the matrix
+    local x = offX * m[1][1] + offY * m[2][1] + offZ * m[3][1] + m[4][1]  -- Apply transform
+    local y = offX * m[1][2] + offY * m[2][2] + offZ * m[3][2] + m[4][2]
+    local z = offX * m[1][3] + offY * m[2][3] + offZ * m[3][3] + m[4][3]
+    return x, y, z                               -- Return the transformed point
+end
+
+
+function getAngle(vec, vec2)
+    return math.deg(math.acos(getVectorDotProduct(vec, vec2) / (getVectorLength(vec) * getVectorLength(vec2))))
 end

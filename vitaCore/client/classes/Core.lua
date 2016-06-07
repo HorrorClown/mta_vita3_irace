@@ -36,6 +36,10 @@ function Core:ready()
     end
 end
 
+function Core:afterLogin()
+    AntiBounce:new()
+end
+
 function Core:get(...)
     return self.m_Config:get(...)
 end
