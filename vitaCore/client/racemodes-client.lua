@@ -376,7 +376,7 @@ function onClientColShapeHit( element, matchingDimension )
 					--setTimer(function(veh)
 					--	addVehicleUpgrade(veh, 1010)
 					--end, 100,1, veh)
-					--triggerServerEvent('syncVehicleNitro', getLocalPlayer())
+					triggerServerEvent('syncVehicleNitro', getLocalPlayer())
 				elseif data.type == "repair" then
 					fixVehicle(veh)
 					playSoundFrontEnd(46)	
@@ -403,7 +403,7 @@ function changeVehicle(veh, model)
 			alignVehicleWithUp(veh)
 			setElementModel(veh, model)
 			changeVehicleClient(veh)
-			if getTickCount() - lastNitroTick < 100 then
+			if getTickCount() - lastNitroTick < 200 then
 				addVehicleUpgrade(veh, 1010)
 			end
 			playSoundFrontEnd(46)

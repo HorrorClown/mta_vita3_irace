@@ -494,19 +494,21 @@ function getRandomMap(gamemodeID)
 end
 
 function syncVehicleNitro()
-	local veh = getPedOccupiedVehicle(source)
+	local veh = getPedOccupiedVehicle(client)
 	if not veh then return false end
-	for i,v in pairs(getGamemodePlayers(getPlayerGameMode(source))) do
+	veh:addUpgrade(1010)
+
+	--[[for i,v in pairs(getGamemodePlayers(getPlayerGameMode(source))) do
 		if v ~= source then
 			callClientFunction(v, "addVehicleUpgrade", veh, 1010)
 		end
-	end
+	end]]
 end	
 addEvent("syncVehicleNitro", true)
 addEventHandler("syncVehicleNitro", getRootElement(), syncVehicleNitro)
 
 function syncVehicleModel(model)
-	local veh = getPedOccupiedVehicle(source)
+	local veh = getPedOccupiedVehicle(client)
 	if not veh then return false end
 	setElementModel(veh, model)
 end	
