@@ -31,9 +31,9 @@ function waveRefreshVitaMembers()
 		local userLevel = getElementData(v, "Level")
 		local userName = getElementData(v, "PlayerName")
 		if tostring(userName) ~= "false" and tostring(userLevel) ~= "false" then
-			if (userLevel == "Admin") then
+			if (userLevel == "Leader") then
 				waveVitaMembers.admins[#waveVitaMembers.admins+1] = userName
-			elseif (userLevel == "GlobalModerator") then
+			elseif (userLevel == "CoLeader") then
 				waveVitaMembers.gmods[#waveVitaMembers.gmods+1] = userName
 			elseif (userLevel == "Moderator") then
 				waveVitaMembers.mods[#waveVitaMembers.mods+1] = userName
@@ -207,14 +207,14 @@ function waveDrawHelp()
 		dxDrawShadowedText("/fixMap [mapname] - Marks the map to be fixed.",screenWidth/2-392,screenHeight/2+125, screenWidth, screenHeight, tocolor(255,255,255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)
 		dxDrawShadowedText("/banPlayer | /pban [player] [minutes] - Bans a player for a certain time.",screenWidth/2-392,screenHeight/2+140, screenWidth, screenHeight, tocolor(255,255,255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)
 	elseif guiComboBoxGetSelected ( helpBox ) == 2 then
-		dxDrawShadowedText("Global Moderator Commands",screenWidth/2-392,screenHeight/2-240, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
+		dxDrawShadowedText("Co-Leader Commands",screenWidth/2-392,screenHeight/2-240, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
 		dxDrawShadowedText("/setdonator [player] [0/1] [date] - Give a player donator rights or revoke them.",screenWidth/2-392,screenHeight/2-220, screenWidth, screenHeight, tocolor(255,255,255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)
 		dxDrawShadowedText("/setmoney [player] [money] - Give somebody more or less money than he had before.",screenWidth/2-392,screenHeight/2-205, screenWidth, screenHeight, tocolor(255,255,255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)
 		dxDrawShadowedText("/setrights [player] [User/Member/...] - Welcome a player to Vita, or to simply tell him to GTFO.",screenWidth/2-392,screenHeight/2-190, screenWidth, screenHeight, tocolor(255,255,255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)
 		dxDrawShadowedText("/setmemeacc [player] [0/1] - Allow a player to use memes or not.",screenWidth/2-392,screenHeight/2-175, screenWidth, screenHeight, tocolor(255,255,255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)
 		dxDrawShadowedText("/addachievement [player] [ID] - Manually give a player an achievement.",screenWidth/2-392,screenHeight/2-160, screenWidth, screenHeight, tocolor(255,255,255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)
 		
-		dxDrawShadowedText("Admin Commands",screenWidth/2-392,screenHeight/2-140, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
+		dxDrawShadowedText("Leader Commands",screenWidth/2-392,screenHeight/2-140, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
 		dxDrawShadowedText("/setlevel [player] [level] - Change the level of somebody on the server.",screenWidth/2-392,screenHeight/2-120, screenWidth, screenHeight, tocolor(255,255,255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)
 		dxDrawShadowedText("/setpoints [player] [points] - Set a players points to a different ammount.",screenWidth/2-392,screenHeight/2-105, screenWidth, screenHeight, tocolor(255,255,255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)	
 	

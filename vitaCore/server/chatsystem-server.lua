@@ -23,7 +23,7 @@ function onChat(message, messageType)
 	elseif messageType == 2 then
 		if getElementData(source, "Level") == "User" then return cancelEvent() end
 		for id, player in pairs(getGamemodePlayers(getPlayerGameMode(source))) do
-			if getElementData(player, "Level") == "Admin" or getElementData(player, "Level") == "Moderator" or getElementData(player, "Level") == "Member" or getElementData(player, "Level") == "Recruit" or getElementData(player, "Level") == "GlobalModerator" or getElementData(player, "Level") == "SeniorMember" then
+			if getElementData(player, "Level") == "Leader" or getElementData(player, "Level") == "Moderator" or getElementData(player, "Level") == "Member" or getElementData(player, "Level") == "Recruit" or getElementData(player, "Level") == "CoLeader" or getElementData(player, "Level") == "SeniorMember" then
 				cancelEvent()
 				outputChatBox ("(Team) "..getPlayerName(source)..": "..tostring(message), player, 173, 255, 47, true)
 			end
@@ -73,7 +73,7 @@ addCommandHandler( "GTeam",
 			local message = table.concat( { ... }, " " )
 			if #message > 0 then
 				for id, player in pairs(getElementsByType("player")) do
-					if getElementData(player, "Level") == "Admin" or getElementData(player, "Level") == "Moderator" or getElementData(player, "Level") == "Member" or getElementData(player, "Level") == "Recruit" or getElementData(player, "Level") == "GlobalModerator" or getElementData(player, "Level") == "SeniorMember" then
+					if getElementData(player, "Level") == "Leader" or getElementData(player, "Level") == "Moderator" or getElementData(player, "Level") == "Member" or getElementData(player, "Level") == "Recruit" or getElementData(player, "Level") == "CoLeader" or getElementData(player, "Level") == "SeniorMember" then
 						outputChatBox ("(GTeam) "..getPlayerName(thePlayer)..": "..tostring(message), player, 47, 173, 255, true)
 					end
 				end			

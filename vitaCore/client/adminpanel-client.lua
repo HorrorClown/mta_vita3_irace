@@ -377,7 +377,7 @@ function showAdminPanel()
 			dxSetEnabled(guiAdminDX["maps_fix"], true)
 			dxSetEnabled(guiAdminDX["bans_ip"], true)
 			dxSetEnabled(guiAdminDX["bans_serial"], true)
-		elseif getElementData(getLocalPlayer(), "Level") == "GlobalModerator" then
+		elseif getElementData(getLocalPlayer(), "Level") == "CoLeader" then
 			dxSetEnabled(guiAdminDX["player_blow"], true)
 			dxSetEnabled(guiAdminDX["player_mute"], true)
 			dxSetEnabled(guiAdminDX["player_kick"], true)
@@ -395,7 +395,7 @@ function showAdminPanel()
 			dxSetEnabled(guiAdminDX["bans_ip"], true)
 			dxSetEnabled(guiAdminDX["bans_serial"], true)	
 			dxSetEnabled(guiAdminDX["bans_delete"], true)			
-		elseif getElementData(getLocalPlayer(), "Level") == "Admin" then
+		elseif getElementData(getLocalPlayer(), "Level") == "Leader" then
 			dxSetEnabled(guiAdminDX["player_blow"], true)
 			dxSetEnabled(guiAdminDX["player_mute"], true)
 			dxSetEnabled(guiAdminDX["player_kick"], true)

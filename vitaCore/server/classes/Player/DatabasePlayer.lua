@@ -25,15 +25,15 @@ function DatabasePlayer:load()
         setElementData(self, "isDonator", false)
     end
 
-    if userData.level == "Admin" then
-        setPlayerTeam(self, adminTeam)
+    if userData.level == "Leader" then
+        setPlayerTeam(self, leaderTeam)
         --aclGroupAddObject(aclGetGroup("Admin"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
 
         for _, ePlayer in pairs(getElementsByType"player") do
             addPlayerArchivement(ePlayer, 38)
         end
-    elseif userData.level == "GlobalModerator" then
-        setPlayerTeam(self, globalTeam)
+    elseif userData.level == "CoLeader" then
+        setPlayerTeam(self, coleaderTeam)
         --aclGroupAddObject(aclGetGroup("SuperModerator"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
     elseif userData.level == "Moderator" then
         setPlayerTeam(self, moderatorTeam)

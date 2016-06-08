@@ -93,8 +93,8 @@ function isLevelVitaTeam(teamname)
 	[2] = "Member",
 	[3] = "SeniorMember",
 	[4] = "Moderator",
-	[5] = "GlobalModerator",
-	[6] = "Admin"
+	[5] = "CoLeader",
+	[6] = "Leader"
 	}
 	for i,v in ipairs(teamNames) do
 		if v == teamname then return true end
@@ -250,9 +250,9 @@ function drawScoreboard()
 			table.insert(scdatas.players.smember, { name = scdatas.name, country = scdatas.country, points = scdatas.points, rank = scdatas.rank, money = scdatas.money, ping = scdatas.ping, state = scdatas.state, fps = scdatas.fps, level = scdatas.level, accountname = scdatas.accountname, player = scdatas.player } )
 		elseif teamrank == "Moderator" then
 			table.insert(scdatas.players.moderator, { name = scdatas.name, country = scdatas.country, points = scdatas.points, rank = scdatas.rank, money = scdatas.money, ping = scdatas.ping, state = scdatas.state, fps = scdatas.fps, level = scdatas.level, accountname = scdatas.accountname, player = scdatas.player } )
-		elseif teamrank == "GlobalModerator" then
+		elseif teamrank == "CoLeader" then
 			table.insert(scdatas.players.gmoderator, { name = scdatas.name, country = scdatas.country, points = scdatas.points, rank = scdatas.rank, money = scdatas.money, ping = scdatas.ping, state = scdatas.state, fps = scdatas.fps, level = scdatas.level, accountname = scdatas.accountname, player = scdatas.player } )
-		elseif teamrank == "Admin" then
+		elseif teamrank == "Leader" then
 			table.insert(scdatas.players.admin, { name = scdatas.name, country = scdatas.country, points = scdatas.points, rank = scdatas.rank, money = scdatas.money, ping = scdatas.ping, state = scdatas.state, fps = scdatas.fps, level = scdatas.level, accountname = scdatas.accountname, player = scdatas.player } )
 		elseif donatorstate == true and isLevelVitaTeam(teamrank) == false then
 			table.insert(scdatas.players.donators, { name = scdatas.name, country = scdatas.country, points = scdatas.points, rank = scdatas.rank, money = scdatas.money, ping = scdatas.ping, state = scdatas.state, fps = scdatas.fps, level = scdatas.level, accountname = scdatas.accountname, player = scdatas.player } )
@@ -288,7 +288,7 @@ function drawScoreboard()
 	
 	--SeniorMember
 	for id, team in ipairs(scdatas.players.smember) do
-		drawUserstats(team, 0, 187, 255, "Senior Member")
+		drawUserstats(team, 0, 187, 255, "Senior-Member")
 		scdatas.rowid = scdatas.rowid + 1
 	end
 	
@@ -298,15 +298,15 @@ function drawScoreboard()
 		scdatas.rowid = scdatas.rowid + 1
 	end
 	
-	--GlobalModerator	
+	--CoLeader
 	for id, team in ipairs(scdatas.players.gmoderator) do
-		drawUserstats(team, 0, 243, 113, "Global Moderator")
+		drawUserstats(team, 0, 243, 113, "Co-Leader")
 		scdatas.rowid = scdatas.rowid + 1
 	end	
 	
-	--Admin
+	--Leader
 	for id, team in ipairs(scdatas.players.admin) do
-		drawUserstats(team, 130, 134, 134, "Admin")
+		drawUserstats(team, 130, 134, 134, "Leader")
 		scdatas.rowid = scdatas.rowid + 1
 	end
 	

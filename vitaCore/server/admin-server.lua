@@ -266,7 +266,7 @@ addCommandHandler ( "mutePlayer", mute )
 addCommandHandler ( "pmute", mute )
 
 function clientDeleteBan(ban)
-	if getElementData(source, "Level") ~= "Admin" then return false end
+	if getElementData(source, "Level") ~= "Leader" then return false end
 	for i,v in ipairs(getBans ()) do
 		if getBanUsername ( v ) == ban.username or getBanSerial( v ) == ban.serial or getBanIP ( v ) == ban.ip then
 			triggerClientEvent ( source, "addNotification", getRootElement(), 3, 18, 88, 97, "Ban successfully deleted." )

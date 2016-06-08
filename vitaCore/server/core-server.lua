@@ -4,43 +4,6 @@ File: core-server.lua
 Author(s):	Sebihunter
 ]]--
 
-gValidatedSerials = {
-	"746BA7FF343C9A6567670CC40BA89483", -- Corby
-	"DD83E2D619CBEE22F2F0C1FCFFB5D0B2", -- Tazmaniiac
-	"3F08D8E47AC51135763CD7739094A2E3", -- Sebihunter
-	"5989A24A123C6E0B9BD0113F1DFD9142", -- ExXoTicC
-	"CE752C7D8E1017B4B24C0F13AAD015F3", -- FaZe
-	"0B5BDA8143D94FA0781B3B02132E30E3", -- SickStar
-	"784360805E54DE9590E7967DFC32BB42", -- Jones
-	"3C7486567C17D6F3A9FF5A059A95C971", -- pr0mise
-	"31E64C06FFE925AF76890C5016D18E42", -- fudel
-	"E6BAFEAAA8911700C6D35ABD1B6BA492", -- DeSmith
-	"5EE4C64794B9C57A33777CEB3F48A152", -- Snicker
-	"7588F81135E5AFA7E05E0A4B8977AFB3", -- Shurelya (Anzy)
-	"590F6E881955B068AB44D28A598F5BB4", -- xDemo
-	"8D6464CF45CDE784C510AD1BE90D0BB3", -- Schranzeule
-	"9F768B86DFEA317CCDE681813CBACE43", -- NiKe
-	"4CAEE9DC04C6C728D0281C14A884B8A1", -- Jogy
-	"385D0EB9D4445885162CA7AB3B4B6843", -- #Dome
-	"0E3F7623A19D2D621EBBA02608251C94", -- Hypnotic
-	"B9CDD9247D3ED93D784E820FE20CB2F4", -- d0pe
-	"A099F9A884C7335DA3CE8693E943DD03", -- Tobes
-	"00495461C761DA10AAD9CD4433B14854",-- Olymp
-	"9435E70DFBCFD6BA67207F64EA0ADB02",-- Agendc
-	"795D8E105A00BD18E0A70B71E56E1052", -- Radion
-	"F862655CB83EA36DD6739EBC4397A6E3", -- ChRiiz
-	"A5C76A9EEDF9987CDD15AD025CE5CC03", -- LioNKinG
-	"D06C8B4A9EE15B5101B83018984412A1", -- Adlerauge
-	"D76402F897B2AE29FE9EAD8E335EFE94", -- Vaali
-	"7C598491345A2F8123D637C80D877843", -- [D]ubStep
-	"86CD3DAE29F29939B0672B3C782583A1", -- Gerard
-	"493DB592AD0E6F13DABD3249D3B2C442", -- Leyo
-	"01806A6F41213EB886AB76DE5B99B493", -- Dragonfire/Nitaco
-	"65492A132DD29A4337E90568556E87F3", -- Dubz
-	"794AE8EE11CF2477FA25D3C0B9090F44", -- revliS
-	"7633AE9978AF762BC410A9597E9F20A2" -- Cookie
-}
-
 gPlayerBlips = {}
 
 --[[function checkIfValidated (playerNick, playerIP, playerUsername, playerSerial, playerVersionNumber)
@@ -63,13 +26,17 @@ gRaceModes = {
 	--[6] = { name = "Monopoly", img="files/selection/vitaNone.png", imghover = "files/selection/vitaNonehover.png", res = "vitaMapMO", joinfunc = "joinMO", quitfunc = "quitMO", loadfunc = "loadMapMO", element="elementMO", killfunc="killMOPlayer", maxplayers = 32, prefix="MO", maps = {} }
 }
 
-recruitTeam = createTeam ( "Recruit", 0, 51, 221 )
-memberTeam = createTeam ( "Member", 0, 119, 255 )
-seniorTeam = createTeam ( "SeniorMember", 0, 187, 255)
-moderatorTeam = createTeam ( "Moderator", 0, 189, 57 )
-globalTeam = createTeam ( "GlobalModerator", 0, 243, 113 )
-donatorTeam = createTeam ( "Donator", 194,103,255 )
-adminTeam = createTeam ( "Admin", 130, 134, 134 )
+donatorTeam = createTeam("Donator", 194, 103, 255)
+
+recruitTeam = createTeam("Recruit", 0, 51, 221)
+memberTeam = createTeam("Member", 0, 119, 255)
+seniorTeam = createTeam("Senior-Member", 0, 187, 255)
+moderatorTeam = createTeam("Moderator", 0, 189, 57)
+coleaderTeam = createTeam("CoLeader", 0, 243, 113)
+leaderTeam = createTeam("Leader", 130, 134, 134)
+
+--adminTeam = createTeam ( "Admin", 130, 134, 134 )
+--globalTeam = createTeam ( "GlobalModerator", 0, 243, 113 )
 
 RandomMes = {
 	[1] = "Read and obey the rules (Show the help with 'F1')!",
