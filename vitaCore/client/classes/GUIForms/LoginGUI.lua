@@ -197,6 +197,7 @@ function LoginGUI.receiveAvatar(avatar, error)
 end
 
 function LoginGUI.downloadAvatar(ID, fileHash)
+    if not fileHash then return end
     if core:get("Login", "avatar", "") == fileHash then return true end
 
     local directory = fileHash:sub(1, 2)
@@ -234,11 +235,11 @@ addEventHandler("loginsuccess", root,
         delete(DownloadGUI:getSingleton())
         delete(LoginBackground:getSingleton())
 
+        core:afterLogin()
+
         showChat(true)
         bindKey("m", "down", toggleVitaMusic)
 
         LoginGUI.downloadAvatar(avatarID, avatarFileHash)
-
-        core:afterLogin()
     end
 )
