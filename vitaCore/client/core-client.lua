@@ -49,7 +49,7 @@ function onClientResourceStart()
 	racemodesClientStart()
 	showChat(false)
 	fadeCamera(true)
-	--showCursor(false)
+	showCursor(false)
 	setCameraMatrix(1468.8785400391, -919.25317382813, 100.153465271, 1468.388671875, -918.42474365234, 99.881813049316)
 	showPlayerHudComponent("all", false)
 	showPlayerHudComponent("crosshair", true)
@@ -521,8 +521,9 @@ function vitaBackgroundToggle(toggle)
 	if toggle == true and isVitaBackground == false then
 		isVitaBackground = true
 		vitaBackgroundReach = 1
-		addEventHandler ( "onClientRender", getRootElement(), vitaBackgroundRender, true, "high+2")
+		addEventHandler("onClientRender", getRootElement(), vitaBackgroundRender, true, "high+2")
 	elseif toggle == false then
+		removeEventHandler("onClientRender", getRootElement(), vitaBackgroundRender)
 		isVitaBackground = false
 		vitaBackgroundReach = 0
 	end

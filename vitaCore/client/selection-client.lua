@@ -56,8 +56,8 @@ function startSelection(modes)
 		end, false )
 	end
 	
-	for i,v in pairs(gSelectionGUI) do
-		--guiSetVisible(gSelectionGUI[i].img, false)
+	for i in pairs(gSelectionGUI) do
+		guiSetVisible(gSelectionGUI[i].img, false)
 	end	
 
 	if getElementData(getLocalPlayer(), "language") ~= 1 then
@@ -76,11 +76,11 @@ function showSelection()
 	showCursor(true)
 	setCameraMatrix(1468.8785400391, -919.25317382813, 100.153465271, 1468.388671875, -918.42474365234, 99.881813049316)
 	setTime(12,0)
-	
-	for i,v in pairs(gSelectionGUI) do
-		guiSetVisible(gSelectionGUI[i].img, true)	
+
+	for i in pairs(gSelectionGUI) do
+		guiSetVisible(gSelectionGUI[i].img, true)
 	end
-	
+
 	vitaBackgroundToggle(true)
 	addEventHandler("onClientRender", getRootElement(), renderSelection)
 end

@@ -48,6 +48,7 @@ function GUIManager:onClick(btn, st)
 end
 
 function GUIManager:performClick()
+    if not self.m_Enabled then return end
     for _, aFunc in ipairs(self.clickExecute) do
         aFunc(self)
     end
