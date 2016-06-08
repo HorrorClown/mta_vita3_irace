@@ -700,9 +700,12 @@ function killDDPlayer(player, noSpectate)
 				end
 			end
 			setElementData(gElementDD, "rankingboard", gRankingboardPlayersDD)
-			setElementData(alivePlayers[1], "winningCounter", getElementData(alivePlayers[1], "winningCounter")+1)
 			
-
+			local newWinningCounter = getElementData(alivePlayers[1], "winningCounter")+1
+			setElementData(alivePlayers[1], "winningCounter", newWinningCounter)
+			if newWinningCounter > getElementData(alivePlayers[1], "WinningStreak") then
+				setElementData(alivePlayers[1], "WinningStreak", newWinningCounter)
+			end
 		end
 		
 		local ran_win_mesage = {

@@ -710,11 +710,16 @@ function killDMPlayer(player, noSpectate)
 				end
 			end
 			setElementData(gElementDM, "rankingboard", gRankingboardPlayersDM)
-			setElementData(alivePlayers[1], "winningCounter", getElementData(alivePlayers[1], "winningCounter")+1)
-				
-			if getElementData(alivePlayers[1], "winningCounter") >= 5 then addPlayerArchivement( alivePlayers[1], 12 ) end
-			if getElementData(alivePlayers[1], "winningCounter") >= 7 then addPlayerArchivement( alivePlayers[1], 13 ) end
-			if getElementData(alivePlayers[1], "winningCounter") >= 11 then addPlayerArchivement( alivePlayers[1], 14 ) end
+			
+			local newWinningCounter = getElementData(alivePlayers[1], "winningCounter")+1
+			setElementData(alivePlayers[1], "winningCounter", newWinningCounter)
+			if newWinningCounter > getElementData(alivePlayers[1], "WinningStreak") then
+				setElementData(alivePlayers[1], "WinningStreak", newWinningCounter)
+			end
+			
+			if newWinningCounter >= 5 then addPlayerArchivement(alivePlayers[1], 12) end
+			if newWinningCounter >= 7 then addPlayerArchivement(alivePlayers[1], 13) end
+			if newWinningCounter >= 11 then addPlayerArchivement(alivePlayers[1], 14) end
 		end
 		
 		local ran_win_mesage = {

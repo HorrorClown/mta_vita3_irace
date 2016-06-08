@@ -1012,8 +1012,11 @@ function markerHitRA(hitElement, matchingDimension)
 							end                                                             
 						end
 							
-						setElementData(hitElement, "winningCounter", getElementData(hitElement, "winningCounter")+1)
-							
+						local newWinningCounter = getElementData(alivePlayers[1], "winningCounter")+1
+						setElementData(alivePlayers[1], "winningCounter", newWinningCounter)
+						if newWinningCounter > getElementData(alivePlayers[1], "WinningStreak") then
+							setElementData(alivePlayers[1], "WinningStreak", newWinningCounter)
+						end
 
 					local ran_win_mesage = {
 							[1] = "He won "..tostring(getElementData(hitElement, "RAWon")).." RACE maps",

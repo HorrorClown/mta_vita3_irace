@@ -26,6 +26,7 @@ function AntiBounce:constructor()
 end
 
 function AntiBounce:destructor()
+	removeCommandHandler("ab", self.fn_Toggle)
     removeEventHandler("onClientPreRender", root, self.fn_PreRender)
 end
 

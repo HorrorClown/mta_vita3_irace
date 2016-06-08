@@ -207,7 +207,7 @@ end
 addEvent("loginfailed", true)
 addEventHandler("loginfailed", root,
     function(text)
-        --LoginGUI:getSingleton().m_Button_Submit:setEnabled(true)
+        LoginGUI:getSingleton().m_Button_Submit:setEnabled(true)
         addNotification(1, 200, 50, 50, text)
     end
 )
@@ -215,6 +215,7 @@ addEventHandler("loginfailed", root,
 addEvent("loginsuccess", true)
 addEventHandler("loginsuccess", root,
     function(pwhash, avatarFileHash, avatarID)
+		showCursor(false)
         initSettings()
         addNotification(2, 50, 200, 50, "Successfully logged in")
 
