@@ -31,6 +31,9 @@ function LoginGUI:constructor()
     setTimer(function()
         self.m_MovingAnimation:startAnimation(750, "OutQuad", 0, 255)
     end, 750, 1)
+
+    self.fn_Restore = function(didClearRenderTargets) if didClearRenderTargets then self:updateRenderTarget() end end
+    addEventHandler("onClientRestore", root, self.fn_Restore)
 end
 
 function LoginGUI:destructor()
@@ -43,6 +46,7 @@ function LoginGUI:destructor()
     self.m_MainAnimation:delete()
     self.rt_Login:destroy()
     removeEventHandler("onClientKey", root, self.fn_SubmitEnter)
+    removeEventHandler("onClientRestore", root, self.fn_Restore)
 end
 
 function LoginGUI:initAnimations()

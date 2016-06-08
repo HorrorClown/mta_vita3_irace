@@ -10,9 +10,13 @@ function DownloadGUI:constructor()
 
     self.m_ProgressAnimation = CAnimation:new(self, "m_Progress")
     self.m_AlphaAnimation = CAnimation:new(self, "m_Alpha")
+
+    self.fn_Restore = function(didClearRenderTargets) if didClearRenderTargets then self:updateRenderTarget() end end
+    addEventHandler("onClientRestore", root, self.fn_Restore)
 end
 
 function DownloadGUI:destructor()
+    removeEventHandler("onClientRestore", root, self.fn_Restore)
     self.m_ProgressAnimation:delete()
     self.m_AlphaAnimation:delete()
 end
