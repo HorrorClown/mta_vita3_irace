@@ -50,6 +50,8 @@ end
 
 function GUIEdit:destructor()
     if isTimer(self.updateTimer) then killTimer(self.updateTimer) end
+    guiSetInputEnabled(false)
+    self.clicked = false
     removeEventHandler("onClientClick", root, self.clickFunc)
     removeEventHandler("onClientCharacter", root, self.editFunc)
     removeEventHandler("onClientKey", root, self.keyFunc)

@@ -139,7 +139,7 @@ function initArchivments()
 	addArchivement(26, "Drift King", "Earn 10.000 points and 5.000 Vero.") --DONE
 	addArchivement(27, "Race Veteran", "Earn 50.000 points and 100.000 Vero.") --DONE
 	addArchivement(28, "Famous Racer", "Earn 100.000 points and 15.000 Vero.") --DONE
-	addArchivement(29, "Vita Race Legend", "Earn 25.000 points and 250.000 Vero.") --DONE
+	addArchivement(29, "iRace Legend", "Earn 25.000 points and 250.000 Vero.") --DONE
 	addArchivement(30, "Godlike Racer", "Earn 50.000 points and 500.000 Vero.") --DONE
 	addArchivement(31, "Mother of God", "Earn 100.000 points and 1.000.000 Vero.") --DONE
 	addArchivement(32, "Get a life", "Earn 1.000.000 points and 10.000.000 Vero.") --DONE
@@ -149,13 +149,13 @@ function initArchivments()
 	addArchivement(36, "New identity", "Rename yourself while playing on the server.") --DONE
 	addArchivement(37, "Time to say Goodbye", "Leave the server for the first time.") --DONE
 	addArchivement(38, "And so ends the fun...", "Be online while an admin connects.") --DONE
-	addArchivement(39, "Propaganda", "Do an advert for race.vita-online.eu in the chat.") --DONE
-	addArchivement(40, "Welcome in our team", "You are or have been a Vita Race member.") --DONE	
+	addArchivement(39, "Propaganda", "Do an advert for irace-mta.de in the chat.") --DONE
+	addArchivement(40, "Welcome in our team", "You are or have been a iRace member.") --DONE
 	addArchivement(41, "There we go again...", "Replay any [DM] map after failing.") --DONE	
 	addArchivement(42, "ThirtyTwo", "Play while there are 32 players in your gamemode.") --DONE	
 	addArchivement(43, "It's okay to be gay", "Listen to gay music.") --DONE	
 	addArchivement(44, "A winner and a loser", "Win a PVP fight.") --DONE
-	addArchivement(45, "Ka-Ching!", "Donate something to Vita.") --DONE
+	addArchivement(45, "Ka-Ching!", "Donate something to iRace.") --DONE
 	addArchivement(46, "I haz se money and se powah!", "Buy a map.") --DONE
 	addArchivement(47, "I want it again!", "Buy a map redo.") --DONE	
 	addArchivement(48, "Shooter Pro", "Win 100 SHOOTER maps.") --DONE
@@ -194,7 +194,7 @@ function triggerArchievment2 ( message, messageType )
 	if message == "I really like her mane?" then
 		addPlayerArchivement(source, 2)
 	end
-	if string.find(message, "online.eu") ~= nil and string.find(message, "vita") ~= nil  then
+	if string.find(message, "mta.de") ~= nil and string.find(message, "irace") ~= nil  then
 		addPlayerArchivement(source, 39)
 	end
 end
