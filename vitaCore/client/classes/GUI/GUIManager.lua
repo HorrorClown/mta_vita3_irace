@@ -88,6 +88,12 @@ end
 
 function GUIManager:setEnabled(enabled)
     self.m_Enabled = enabled
+	
+	if self.subElements then
+		for _, subElement in ipairs(self.subElements) do
+			subElement:setEnabled(enabled)
+		end
+	end
 end
 
 function GUIManager:registerWindow(eWindow)

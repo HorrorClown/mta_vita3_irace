@@ -43,7 +43,7 @@ function checkMain()
    end
   end
 end
-setTimer ( checkMain, 100, -1)
+setTimer ( checkMain, 100, 0)
 
 
 function setAutoafk(commandName)
