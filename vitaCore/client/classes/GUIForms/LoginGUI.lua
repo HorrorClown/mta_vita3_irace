@@ -55,6 +55,8 @@ function LoginGUI:initAnimations()
 end
 
 function LoginGUI:createGUI()
+    self.m_Enabled = true
+
     -- Username & Password
     self.m_EditStartX = screenWidth/2-128
     self.m_EditStartY = 175
@@ -68,6 +70,8 @@ function LoginGUI:createGUI()
     self.m_Label_Register = GUILabel:new("#ffffffVisit '#ff7000www.irace-mta.de#ffffff' to register an account", 0, self.HEIGHT - 30, screenWidth, 30, self)
     self.m_Label_Register:setAlign("center", "center")
     self.m_Label_Register:setFont(irFont(25))
+    self.m_Button_Submit:setFont("default-bold")
+    self.m_Button_Submit:setSize(1.3)
 
     self.m_Button_Submit:addClickFunction(
         function()

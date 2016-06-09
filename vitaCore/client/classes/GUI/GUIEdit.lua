@@ -10,7 +10,6 @@ string.len = utf8.len
 GUIEdit = inherit(GUIManager)
 
 function GUIEdit:constructor(sTitle, nDiffX, nDiffY, nWidth, nHeight, bNumeric, bMasked, parent)
-    self.m_Enabled = true
     self.title = sTitle
     self.text = ""
     self.caretPos = 0
@@ -18,12 +17,14 @@ function GUIEdit:constructor(sTitle, nDiffX, nDiffY, nWidth, nHeight, bNumeric, 
     self.diffY = nDiffY
     self.w = nWidth
     self.h = nHeight
-    self.parent = parent or false
+    self.parent = parent
+    self.m_Enabled = self.parent.m_Enabled
     self.clickExecute = {}
     self.numeric = bNumeric
     self.masked = bMasked
     self.alpha = 255
     self.color = tocolor()
+    if self.parent.subElements then table.insert(self.parent.subElements, self) end
 
     --local pX, pY = self.parent:getPosition()
     --self.x = pX + self.diffX

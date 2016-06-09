@@ -31,6 +31,7 @@
 
     <script src="server/classes/Core.lua" type="server" />
     <script src="server/classes/DatabaseMap.lua" type="server" />
+    <script src="server/classes/Migration.lua" type="server"/>
     <script src="server/classes/Provider.lua" type="server"/>
 
     <!-- Player -->
@@ -41,7 +42,7 @@
 
     <script src="server/Main.lua" type="server" />
 
-    <!-- =================================================================-->
+    <!-- ================================================================= -->
 
 	<script src="server/utils-server.lua" type="server" />
 	<script src="server/log-server.lua" type="server" />
@@ -104,17 +105,21 @@
     <script src = "client/constants/Main.lua" type = "client" cache = "false"/>
 
     <!-- GUI System -->
-    <script src="client/classes/GUI/Animation.lua" type="client" cache="false"/>
     <script src="client/classes/GUI/GUIManager.lua" type="client" cache="false"/>
+    <script src="client/classes/GUI/GUIWindow.lua" type="client" cache="false"/>
+    <script src="client/classes/GUI/GUIArea.lua" type="client" cache="false"/>
+    <script src="client/classes/GUI/Animation.lua" type="client" cache="false"/>
     <script src="client/classes/GUI/GUIEdit.lua" type="client" cache="false"/>
     <script src="client/classes/GUI/GUILabel.lua" type="client" cache="false"/>
     <script src="client/classes/GUI/GUIButton.lua" type="client" cache="false"/>
+    <script src="client/classes/GUI/GUICheckbox.lua" type="client" cache="false"/>
     <script src="client/classes/GUI/GUIFont.lua" type="client" cache="false"/>
 
     <!-- GUI Forms -->
     <script src="client/classes/GUIForms/LoginBackground.lua" type="client" cache="false"/>
     <script src="client/classes/GUIForms/DownloadGUI.lua" type="client" cache="false"/>
     <script src="client/classes/GUIForms/LoginGUI.lua" type="client" cache="false"/>
+    <script src="client/classes/GUIForms/MigratorGUI.lua" type="client" cache="false"/>
 
 	<script src="client/client_anim.lua" type="client" />		
 	<script src="client/textlib.lua" type="client" />	

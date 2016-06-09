@@ -14,17 +14,6 @@ function GUIManager:destructor()
 
 end
 
-function GUIManager:show()
-    addEventHandler("onClientRender", root, self.onRenderFunc)
-    if self.onCloseButtonClickFunc then addEventHandler("onClientClick", root, self.onCloseButtonClickFunc) end
-    if self.subElements then
-        for _, subElement in ipairs(self.subElements) do
-            subElement:addClickHandler()
-        end
-    end
-    self.isVisible = true
-end
-
 function GUIManager:hide()
     removeEventHandler("onClientRender", root, self.onRenderFunc)
     removeEventHandler("onClientClick", root, self.onCloseButtonClickFunc)

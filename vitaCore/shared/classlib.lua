@@ -316,7 +316,7 @@ oop.initClasses = function()
     if SERVER then
         oop.prepareClass("ACL")
         oop.prepareClass("ACLGroup")
-        oop.prepareClass("Account")
+        --oop.prepareClass("Account")
         oop.prepareClass("Ban")
         oop.prepareClass("Connection")
         oop.prepareClass("QueryHandle")

@@ -90,7 +90,7 @@ function DatabasePlayer:load()
     setElementData(self, "shooterkills", tonumber(userData.shooterkills))
     setElementData(self, "ddkills", tonumber(userData.ddkills))
     setElementData(self, "betCounter", tonumber(userData.betcounter))
-    setElementData(self, "playedTimeCounter", tonumber(userData.playertimecounter))
+    setElementData(self, "jointimes", tonumber(userData.jointimes) or 0)
     setElementData(self, "TimeOnServer", tonumber(userData.timeonserver) or 0)
     setElementData(self, "Backlights", tonumber(userData.backlights))
     setElementData(self, "JoinTime", getTimestamp())
@@ -174,9 +174,18 @@ function DatabasePlayer:save()
             isDonator = 1
         end
 
-        sql:queryExec("UPDATE ??_player SET level = ?, skin = ?, points = ?, rank = ?, money = ?, wonmaps = ?, playedmaps = ?, ddmaps = ?, dmmaps = ?, shmaps = ?, ramaps = ?, ddwon = ?, dmwon = ?, shwon = ?, rawon = ?, betcounter = ?, playedtimecounter = ?, vehcolor = ?, lightcolor = ?, timeonserver = ?, toptimes = ?, toptimesra = ?, km = ?, winningstreak = ?, memeActivated = ?, ddWinrate = ?, dmWinrate = ?, shWinrate = ?, raWinrate = ?, isDonator = ?, usedHorn = ?, wheels = ?, shooterkills = ?, ddkills = ?, donatordate = ?, backlights = ?, archivements = ? WHERE ID = ?", sql:getPrefix(),
-            self:getData("Level"), self:getData("Skin"), self:getData("Points"), self:getData("Rank"), self:getData("Money"), self:getData("WonMaps"), self:getData("PlayedMaps"), self:getData("DDMaps"), self:getData("DMMaps"), self:getData("SHMaps"), self:getData("RAMaps"), self:getData("DDWon"), self:getData("DMWon"), self:getData("SHWon"), self:getData("RAWon"), self:getData("betCounter"), self:getData("playedTimeCounter"), mysqlColor, mysqlLightcolor, self:getData("TimeOnServer"), self:getData("TopTimes"), self:getData("TopTimesRA"), self:getData("KM"), self:getData("WinningStreak"), self:getData("memeActivated"), math.round(self:getData("DDWon")/self:getData("DDMaps")*100,2), math.round(self:getData("DMWon")/self:getData("DMMaps")*100,2), math.round(self:getData("SHWon")/self:getData("SHMaps")*100,2), math.round(self:getData("RAWon")/self:getData("RAMaps")*100,2), isDonator, self:getData("usedHorn"), self:getData("Wheels"), self:getData("shooterkills"),	self:getData("ddkills"), self:getData("donatordate"), self:getData("Backlights"), archivements_save, self.m_ID)
+        sql:queryExec("UPDATE ??_player SET level = ?, skin = ?, points = ?, rank = ?, money = ?, wonmaps = ?, playedmaps = ?, ddmaps = ?, dmmaps = ?, shmaps = ?, ramaps = ?, ddwon = ?, dmwon = ?, shwon = ?, rawon = ?, betcounter = ?, jointimes = ?, vehcolor = ?, lightcolor = ?, timeonserver = ?, toptimes = ?, toptimesra = ?, km = ?, winningstreak = ?, memeActivated = ?, ddWinrate = ?, dmWinrate = ?, shWinrate = ?, raWinrate = ?, isDonator = ?, usedHorn = ?, wheels = ?, shooterkills = ?, ddkills = ?, donatordate = ?, backlights = ?, archivements = ? WHERE ID = ?", sql:getPrefix(),
+            self:getData("Level"), self:getData("Skin"), self:getData("Points"), self:getData("Rank"), self:getData("Money"), self:getData("WonMaps"), self:getData("PlayedMaps"), self:getData("DDMaps"), self:getData("DMMaps"), self:getData("SHMaps"), self:getData("RAMaps"), self:getData("DDWon"), self:getData("DMWon"), self:getData("SHWon"), self:getData("RAWon"), self:getData("betCounter"), self:getData("jointimes"), mysqlColor, mysqlLightcolor, self:getData("TimeOnServer"), self:getData("TopTimes"), self:getData("TopTimesRA"), self:getData("KM"), self:getData("WinningStreak"), self:getData("memeActivated"), math.round(self:getData("DDWon")/self:getData("DDMaps")*100,2), math.round(self:getData("DMWon")/self:getData("DMMaps")*100,2), math.round(self:getData("SHWon")/self:getData("SHMaps")*100,2), math.round(self:getData("RAWon")/self:getData("RAMaps")*100,2), isDonator, self:getData("usedHorn"), self:getData("Wheels"), self:getData("shooterkills"),	self:getData("ddkills"), self:getData("donatordate"), self:getData("Backlights"), archivements_save, self.m_ID)
     end
+end
+
+function DatabasePlayer:getMigrationState()
+    if not self.m_Migrated then
+        local result = sql:queryFetchSingle("SELECT Migrated FROM ??_account WHERE ID = ?", sql:getPrefix(), self.m_ID)
+        self.m_Migrated = result.Migrated
+    end
+
+    return self.m_Migrated
 end
 
 -- Short getters TODO

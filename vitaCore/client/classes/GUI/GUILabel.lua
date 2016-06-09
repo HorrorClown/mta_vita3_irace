@@ -14,11 +14,13 @@ function GUILabel:constructor(sText, nDiffX, nDiffY, nWidth, nHeight, parent)
     self.w = nWidth
     self.h = nHeight
     self.parent = parent
+    self.m_Enabled = self.parent.m_Enabled
     self.m_AlignX = "left"
     self.m_AlignY = "top"
     self.m_Font = "default"
     self.m_Size = 1
     self.clickExecute = {}
+    if self.parent.subElements then table.insert(self.parent.subElements, self) end
 
     self.hoverFunc = bind(self.onHover, self)
     --addEventHandler("onClientCursorMove", root, self.hoverFunc)
@@ -71,5 +73,6 @@ function GUILabel:setText(text)
 end
 
 function GUILabel:render(offset)
+    if not self.m_Enabled then return end
     dxDrawText(self.text, self.diffX, self.diffY + offset, self.diffX + self.w, self.diffY + self.h + offset, tocolor(255, 255, 255), self.m_Size, self.m_Font, self.m_AlignX, self.m_AlignY, false, false, false, true)
 end

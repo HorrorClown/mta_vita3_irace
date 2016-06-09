@@ -8,7 +8,6 @@ GUIButton = inherit(GUIManager)
 
 --Todo: Parameter >color< zum table machen mit dem Aufbau {["normal"] = {r,g,b,a}, ["hover"] = {r,g,b,a}, ["disabled"] = {r,g,b,a}}
 function GUIButton:constructor(sTitle, nDiffX, nDiffY, nWidth, nHeight, color, parent)
-    self.m_Enabled = true
     self.title = sTitle
     self.diffX = nDiffX
     self.diffY = nDiffY
@@ -17,7 +16,11 @@ function GUIButton:constructor(sTitle, nDiffX, nDiffY, nWidth, nHeight, color, p
     self.color = color
     self.drawColor = tocolor(unpack(self.color["normal"]))
     self.parent = parent
+    self.m_Enabled = self.parent.m_Enabled
     self.clickExecute = {}
+    self.m_Font = "default"
+    self.m_Size = 1
+    if self.parent.subElements then table.insert(self.parent.subElements, self) end
 
     self.hoverFunc = bind(self.onHover, self)
     addEventHandler("onClientCursorMove", root, self.hoverFunc)
@@ -47,8 +50,15 @@ function GUIButton:onHover()
     end
 end
 
+function GUIButton:setFont(font)
+    self.m_Font = font
+end
+
+function GUIButton:setSize(size)
+    self.m_Size = size
+end
 
 function GUIButton:render(offset)
     dxDrawRectangle(self.diffX, self.diffY + offset, self.w, self.h, self.drawColor)
-    dxDrawText(self.title, self.diffX, self.diffY + offset, self.diffX + self.w, self.diffY + self.h + offset, tocolor(255, 255, 255), 1.3, "default-bold", "center", "center")
+    dxDrawText(self.title, self.diffX, self.diffY + offset, self.diffX + self.w, self.diffY + self.h + offset, tocolor(255, 255, 255), self.m_Size, self.m_Font, "center", "center")
 end
