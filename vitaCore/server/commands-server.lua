@@ -317,7 +317,8 @@ function buyRedoMap(player, commandName)
 		end
 	end
 end
-addCommandHandler ( "buyredo", buyRedoMap )
+addCommandHandler("buyredo", buyRedoMap)
+addCommandHandler("vr", buyRedoMap)
 
 function buySetMap(player, commandName, ...)
 	local mapname = table.concat(arg, " ")

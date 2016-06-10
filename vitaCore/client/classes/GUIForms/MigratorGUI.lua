@@ -126,15 +126,3 @@ addEventHandler("migrationLoginSuccess", localPlayer,
         mgi.m_Window:updateRenderTarget()
     end
 )
-
-
-addCommandHandler("migrate",
-    function()
-        MigratorGUI:new()
-    end
-)
--------DEV
-addEventHandler("onClientResourceStart", resourceRoot, function()
-    --MigratorGUI:new()
-    --showCursor(true)
-end)

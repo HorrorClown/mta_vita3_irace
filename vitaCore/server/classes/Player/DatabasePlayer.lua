@@ -90,7 +90,7 @@ function DatabasePlayer:load()
     setElementData(self, "shooterkills", tonumber(userData.shooterkills))
     setElementData(self, "ddkills", tonumber(userData.ddkills))
     setElementData(self, "betCounter", tonumber(userData.betcounter))
-    setElementData(self, "jointimes", tonumber(userData.jointimes) or 0)
+    setElementData(self, "jointimes", (tonumber(userData.jointimes) or 0) + 1)
     setElementData(self, "TimeOnServer", tonumber(userData.timeonserver) or 0)
     setElementData(self, "Backlights", tonumber(userData.backlights))
     setElementData(self, "JoinTime", getTimestamp())
@@ -107,6 +107,7 @@ function DatabasePlayer:load()
     setElementData(self, "isLoggedIn", true)
     setElementData(self, "country", getPlayerCountry(self))
     setElementData(self, "usedHorn", tonumber(userData.usedHorn))
+    self.m_Level = userData.level
 
     if userData.wheels and tonumber(userData.wheels) ~= 0 then
         setElementData(self, "Wheels", tonumber(userData.wheels))

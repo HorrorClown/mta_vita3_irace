@@ -4,7 +4,8 @@ File: admin-server.lua
 Author(s):	Sebihunter
 ]]--
 
-function deletetime ( player, commandname, Value )
+function deletetime(player, commandname, Value)
+	if not player:hasRights("Moderator") then return end
 	--Todo: Anpassen an DatabaseMap Klasse
 	outputChatBox ( "#FF0000:ERROR: #FFFFFFThis function is not ready now.", player, 255, 0, 0, true )
 	if true then return false end
@@ -48,9 +49,11 @@ function deletetime ( player, commandname, Value )
 		end
 	end
 end
-addCommandHandler ( "deletetime", deletetime )
+addCommandHandler("deletetime", deletetime)
 
 function skipMap(player, commandName)
+	if not player:hasRights("Moderator") then return end
+
 	local gameMode = getPlayerGameMode(player)
 	if gameMode ~= 0 and gameMode ~= gGamemodeMO then
 		if gameMode == gGamemodeFUN then
@@ -73,9 +76,11 @@ function skipMap(player, commandName)
 		end
 	end
 end
-addCommandHandler ( "skipMap", skipMap )
+addCommandHandler("skipMap", skipMap)
 
 function redoMap(player, commandName)
+	if not player:hasRights("Moderator") then return end
+
 	local gameMode = getPlayerGameMode(player)
 	if gameMode ~= 0 and gameMode ~= gGamemodeFUN and gameMode ~= gGamemodeMO then
 		local gameModeElement = getGamemodeElement(gameMode)
@@ -96,9 +101,11 @@ function redoMap(player, commandName)
 		end
 	end
 end
-addCommandHandler ( "redo", redoMap )
+addCommandHandler("redo", redoMap)
 
 function setMap(player, commandName, ...)
+	if not player:hasRights("Moderator") then return end
+
 	local mapname = table.concat(arg, " ")
 	local gameMode = getPlayerGameMode(player)
 	if gameMode ~= 0 and gameMode ~= gGamemodeFUN  and gameMode ~= gGamemodeMO then
@@ -117,9 +124,11 @@ function setMap(player, commandName, ...)
 		end
 	end
 end
-addCommandHandler ( "setnextmap", setMap )
+addCommandHandler("setnextmap", setMap)
 
 function fixMap(player, commandName, ...)
+	if not player:hasRights("Member") then return end
+
 	local mapname = table.concat(arg, " ")
 	if mapname == "" then
 		triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map could not be found." )
@@ -149,6 +158,8 @@ end
 addCommandHandler("fixMap", function(...) Async.create(fixMap)(...) end)
 
 function deleteMap(player, commandName, ...)
+	if not player:hasRights("Member") then return end
+
 	local mapname = table.concat(arg, " ")
 	if mapname == "" then
 		triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map could not be found." )
@@ -176,44 +187,50 @@ function deleteMap(player, commandName, ...)
 end
 addCommandHandler("deleteMap", function(...) Async.create(deleteMap)(...) end)
 
-function badumtss (source)
+function badumtss(source)
+	if not player:hasRights("CoLeader") then return end
 	outputChatBoxToGamemode ( "#FF5435~Ba Dum Tss~", getPlayerGameMode(source), 255, 0, 0, true )
 	for i,v in ipairs(getGamemodePlayers(getPlayerGameMode(source))) do
 		callClientFunction(v, "playSound", "files/audio/badumtss.mp3")
 	end
 end
-addCommandHandler ( "badumtss", badumtss )
+addCommandHandler("badumtss", badumtss)
 
-function glanguage (source)
+function glanguage(source)
+	if not player:hasRights("Member") then return end
 	outputChatBox( "#FF0000:ADMIN:#FFFFFF You may only speak English in main ('T') and global ('G') chat, otherwise you will be punished (mute/kick/ban)", getRootElement(), 255, 0, 0, true )
 end
-addCommandHandler ( "glang", glanguage )
+addCommandHandler("glang", glanguage)
 
-
-function language (source)
+function language(source)
+	if not player:hasRights("Member") then return end
 	outputChatBoxToGamemode ( "#FF0000:ADMIN:#FFFFFF You may only speak English in main ('T') and global ('G') chat, otherwise you will be punished (mute/kick/ban)", getPlayerGameMode(source), 255, 0, 0, true )
 end
-addCommandHandler ( "lang", language )
+addCommandHandler("lang", language)
 
-function insult (source)
+function insult(source)
+	if not player:hasRights("Member") then return end
 	outputChatBoxToGamemode ( "#FF0000:ADMIN:#FFFFFF You may not insult otherwise you will be punished (mute/kick/ban)", getPlayerGameMode(source), 255, 0, 0, true )
 end
-addCommandHandler ( "ins", insult )
+addCommandHandler("ins", insult)
 
-
-function spam (source)
+function spam(source)
+	if not player:hasRights("Member") then return end
 	outputChatBoxToGamemode ( "#FF0000:ADMIN:#FFFFFF You may not spam otherwise you will be punished (mute/kick/ban)", getPlayerGameMode(source), 255, 0, 0, true )
 end
-addCommandHandler ( "spam", spam )
+addCommandHandler("spam", spam)
 
-function camp (source)
+function camp(source)
+	if not player:hasRights("Member") then return end
 	outputChatBoxToGamemode ( "#FF0000:ADMIN:#FFFFFF You may not camp otherwise you will be punished (blow/kick/ban)", getPlayerGameMode(source), 255, 0, 0, true )
 end
-addCommandHandler ( "camp", camp )
+addCommandHandler("camp", camp)
 
 gMutes = {}
 
-function mute ( player, commandname, toplayer, Value )
+function mute(player, commandname, toplayer, Value )
+	if not player:hasRights("Member") then return end
+
 	local targetPlayer
 	if toplayer == nil or Value	== nil or tonumber(Value) < 0 then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /"..commandname.." [player] [minutes]", player, 255, 0, 0, true )
@@ -262,20 +279,20 @@ function mute ( player, commandname, toplayer, Value )
 		end
 	end
 end
-addCommandHandler ( "mutePlayer", mute )
-addCommandHandler ( "pmute", mute )
+addCommandHandler("mutePlayer", mute)
+addCommandHandler("pmute", mute)
 
 function clientDeleteBan(ban)
-	if getElementData(source, "Level") ~= "Leader" then return false end
+	if getElementData(client, "Level") ~= "Leader" then return false end
 	for i,v in ipairs(getBans ()) do
 		if getBanUsername ( v ) == ban.username or getBanSerial( v ) == ban.serial or getBanIP ( v ) == ban.ip then
-			triggerClientEvent ( source, "addNotification", getRootElement(), 3, 18, 88, 97, "Ban successfully deleted." )
+			triggerClientEvent ( client, "addNotification", getRootElement(), 3, 18, 88, 97, "Ban successfully deleted." )
 			removeBan(v)
 			triggerEvent ( "clientRequestBanList", getRootElement() )
 			return
 		end
 	end
-	triggerClientEvent ( source, "addNotification", getRootElement(), 1, 255,0,0, "Ban could not not be deleted." )
+	triggerClientEvent ( client, "addNotification", getRootElement(), 1, 255,0,0, "Ban could not not be deleted." )
 end
 addEvent("clientDeleteBan", true)
 addEventHandler("clientDeleteBan", getRootElement(), clientDeleteBan)
@@ -332,7 +349,9 @@ addEventHandler("clientRequestBanList", getRootElement(), clientRequestBanList)
 	end
 )]]
 
-function ban ( player, commandname, toplayer, Value )
+function ban(player, commandname, toplayer, Value)
+	if not player:hasRights("SeniorMember") then return end
+
 	local targetPlayer
 	if toplayer == nil or Value	== nil or tonumber(Value) < 0 then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /"..commandname.."  [player] [minutes]", player, 255, 0, 0, true )
@@ -343,10 +362,10 @@ function ban ( player, commandname, toplayer, Value )
 			else
 				if Value == 0 then
 					outputChatBoxToGamemode ( "#125861:ADMIN:#FFFFFF "..getPlayerName(targetPlayer).." has been banned by "..getPlayerName(player)..".", getPlayerGameMode(player), 255, 0, 0, true )
-					banPlayer ( targetPlayer, true, true, true, player, "Permaban", 0)	
+					banPlayer(targetPlayer, true, true, true, player, "Permaban", 0)
 				else
 					outputChatBoxToGamemode ( "#125861:ADMIN:#FFFFFF "..getPlayerName(targetPlayer).." has been timebanned by "..getPlayerName(player).." ("..Value.." minutes).", getPlayerGameMode(player), 255, 0, 0, true )
-					banPlayer ( targetPlayer, true, true, true, player, nil, tonumber(Value)*60)
+					banPlayer(targetPlayer, true, true, true, player, nil, tonumber(Value)*60)
 				end
 			end
 		else
@@ -354,10 +373,12 @@ function ban ( player, commandname, toplayer, Value )
 		end
 	end
 end
-addCommandHandler ( "banPlayer", ban )
-addCommandHandler ( "pban", ban )
+addCommandHandler("banPlayer", ban)
+addCommandHandler("pban", ban)
 
-function kill ( player, commandname, toplayer )
+function kill(player, commandname, toplayer)
+	if not player:hasRights("Member") then return end
+
 	local targetPlayer
 	if toplayer == nil then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /"..commandname.." [player]", player, 255, 0, 0, true )
@@ -385,12 +406,14 @@ function kill ( player, commandname, toplayer )
 		end
 	end
 end
-addCommandHandler ( "blowPlayer", kill )
-addCommandHandler ( "pblow", kill )
-addCommandHandler ( "pkill", kill )
---addCommandHandler ( "killPlayer", kill )
+addCommandHandler("blowPlayer", kill)
+addCommandHandler("pblow", kill)
+addCommandHandler("pkill", kill)
+--addCommandHandler ( "killPlayer" )
 
-function kick ( player, commandname, toplayer )
+function kick(player, commandname, toplayer )
+	if not player:hasRights("Member") then return end
+
 	local targetPlayer
 	if toplayer == nil then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /"..commandname.." [player]", player, 255, 0, 0, true )
@@ -407,10 +430,12 @@ function kick ( player, commandname, toplayer )
 		end
 	end
 end
-addCommandHandler ( "kickPlayer", kick )
-addCommandHandler ( "pkick", kick )
+addCommandHandler("kickPlayer", kick)
+addCommandHandler("pkick", kick)
 
-function setpoints ( player, commandname, toplayer, Value )
+function setpoints(player, commandname, toplayer, Value )
+	if not player:hasRights("Leader") then return end
+
 	local targetPlayer
 	if toplayer == nil or Value	== nil or tonumber(Value) < 0 then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /setpoints [player] [Value]", player, 255, 0, 0, true )
@@ -428,9 +453,12 @@ function setpoints ( player, commandname, toplayer, Value )
 		end
 	end
 end
-addCommandHandler ( "setpoints", setpoints )
+addCommandHandler("setpoints", setpoints)
 
-function setlevel ( player, commandname, toplayer, Value )
+function setlevel(player, commandname, toplayer, Value )
+	if not player:hasRights("Leader") then return end
+
+
 	local targetPlayer
 	if toplayer == nil or Value	== nil or tonumber(Value) < 0 then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /setlevel [player] [Value]", player, 255, 0, 0, true )
@@ -448,10 +476,11 @@ function setlevel ( player, commandname, toplayer, Value )
 		end
 	end
 end
-addCommandHandler ( "setlevel", setlevel )
+addCommandHandler("setlevel", setlevel)
 
+function setachievementfunc(player, commandname, toplayer, Value )
+	if not player:hasRights("Leader") then return end
 
-function setachievementfunc ( player, commandname, toplayer, Value )
 	local targetPlayer
 	if toplayer == nil or Value	== nil then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /addachievement [player] [Number]", player, 255, 0, 0, true )
@@ -472,12 +501,14 @@ function setachievementfunc ( player, commandname, toplayer, Value )
 		end
 	end
 end
-addCommandHandler ( "addachievement", setachievementfunc )
+addCommandHandler("addachievement", setachievementfunc)
 
-function setrights ( player, commandname, toplayer, Value )
+function setrights(player, commandname, toplayer, Value )
+	if not player:hasRights("Leader") then return end
+
 	local targetPlayer
 	if toplayer == nil or Value	== nil then
-		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /setrights [player] [User/Member/Recruit...]", player, 255, 0, 0, true )
+		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /setrights [player] [User/Recruit/Member/SeniorMember/Moderator/CoLeader/Leader]", player, 255, 0, 0, true )
 	else if getPlayerFromName(toplayer) ~= false or getPlayerFromName(toplayer) ~= nil  then
 		targetPlayer = getPlayerFromName2(toplayer)
 			if targetPlayer == false or type(targetPlayer) == "table" then
@@ -488,13 +519,15 @@ function setrights ( player, commandname, toplayer, Value )
 				outputChatBox ( "#125861:ADMIN: #FFFFFF Your rights were set to "..tostring(Value).." by "..tostring(getPlayerName(player)).."!" , targetPlayer, 139,69,19, true )
 			end
 		else
-			outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /setrights [player] [User/Member/Recruit...]", player, 255, 0, 0, true )
+			outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /setrights [player] [User/Recruit/Member/SeniorMember/Moderator/CoLeader/Leader]", player, 255, 0, 0, true )
 		end
 	end
 end
-addCommandHandler ( "setrights", setrights )
+addCommandHandler("setrights", setrights)
 
-function setdonator ( player, commandname, toplayer, Value, Date )
+function setdonator(player, commandname, toplayer, Value, Date)
+	if not player:hasRights("Leader") then return end
+
 	local targetPlayer
 	if toplayer == nil or Value	== nil or tonumber(Value) < 0 then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /setdonator [player] [0/1] [date]", player, 255, 0, 0, true )
@@ -519,10 +552,11 @@ function setdonator ( player, commandname, toplayer, Value, Date )
 		end
 	end
 end
-addCommandHandler ( "setdonator", setdonator )
+--addCommandHandler("setdonator", setdonator)
 
+function setmemeacc(player, commandname, toplayer, Value )
+	if not player:hasRights("Leader") then return end
 
-function setmemeacc ( player, commandname, toplayer, Value )
 	local targetPlayer
 	if toplayer == nil or Value	== nil or tonumber(Value) < 0 then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /setmemeacc [player] [Value]", player, 255, 0, 0, true )
@@ -540,9 +574,11 @@ function setmemeacc ( player, commandname, toplayer, Value )
 		end
 	end
 end
-addCommandHandler ( "setmemeacc", setmemeacc )
+addCommandHandler("setmemeacc", setmemeacc)
 
-function setmoney ( player, commandname, toplayer, Value )
+function setmoney(player, commandname, toplayer, Value)
+	if not player:hasRights("Leader") then return end
+
 	local targetPlayer
 	if toplayer == nil or Value	== nil or tonumber(Value) < 0 then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /setmoney [player] [Value]", player, 255, 0, 0, true )
@@ -560,4 +596,4 @@ function setmoney ( player, commandname, toplayer, Value )
 		end
 	end
 end
-addCommandHandler ( "setmoney", setmoney )
+addCommandHandler("setmoney", setmoney)

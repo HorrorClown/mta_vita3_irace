@@ -148,7 +148,7 @@ function waveDrawHelp()
 		isDrawn = false		
 		lines = lines+5]]
 
-		dxDrawShadowedText("Admins ("..#waveVitaMembers.admins..")",screenWidth/2+92,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
+		dxDrawShadowedText("Leader ("..#waveVitaMembers.admins..")",screenWidth/2+92,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
 		lines = lines + 20
 		for i,v in ipairs(waveVitaMembers.admins) do
 			isDrawn = true
