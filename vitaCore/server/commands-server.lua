@@ -56,6 +56,7 @@ function bet ( player, commandname, bettedplayer, Value )
 	local B_Player = nil
 	if bettedplayer == nil or Value == nil then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /bet [Player] [500-5000]", player, 255, 0, 0, true )
+		return
 	end
 	Value = math.ceil(Value)
 	local check

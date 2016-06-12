@@ -522,6 +522,7 @@ function nickChangeHandler(oldNick, newNick)
 	addPlayerArchivement(source, 36)
 	setElementData(source, "renamelock", true)
 	setTimer ( function(source)
+		if not isElement(source) then return end
 		setElementData(source, "renamelock", nil)
 	end, 60000, 1, source )		 
 	setPlayerNametagText ( source, removeColorCoding (newNick) )

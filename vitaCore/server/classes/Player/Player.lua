@@ -4,7 +4,9 @@ registerElementClass("player", Player)
 Player.Map = {}
 
 function Player:constructor()
-    outputServerLog("Class: Player -> constructor")
+    setPedStat(self, 160, 1000)
+    setPedStat(self, 229, 1000)
+    setPedStat(self, 230, 1000)
 end
 
 function Player:virtual_constructor()

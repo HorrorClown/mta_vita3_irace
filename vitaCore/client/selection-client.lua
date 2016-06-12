@@ -89,7 +89,7 @@ addEventHandler("showSelection", getRootElement(), showSelection)
 
 function renderSelection()
 	--dxDrawRectangle( 0,0, screenWidth, screenHeight, tocolor ( 0, 0, 0, 200 ) )
-	dxDrawText("Vita3 Mode",(screenWidth*0.025),screenHeight-(screenHeight*0.95), screenWidth, screenHeight, tocolor(255,255,255,255), 1,ms)
+	dxDrawText("iRace 2.0",(screenWidth*0.025),screenHeight-(screenHeight*0.95), screenWidth, screenHeight, tocolor(255,255,255,255), 1,ms)
 	dxDrawLine((screenWidth*0.025), screenHeight-(screenHeight*0.87), (screenWidth*0.32), screenHeight-(screenHeight*0.87), tocolor(255,255,255,255))
 	dxDrawText("Select your mode...",screenWidth*0.2,screenHeight-(screenHeight*0.87), screenWidth, screenHeight, tocolor(255,255,255,255), 0.4,ms)
 	dxDrawText("Total players: "..#getElementsByType("player"),(screenWidth*0.025),((screenHeight*0.92))+(screenWidth/200), screenWidth, screenHeight, tocolor(255,255,255,255), 0.6,ms, "left", "top", false, false, false, true)

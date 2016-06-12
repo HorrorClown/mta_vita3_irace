@@ -621,8 +621,7 @@ function killDMPlayer(player, noSpectate)
 		end
 		setElementData(gElementDM, "rankingboard", gRankingboardPlayersDM)
 	end
-	
-	
+
 	if tonumber(getElementData(gElementDM, "startTick")) then
 		if getTickCount() - getElementData(gElementDM, "startTick") <= 300 and getElementData(player, "AFK") == false then
 			addPlayerArchivement(player, 17)
@@ -991,22 +990,22 @@ function playerGotHunter()
 	outputChatBox("#996633:Points: #ffffff You recieved 50 extra-points for reaching the Hunter.", player, 255, 255, 255, true)
 	setElementData(player, "Points", getElementData(player, "Points")+50)
 
-	local hastToptime = databaseMapDM:getToptimeFromPlayer(player.m_ID)
+	local hasToptime, hasPosition = databaseMapDM:getToptimeFromPlayer(player.m_ID)
 	local toptimeAdded = databaseMapDM:addNewToptime(player.m_ID, getTickCount() - getElementData(gElementDM, "startTick"))
 
-	if toptimeAdded == true then
+	if toptimeAdded then
 		callClientFunction(player, "forceToptimesOpen")
 
 		local tInformation, tPosition = databaseMapDM:getToptimeFromPlayer(player.m_ID)
 		outputChatBoxToGamemode(":TOPTIME:#FFFFFF ".._getPlayerName(player).."#FFFFFF finished the map ("..msToTimeStr(tInformation.time)..") and got toptime position "..tPosition..".",gGamemodeDM, 148,214,132, true)
 
-        if tPosition <= 12 and (hastToptime == false or tPosition) == false then
-			setElementData(source, "TopTimes", getElementData(source, "TopTimes")+1)
-			setElementData(source, "TopTimeCounter", getElementData(source, "TopTimeCounter")+1)	
+        if tPosition <= 12 and hasToptime == false then
+			setElementData(source, "TopTimes", getElementData(source, "TopTimes") + 1)
+			setElementData(source, "TopTimeCounter", getElementData(source, "TopTimeCounter") + 1)
 		end	
-		if tPosition <= 12 and (hastToptime ~= false and hastToptime <= 12) then
+		if tPosition <= 12 and (hasToptime and tPosition < hasPosition) then
 			addPlayerArchivement(source, 59)
-		end		
+		end
 	end
 	
 	for _, v in pairs(getGamemodePlayers(gGamemodeDM)) do

@@ -416,7 +416,8 @@ function showAdminPanel()
 			dxSetEnabled(guiAdminDX["bans_ip"], true)
 			dxSetEnabled(guiAdminDX["bans_serial"], true)			
 		else return false end
-		
+
+		guiSetInputMode("no_binds_when_editing")
 		showCursor(true)
 		refreshAdminPanel("all")
 		guiSetVisible(adminPanelWindow, true)

@@ -34,10 +34,10 @@ scdatas.gmSH = clickableAreaCreate(0,0,0,0)
 addEventHandler("onClickableAreaClick", scdatas.gmSH, function(button, state) if button == "left" and state == "down" and scdatas.enabled == true then scdatas.gameMode = 1 end end)
 
 scdatas.gmRA = clickableAreaCreate(0,0,0,0)
-addEventHandler("onClickableAreaClick", scdatas.gmRA, function(button, state) if button == "left" and state == "down" and scdatas.enabled == true then scdatas.gameMode = 3 end end)
+--addEventHandler("onClickableAreaClick", scdatas.gmRA, function(button, state) if button == "left" and state == "down" and scdatas.enabled == true then scdatas.gameMode = 3 end end)
 
 scdatas.gmMI = clickableAreaCreate(0,0,0,0)
-addEventHandler("onClickableAreaClick", scdatas.gmMI, function(button, state) if button == "left" and state == "down" and scdatas.enabled == true then scdatas.gameMode = 4 end end)
+--addEventHandler("onClickableAreaClick", scdatas.gmMI, function(button, state) if button == "left" and state == "down" and scdatas.enabled == true then scdatas.gameMode = 4 end end)
 
 ---Scoreboardvalues---
 

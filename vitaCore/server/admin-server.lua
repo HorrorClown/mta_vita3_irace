@@ -458,7 +458,6 @@ addCommandHandler("setpoints", setpoints)
 function setlevel(player, commandname, toplayer, Value )
 	if not player:hasRights("Leader") then return end
 
-
 	local targetPlayer
 	if toplayer == nil or Value	== nil or tonumber(Value) < 0 then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /setlevel [player] [Value]", player, 255, 0, 0, true )
@@ -515,8 +514,11 @@ function setrights(player, commandname, toplayer, Value )
 				outputChatBox ( "#FF0000:ERROR: #FFFFFFThe player doesn't exist or there are more then 1 possible player choice.", player, 255, 0, 0, true )
 			else
 				outputChatBox ( "#125861:ADMIN: #FFFFFF You set the rights of "..tostring(getPlayerName(targetPlayer)).." to "..tostring(Value).."" , player, 139,69,19, true )
-				setElementData(targetPlayer, "Level", tostring(Value))
 				outputChatBox ( "#125861:ADMIN: #FFFFFF Your rights were set to "..tostring(Value).." by "..tostring(getPlayerName(player)).."!" , targetPlayer, 139,69,19, true )
+
+				targetPlayer.m_Level = tostring(Value)
+				targetPlayer:setData("Level", tostring(Value))
+				targetPlayer:getData("accElement"):setData("Level", tostring(Value))
 			end
 		else
 			outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /setrights [player] [User/Recruit/Member/SeniorMember/Moderator/CoLeader/Leader]", player, 255, 0, 0, true )
