@@ -10,7 +10,6 @@ function PlayerManager:constructor()
     addEventHandler("onPlayerJoin", root, bind(self.playerJoin, self))
     addEventHandler("onPlayerQuit", root, bind(self.playerQuit, self))
     addEventHandler("playerReady", root, bind(self.playerReady, self))
-
 end
 
 function PlayerManager:destructor()

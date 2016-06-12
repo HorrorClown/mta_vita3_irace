@@ -50,9 +50,13 @@ function startTimerDD()
 		elseif left == 1 then
 			countdownFuncDD(4)
 			killTimer(gStartTimerDD)
+			gStartTimerDD = false
+
 			for i,v in pairs(getGamemodePlayers(gGamemodeDD)) do
 				textDisplayRemoveObserver(gTextdisplayDD, v)
-			end			
+			end
+
+			return
 		end
 	end
 	

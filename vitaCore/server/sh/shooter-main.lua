@@ -51,9 +51,13 @@ function startTimerSH()
 		elseif left == 1 then
 			countdownFuncSH(4)
 			killTimer(gStartTimerSH)
+			gStartTimerSH = false
+
 			for i,v in pairs(getGamemodePlayers(gGamemodeSH)) do
 				textDisplayRemoveObserver(gTextdisplaySH, v)
-			end			
+			end
+
+			return
 		end
 	end
 	

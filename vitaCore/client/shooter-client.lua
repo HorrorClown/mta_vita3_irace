@@ -13,7 +13,8 @@ function vitaJumping()
         setElementVelocity( vehicle ,sx, sy, sz+0.25 )
 	end
 end
-bindKey ( "lshift","down", vitaJumping)
+bindKey("lshift", "down", vitaJumping)
+bindKey("mouse2", "down", vitaJumping)
 
 
 local shootingAllowed = true

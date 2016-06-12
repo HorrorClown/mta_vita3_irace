@@ -3,7 +3,7 @@ Account = inherit(Object)
 function Account.login(player, username, password, pwhash)
     if (not username or not password) and not pwhash then return false end
 
-    board:queryFetchSingle(Async.waitFor(self), ("SELECT userID, ingameID, username, password, avatarID, disableAvatar FROM ??_user WHERE %s = ?"):format(username:find("@") and "email" or "username"), board:getPrefix(), username)
+    board:queryFetchSingle(Async.waitFor(self), ("SELECT userID, ingameID, username, password, banned, banReason, avatarID, disableAvatar FROM ??_user WHERE %s = ?"):format(username:find("@") and "email" or "username"), board:getPrefix(), username)
     local boardResult = Async.wait()
     if not boardResult or not boardResult.userID then
         --player:triggerEvent("addNotification", 1, 200, 50, 50, "Invalid username or password")
@@ -19,6 +19,11 @@ function Account.login(player, username, password, pwhash)
     if pwhash ~= boardResult.password then
         --player:triggerEvent("addNotification", 1, 200, 50, 50, "Invalid username or password")
         player:triggerEvent("loginfailed", "Invalid username or password")
+        return false
+    end
+
+    if boardResult.banned == 1 then
+        player:triggerEvent("loginfailed", "This Account has been banned.\nReason: " .. tostring(boardResult.banReason))
         return false
     end
 

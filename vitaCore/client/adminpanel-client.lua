@@ -121,7 +121,7 @@ end, false )
 addEventHandler ( "onClientDXClick", guiAdminDX["player_blow"], function() 
 	local row = dxGridListGetSelectedItem ( guiAdminDX["player_list"] )
 	if row and dxGridListGetItemData ( guiAdminDX["player_list"],  row ) and isElement(dxGridListGetItemData ( guiAdminDX["player_list"],  row )) then
-		executeServerCommandHandler ( "killPlayer", dxGridListGetItemText ( guiAdminDX["player_list"],  row ) )
+		executeServerCommandHandler ( "pkill", dxGridListGetItemText ( guiAdminDX["player_list"],  row ) )
 	else
 		addNotification(1, 200, 50, 50, "No player selected.")
 	end

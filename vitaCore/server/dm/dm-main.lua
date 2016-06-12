@@ -42,7 +42,7 @@ function startTimerDM()
 	end
 	
 	if isTimer(gStartTimerDM) then
-		local ttime, left, will = getTimerDetails ( gStartTimerDM )
+		local ttime, left, will = getTimerDetails(gStartTimerDM)
 		if left == 3 then
 			textItemSetText(gTextdisplayTextDM, "waiting for players...")
 			for i,v in pairs(getGamemodePlayers(gGamemodeDM)) do
@@ -51,9 +51,13 @@ function startTimerDM()
 		elseif left == 1 then
 			countdownFuncDM(4)
 			killTimer(gStartTimerDM)
+			gStartTimerDM = false
+
 			for i,v in pairs(getGamemodePlayers(gGamemodeDM)) do
 				textDisplayRemoveObserver(gTextdisplayDM, v)
-			end			
+			end
+
+			return
 		end
 	end
 	
@@ -688,7 +692,7 @@ function killDMPlayer(player, noSpectate)
 			
 			setElementData(alivePlayers[1], "DMWon", getElementData(alivePlayers[1], "DMWon")+1)
 			setElementData(alivePlayers[1], "DMMaps", getElementData(alivePlayers[1], "DMMaps")+1)
-			givePlayerBetWinning (alivePlayers[1])
+			givePlayerBetWinning(alivePlayers[1])
 			
 			if getElementData(alivePlayers[1], "DMWon") >= 100 then
 				addPlayerArchivement( alivePlayers[1], 19 )
@@ -934,11 +938,26 @@ function countdownFuncDM(id)
 				if getElementData(v, "state") == "ready" then
 					setElementData(v, "state", "alive")
 					if isElement(getPlayerRaceVeh(v)) then
-						setVehicleDamageProof ( getPlayerRaceVeh(v), false )
+						setVehicleDamageProof(getPlayerRaceVeh(v), false)
 						setElementFrozen(getPlayerRaceVeh(v), false)
 					end
 				else
 					playerWaitRoundDM(v)
+					--Todo
+					--[[
+					setTimer(
+						function(player)
+							if not isElement(player) then return end
+							if getElementData(player, "state") == "ready" then
+								setElementData(player, "state", "alive")
+								if isElement(getPlayerRaceVeh(player)) then
+									setVehicleDamageProof(getPlayerRaceVeh(player), false)
+									setElementFrozen(getPlayerRaceVeh(player), false)
+								end
+							else
+								playerWaitRoundDM(player)
+							end
+						end, 20000, 1, v)]]
 				end
 			end			
 		end
@@ -958,6 +977,7 @@ function countdownFuncDM(id)
 			loadMapDM(getElementData(gElementDM, "nextmap"))		
 			return
 		end
+
 		gIsDMRunning = true
 		countdownTimerDM = false
 		gDMMapTimer = setTimer(endMapDM, getElementData(gElementDM, "duration"), 1)
@@ -975,16 +995,14 @@ end
 addEventHandler ( "onPlayerWasted", getRootElement(), onPlayerWastedDM )
 
 function playerGotHunter()
-	local player = source
+	local player = client
 	if gHasHunterDM == false then
 		gHasHunterDM = true
-		for i,v in pairs(getGamemodePlayers(gGamemodeDM)) do
-			callClientFunction(v, "setWeather" ,0)
-			callClientFunction(v, "setTime", 0,0)
-			callClientFunction(v, "resetSkyGradient")
-			setElementData( v, "ghostmod", false )
-		end
-		outputChatBoxToGamemode("#7A142D:Hunter: #ffffff"..getPlayerName(player).."#ffffff has reached the Hunter. The ghostmode has been deactivated.", gGamemodeDM, 255, 255, 255, true)
+
+		callClientFunction(player, "setWeather" ,0)
+		callClientFunction(player, "setTime", 0,0)
+		callClientFunction(player, "resetSkyGradient")
+		setElementData(player, "ghostmod", false )
 	end
 	toggleControl ( player, "vehicle_secondary_fire", false )
 	outputChatBox("#996633:Points: #ffffff You recieved 50 extra-points for reaching the Hunter.", player, 255, 255, 255, true)

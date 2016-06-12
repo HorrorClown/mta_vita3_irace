@@ -188,7 +188,7 @@ end
 addCommandHandler("deleteMap", function(...) Async.create(deleteMap)(...) end)
 
 function badumtss(source)
-	if not player:hasRights("CoLeader") then return end
+	if not source:hasRights("CoLeader") then return end
 	outputChatBoxToGamemode ( "#FF5435~Ba Dum Tss~", getPlayerGameMode(source), 255, 0, 0, true )
 	for i,v in ipairs(getGamemodePlayers(getPlayerGameMode(source))) do
 		callClientFunction(v, "playSound", "files/audio/badumtss.mp3")
@@ -197,31 +197,31 @@ end
 addCommandHandler("badumtss", badumtss)
 
 function glanguage(source)
-	if not player:hasRights("Member") then return end
+	if not source:hasRights("Member") then return end
 	outputChatBox( "#FF0000:ADMIN:#FFFFFF You may only speak English in main ('T') and global ('G') chat, otherwise you will be punished (mute/kick/ban)", getRootElement(), 255, 0, 0, true )
 end
 addCommandHandler("glang", glanguage)
 
 function language(source)
-	if not player:hasRights("Member") then return end
+	if not source:hasRights("Member") then return end
 	outputChatBoxToGamemode ( "#FF0000:ADMIN:#FFFFFF You may only speak English in main ('T') and global ('G') chat, otherwise you will be punished (mute/kick/ban)", getPlayerGameMode(source), 255, 0, 0, true )
 end
 addCommandHandler("lang", language)
 
 function insult(source)
-	if not player:hasRights("Member") then return end
+	if not source:hasRights("Member") then return end
 	outputChatBoxToGamemode ( "#FF0000:ADMIN:#FFFFFF You may not insult otherwise you will be punished (mute/kick/ban)", getPlayerGameMode(source), 255, 0, 0, true )
 end
 addCommandHandler("ins", insult)
 
 function spam(source)
-	if not player:hasRights("Member") then return end
+	if not source:hasRights("Member") then return end
 	outputChatBoxToGamemode ( "#FF0000:ADMIN:#FFFFFF You may not spam otherwise you will be punished (mute/kick/ban)", getPlayerGameMode(source), 255, 0, 0, true )
 end
 addCommandHandler("spam", spam)
 
 function camp(source)
-	if not player:hasRights("Member") then return end
+	if not source:hasRights("Member") then return end
 	outputChatBoxToGamemode ( "#FF0000:ADMIN:#FFFFFF You may not camp otherwise you will be punished (blow/kick/ban)", getPlayerGameMode(source), 255, 0, 0, true )
 end
 addCommandHandler("camp", camp)
@@ -317,8 +317,7 @@ end
 addEvent("clientRequestBanList", true)
 addEventHandler("clientRequestBanList", getRootElement(), clientRequestBanList)
 
--- TODO:
---[[addCommandHandler ( "banSerial",
+addCommandHandler ( "banSerial",
 	function(player, commandname, Value)
 		local targetPlayer
 		if Value== nil then
@@ -331,7 +330,7 @@ addEventHandler("clientRequestBanList", getRootElement(), clientRequestBanList)
 			end
 		end
 	end
-)]]
+)
 
 --TODO:
 --[[addCommandHandler ( "banIP",

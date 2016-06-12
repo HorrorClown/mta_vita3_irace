@@ -25,10 +25,9 @@ function dxCreateShader (filepath, priority, maxDistance, layered, elementTypes 
 	if not priority then priority = 0 end
 	if not maxDistance then maxDistance = 0 end
 	if not layered then layered = false end
-	if not elementTypes then elementTypes = 0 end
-	local marker = _dxCreateShader (filepath, priority, maxDistance, layered, elementTypes )
-	gScriptShaders[#gScriptShaders+1] = marker
-	return marker
+	local shader = _dxCreateShader (filepath, priority, maxDistance, layered, elementTypes )
+	gScriptShaders[#gScriptShaders+1] = shader
+	return shader
 end
 
 _outputChatBox = outputChatBox

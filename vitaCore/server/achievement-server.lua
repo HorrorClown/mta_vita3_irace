@@ -155,7 +155,7 @@ function initArchivments()
 	addArchivement(42, "ThirtyTwo", "Play while there are 32 players in your gamemode.") --DONE	
 	addArchivement(43, "It's okay to be gay", "Listen to gay music.") --DONE	
 	addArchivement(44, "A winner and a loser", "Win a PVP fight.") --DONE
-	addArchivement(45, "Ka-Ching!", "Donate something to iRace.") --DONE
+	--addArchivement(45, "Ka-Ching!", "Donate something to iRace.") --DONE
 	addArchivement(46, "I haz se money and se powah!", "Buy a map.") --DONE
 	addArchivement(47, "I want it again!", "Buy a map redo.") --DONE	
 	addArchivement(48, "Shooter Pro", "Win 100 SHOOTER maps.") --DONE
@@ -164,10 +164,10 @@ function initArchivments()
 	addArchivement(51, "Rockets everywhere", "Win a SHOOTER map.") --DONE
 	addArchivement(52, "Damn am I hot!", "Win a Destruction Derby map while burning.") --DONE
 	addArchivement(53, "FIRST!", "Play a map on the first time run on the server.") --DONE
-	addArchivement(54, "Finish!", "Reach the finish line of a race map.") --DONE
-	addArchivement(55, "Le number one", "End a race map as first.") --DONE
-	addArchivement(56, "Race Pro", "Win 100 RACE maps.") --DONE
-	addArchivement(57, "Super Sexy Race King", "Win 1000 RACE maps.") --DONE
+	--addArchivement(54, "Finish!", "Reach the finish line of a race map.") --DONE
+	--addArchivement(55, "Le number one", "End a race map as first.") --DONE
+	--addArchivement(56, "Race Pro", "Win 100 RACE maps.") --DONE
+	--addArchivement(57, "Super Sexy Race King", "Win 1000 RACE maps.") --DONE
 	addArchivement(58, "Traveller", "Drive 10.000 kilometres.") --DONE
 	addArchivement(59, "Improved", "Beat your own top12 race- or huntertoptime.") --DONE
 	addArchivement(60, "Megalomaniac", "Spin at least 100.000 Vero and win.") --DONE
@@ -176,16 +176,16 @@ function initArchivments()
 	addArchivement(63, "The 'Nosejob'", "Stop being an ugly fag and buy a new skin.") --DONE
 	addArchivement(64, "All by myself", "Be forever alone since all other people left your gamemode :((") --DONE
 	addArchivement(65, "They see me rollin', they hatin'", "Get a new pair of wheels.") --DONE
-	addArchivement(66, "Nigger stole my bike", "Stealing a bike in Ware as CJ.") --DONE
-	addArchivement(67, "Lolz I haz minigun!", "Humiliate somebody with your minigun and win GunGame.") --DONE
-	addArchivement(68, "Master of Hay.", "Climb the tower of hay.") --DONE
+	--addArchivement(66, "Nigger stole my bike", "Stealing a bike in Ware as CJ.") --DONE
+	--addArchivement(67, "Lolz I haz minigun!", "Humiliate somebody with your minigun and win GunGame.") --DONE
+	--addArchivement(68, "Master of Hay.", "Climb the tower of hay.") --DONE
 	addArchivement(69, "69", "Be level 69.") --DONE
-	addArchivement(70, "Fat guys running", "Complete a map of Running Men.") --DONE
-	addArchivement(71, "Coward", "Saving your position in Running Men.") --DONE
-	addArchivement(72, "Fat fighter", "Stay alive for 180 seconds in an active Sumo fight.") --DONE
-	addArchivement(73, "Perfect game", "Finish Ware with a score of 30/30.") --DONE
-	addArchivement(74, "Headshot!", "Perform a headshot.") --DONE
-	addArchivement(75, "Opinion leader", "Voting for the mode in Minigames which gets chosen.") --DONE
+	--addArchivement(70, "Fat guys running", "Complete a map of Running Men.") --DONE
+	--addArchivement(71, "Coward", "Saving your position in Running Men.") --DONE
+	--addArchivement(72, "Fat fighter", "Stay alive for 180 seconds in an active Sumo fight.") --DONE
+	--addArchivement(73, "Perfect game", "Finish Ware with a score of 30/30.") --DONE
+	--addArchivement(74, "Headshot!", "Perform a headshot.") --DONE
+	--addArchivement(75, "Opinion leader", "Voting for the mode in Minigames which gets chosen.") --DONE
 	addArchivement(76, "Light me up", "Modify your backlights.") --DONE
 end
 addEventHandler("onResourceStart", getResourceRootElement(), initArchivments)

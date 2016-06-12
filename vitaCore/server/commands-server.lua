@@ -53,49 +53,54 @@ addCommandHandler ( "send", send )
 bettedPlayer = {}
 function bet ( player, commandname, bettedplayer, Value )
 	if isLoggedIn(player) ~= true then outputChatBox ( "#FF0000:ERROR: #FFFFFFYou must be logged in to use this command.", player, 255, 0, 0, true ) return false end
+
 	local B_Player = nil
 	if bettedplayer == nil or Value == nil then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /bet [Player] [500-5000]", player, 255, 0, 0, true )
 		return
 	end
+
 	Value = math.ceil(Value)
-	local check
+
+	--[[local check
 	for k, v in pairs(bettedPlayer) do
 		if k == player then
 			check = k
 		end
-	end
-	if bettedplayer ~= nil and bettedplayer ~= false and Value ~= nil and Value ~= false and Value <= 5000 and Value ~= 0 and Value >= 500 and check ~= player then
-	if #getGamemodePlayers(getPlayerGameMode(player)) >= 5 then
-		if getElementData(getGamemodeElement(getPlayerGameMode(player)), "betAvailable") == true then
-			B_Player = getPlayerFromName2(bettedplayer)
-			if B_Player == false or B_Player == nil or B_Player == "false" or type(targetPlayer) == "table" or tostring(getPlayerName(B_Player)) == "false" then
-				outputChatBox ( "#FF0000:ERROR: #FFFFFFThe player doesn't exist or there are more than one players found with that name.", player, 255, 0, 0, true )
-			elseif tostring(getPlayerName(B_Player)) == getPlayerName(player) then
-				outputChatBox ( "#FF0000:ERROR: #FFFFFFYou may not bet on yourself.", player, 255, 0, 0, true )
-			elseif getPlayerGameMode(player) ~= getPlayerGameMode(B_Player) then
-				outputChatBox ( "#FF0000:ERROR: #FFFFFFYou must be in the same gamemode as the other.", player, 255, 0, 0, true )
-			else if getPlayerMoney(player) >= 0 and getPlayerMoney(player) >= tonumber ( Value ) then 
-					outputChatBoxToGamemode ( ":BET: #FFFFFF"..tostring(getPlayerName ( player )).." betted "..tonumber(Value).." Vero on "..tostring(getPlayerName( B_Player) ), getPlayerGameMode(player), 139,69,19, true )
-					outputChatBox ( ":BET: #FFFFFFIf you leave or change gamemode you'll lose the bet instantly.", player, 139,69,19, true )
-					bettedPlayer[player] = {B_Player, tonumber(Value)}
-					setPlayerMoney(player, getPlayerMoney(player) -tonumber(Value))
-				else 
-					outputChatBox ( "#FF0000:ERROR: #FFFFFFYou don't have enough money for that.", player, 255, 0, 0, true )
+	end]]
+
+	if bettedplayer ~= nil and bettedplayer ~= false and Value ~= nil and Value ~= false and Value <= 5000 and Value ~= 0 and Value >= 500 and not bettedPlayer[player] then
+		if #getGamemodePlayers(getPlayerGameMode(player)) >= 5 then
+			if getElementData(getGamemodeElement(getPlayerGameMode(player)), "betAvailable") == true then
+				B_Player = getPlayerFromName2(bettedplayer)
+				if B_Player == false or B_Player == nil or B_Player == "false" or type(targetPlayer) == "table" or tostring(getPlayerName(B_Player)) == "false" then
+					outputChatBox ( "#FF0000:ERROR: #FFFFFFThe player doesn't exist or there are more than one players found with that name.", player, 255, 0, 0, true )
+				elseif tostring(getPlayerName(B_Player)) == getPlayerName(player) then
+					outputChatBox ( "#FF0000:ERROR: #FFFFFFYou may not bet on yourself.", player, 255, 0, 0, true )
+				elseif getPlayerGameMode(player) ~= getPlayerGameMode(B_Player) then
+					outputChatBox ( "#FF0000:ERROR: #FFFFFFYou must be in the same gamemode as the other.", player, 255, 0, 0, true )
+				else if getPlayerMoney(player) >= 0 and getPlayerMoney(player) >= tonumber ( Value ) then
+						outputChatBoxToGamemode ( ":BET: #FFFFFF"..tostring(getPlayerName ( player )).." betted "..tonumber(Value).." Vero on "..tostring(getPlayerName( B_Player) ), getPlayerGameMode(player), 139,69,19, true )
+						outputChatBox ( ":BET: #FFFFFFIf you leave or change gamemode you'll lose the bet instantly.", player, 139,69,19, true )
+						bettedPlayer[player] = {B_Player, tonumber(Value)}
+						setPlayerMoney(player, getPlayerMoney(player) -tonumber(Value))
+					else
+						outputChatBox ( "#FF0000:ERROR: #FFFFFFYou don't have enough money for that.", player, 255, 0, 0, true )
+					end
 				end
+			else
+				outputChatBox ( "#FF0000:ERROR: #FFFFFFSorry, you cannot bet at the moment.", player, 255, 0, 0, true )
 			end
 		else
-			outputChatBox ( "#FF0000:ERROR: #FFFFFFSorry, you cannot bet at the moment.", player, 255, 0, 0, true )
+			outputChatBox ( "#FF0000:ERROR: #FFFFFFYou need atleast 5 players to bet.", player, 255, 0, 0, true )
 		end
-	else outputChatBox ( "#FF0000:ERROR: #FFFFFFYou need atleast 5 players to bet.", player, 255, 0, 0, true )
+	else
+		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /bet [Player] [Money(500-5000)]", player, 255, 0, 0, true )
 	end
-else
-	outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /bet [Player] [Money(500-5000)]", player, 255, 0, 0, true )
-end
 end
 addCommandHandler ( "bet", bet )
 
-function givePlayerBetWinning (theWinner)
+function givePlayerBetWinning(theWinner)
 	for player, bet in pairs(bettedPlayer) do
 		if isElement(player) and bettedPlayer[player] ~= false and getPlayerGameMode(player) == getPlayerGameMode(theWinner) then
 			local Money = getPlayerMoney(player)
@@ -106,7 +111,8 @@ function givePlayerBetWinning (theWinner)
 				--if getElementData(source, "betCounter") >= 50 then
 					addPlayerArchivement( player, 7 )
 				--end
-			else outputChatBox(":BET:#FFFFFF Sorry you lost!", player, 139,69,19, true)
+			else
+				outputChatBox(":BET:#FFFFFF Sorry you lost!", player, 139,69,19, true)
 			end
 			bettedPlayer[player] = false
 		end  
@@ -319,7 +325,7 @@ function buyRedoMap(player, commandName)
 	end
 end
 addCommandHandler("buyredo", buyRedoMap)
-addCommandHandler("vr", buyRedoMap)
+addCommandHandler("br", buyRedoMap)
 
 function buySetMap(player, commandName, ...)
 	local mapname = table.concat(arg, " ")

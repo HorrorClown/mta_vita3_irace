@@ -316,10 +316,10 @@ function checkUsers()
 			setElementData(player, "WonMaps", getElementData(player, "DMWon")+getElementData(player, "DDWon")+getElementData(player, "SHWon")+getElementData(player, "RAWon"))
 			setElementData(player, "PlayedMaps", getElementData(player, "DMMaps")+getElementData(player, "DDMaps")+getElementData(player, "SHMaps")+getElementData(player, "RAMaps"))
 			setElementModel(player, getElementData(player, "Skin"))
-			if string.find(getPlayerName(player), "Vita|") ~= nil then
+			if string.find(getPlayerName(player), "iR|") ~= nil then
 				if getElementData(player, "Level")  == "User" then
 					putPlayerBackToSelection(player)
-					triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Remove the Vita| clantag." )
+					triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Remove the iR| clantag." )
 				else
 					addPlayerArchivement(player, 40)
 				end
