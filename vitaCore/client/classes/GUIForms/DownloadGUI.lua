@@ -56,6 +56,13 @@ function DownloadGUI:onComplete()
             local pwhash = core:get("Login", "password", "")
             local avatar = core:get("Login", "avatar", false)
 
+            if avatar then
+                if not File.exists("files/_avatar.png") then
+                    core:set("Login", "avatar", nil)
+                    avatar = false
+                end
+            end
+
             lgi.m_Editbox_Username:setText(username)
             lgi.m_Editbox_Password:setText(pwhash)
             lgi.usePasswordHash = pwhash

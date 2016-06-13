@@ -25,32 +25,6 @@ function DatabasePlayer:load()
         setElementData(self, "isDonator", false)
     end
 
-    if userData.level == "Leader" then
-        setPlayerTeam(self, leaderTeam)
-        --aclGroupAddObject(aclGetGroup("Admin"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
-
-        for _, ePlayer in pairs(getElementsByType"player") do
-            addPlayerArchivement(ePlayer, 38)
-        end
-    elseif userData.level == "CoLeader" then
-        setPlayerTeam(self, coleaderTeam)
-        --aclGroupAddObject(aclGetGroup("SuperModerator"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
-    elseif userData.level == "Moderator" then
-        setPlayerTeam(self, moderatorTeam)
-        --aclGroupAddObject(aclGetGroup("Moderator"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
-    elseif userData.level == "SeniorMember" then
-        setPlayerTeam(self, seniorTeam)
-        --aclGroupAddObject(aclGetGroup("SeniorMember"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
-    elseif userData.level == "Member" then
-        setPlayerTeam(self, memberTeam)
-        --aclGroupAddObject(aclGetGroup("Member"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
-    elseif userData.level == "Recruit" then
-        setPlayerTeam(self, recruitTeam)
-        --aclGroupAddObject(aclGetGroup("Recruit"), "user."..tostring(getElementData(client, "Userid")).."_"..tostring(getElementData(client, "AccountName")))
-    else
-        setElementData(self, "Level", "User")
-    end
-
     if getPlayerTeam(self) == false and getElementData(self, "isDonator") == true then
         setPlayerTeam(self, donatorTeam)
     end
@@ -108,6 +82,13 @@ function DatabasePlayer:load()
     setElementData(self, "country", getPlayerCountry(self))
     setElementData(self, "usedHorn", tonumber(userData.usedHorn))
     self.m_Level = userData.level
+    self:updateTeam()
+
+    if self.m_Level == "Leader" then
+        for _, ePlayer in pairs(getElementsByType"player") do
+            addPlayerArchivement(ePlayer, 38)
+        end
+    end
 
     if userData.wheels and tonumber(userData.wheels) ~= 0 then
         setElementData(self, "Wheels", tonumber(userData.wheels))

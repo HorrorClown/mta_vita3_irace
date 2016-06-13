@@ -1,7 +1,5 @@
 LoginGUI = inherit(Singleton)
 
--- Todo: neet to clean up :)
-
 function LoginGUI:constructor()
     self.usePasswordHash = false
     self.useCustomAvatar = false
@@ -126,7 +124,7 @@ function LoginGUI:createGUI()
 
             addEventHandler("onClientBrowserCreated", self.m_RegisterBrowser,
                 function()
-                    self.m_RegisterBrowser:loadURL("http://ir2.pewx.de/index.php?register")
+                    self.m_RegisterBrowser:loadURL("http://irace-mta.de/index.php?register")
                     self.m_ShowRegisterBrowser = true
                 end
             )
@@ -195,6 +193,11 @@ end
 
 function LoginGUI.receiveAvatar(avatar, error)
     avatar = dxConvertPixels(avatar, "png")
+    if not avatar then
+        core:set("Login", "avatar", nil)
+        return
+    end
+
     local file = File.new("files/_avatar.png")
     file:write(avatar)
     file:close()
@@ -206,8 +209,7 @@ function LoginGUI.downloadAvatar(ID, fileHash)
 
     local directory = fileHash:sub(1, 2)
     local fileString = ("%s-%s-%s.jpg"):format(ID, fileHash, 128)   --> avatarID-fileHash-size.jpg
-    --local downloadString = ("http://ir2.pewx.de/wcf/images/avatars/%s/%s"):format(directory, fileString)
-    local downloadString = ("http://192.168.178.24/wbb/wcf/images/avatars/%s/%s"):format(directory, fileString)
+    local downloadString = ("http://irace-mta.de/wcf/images/avatars/%s/%s"):format(directory, fileString)
 
     fetchRemote(downloadString, LoginGUI.receiveAvatar)
     core:set("Login", "avatar", fileHash)

@@ -46,3 +46,21 @@ end
 function Player.getFromID(id)
     return Player.Map[id]
 end
+
+function Player:updateTeam()
+    if self.m_Level == "Leader" then
+        self:setTeam(leaderTeam)
+    elseif self.m_Level == "CoLeader" then
+        self:setTeam(coleaderTeam)
+    elseif self.m_Level == "Moderator" then
+        self:setTeam(moderatorTeam)
+    elseif self.m_Level == "SeniorMember" then
+        self:setTeam(seniorTeam)
+    elseif self.m_Level == "Member" then
+        self:setTeam(memberTeam)
+    elseif self.m_Level == "Recruit" then
+        self:setTeam(recruitTeam)
+    else
+        self:setTeam(nil)
+    end
+end

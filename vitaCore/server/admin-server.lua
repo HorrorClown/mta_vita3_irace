@@ -501,7 +501,7 @@ function setachievementfunc(player, commandname, toplayer, Value )
 end
 addCommandHandler("addachievement", setachievementfunc)
 
-function setrights(player, commandname, toplayer, Value )
+function setrights(player, commandname, toplayer, Value)
 	if not player:hasRights("Leader") then return end
 
 	local targetPlayer
@@ -518,6 +518,7 @@ function setrights(player, commandname, toplayer, Value )
 				targetPlayer.m_Level = tostring(Value)
 				targetPlayer:setData("Level", tostring(Value))
 				targetPlayer:getData("accElement"):setData("Level", tostring(Value))
+				targetPlayer:updateTeam()
 			end
 		else
 			outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /setrights [player] [User/Recruit/Member/SeniorMember/Moderator/CoLeader/Leader]", player, 255, 0, 0, true )
