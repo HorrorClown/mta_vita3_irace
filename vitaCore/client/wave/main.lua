@@ -97,13 +97,13 @@ function showWave()
 		dxGridListAddRow ( wavePlayerList, getPlayerName(player), player)		
 	end				
 	
-	for num = 1, #tArchivements do
+	--[[for num = 1, #tArchivements do
 		if getElementData(getLocalPlayer(), "Archivements")[tostring(num)] == true then
 			dxGridListAddRow ( g_achievementgui["list_collected"], tArchivements[num]["name"],tArchivements[num]["des"]  )
 		else
 			dxGridListAddRow ( g_achievementgui["list_left"], tArchivements[num]["name"],tArchivements[num]["des"]  )
 		end
-	end	
+	end]]	
 	
 	addEventHandler("onClientRender", getRootElement(), renderWave, false, "low")
 end
