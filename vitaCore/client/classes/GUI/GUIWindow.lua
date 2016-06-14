@@ -28,10 +28,11 @@ function GUIWindow:constructor(sTitle, nPosX, nPosY, nWidth, nHeight, bClosable,
 end
 
 function GUIWindow:destructor()
-    Core:getManager("CDXManager"):unregisterWindow(self)
     for _, subElement in pairs(self.subElements) do
         delete(subElement)
     end
+    removeEventHandler("onClientRender", root, self.onRenderFunc)
+    removeEventHandler("onClientClick", root, self.onCloseButtonClickFunc)
 end
 
 function GUIWindow:updateRenderTarget(tailCall)
@@ -94,7 +95,8 @@ end]]
 function GUIWindow:onCloseButtonClick(btn, st)
     if btn == "left" and st == "down" then
         if self.closable and isHover(self.x + self.w - 22, self.y, 22, 22) then
-            self:hide()
+            showCursor(false)
+            self:destructor()
             return
         end
         if self.movable and not self.moving and isHover(self.x, self.y, self.w, 22) then

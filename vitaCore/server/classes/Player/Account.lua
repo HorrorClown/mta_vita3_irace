@@ -82,9 +82,9 @@ function Account:constructor(id, forumID, accountname, player)
     player.m_ForumID = self.m_ForumID
     player.m_Accountname = self.m_Accountname
 
+    player:getMigrationState()
     player:load()
-    player:triggerEvent("retrieveInfo", {ID = id, Accountname = accountname})
-    --player:updateAvatar()
+    player:triggerEvent("retrieveInfo", {ID = id, Accountname = accountname, Migrated = player.m_Migrated})
 end
 
 function Account.getNameFromID(id)

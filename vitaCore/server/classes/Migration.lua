@@ -54,7 +54,6 @@ function Migration:startMigration(username, password, doMigrate)
         return
     end
 
-
     if not getAccount(username, password or false) then
         client:triggerEvent("migrationLoginFailed", "Internal error. Please contanct an Admin", false)
         return
@@ -62,25 +61,35 @@ function Migration:startMigration(username, password, doMigrate)
 
     local account = getAccount(username)
 
+    if account:getData("Migrated") then
+        client:triggerEvent("migrationLoginFailed", "Account already migrated", false)
+        return
+    end
+
+    local accountDatas = {"playtime", "jointimes", "dmsplayed", "dmswon", "ddsplayed", "ddswon"}
+    for _, data in pairs(accountDatas) do
+        if not tonumber(account:getData(data)) then
+            client:triggerEvent("migrationFailed", "Some account datas are invalid. Please contact an admin", false)
+            return
+        end
+    end
+
     if doMigrate.playtime then
         local oldPlaytime = client:getData("TimeOnServer")
         local newPlaytime =  oldPlaytime + account:getData("playtime")*60
-        --client:setData("TimeOnServer", newPlaytime)
-        outputChatBox(("Migrate playtime - Old: %s | New: %s"):format(oldPlaytime, newPlaytime))
+        client:setData("TimeOnServer", newPlaytime)
     end
 
     if doMigrate.jointimes then
         local oldJointimes = client:getData("jointimes")
         local newJointimes =  oldJointimes + account:getData("jointimes")
-        --client:setData("jointimes", newJointimes)
-        outputChatBox(("Migrate jointimes - New: %s"):format(newJointimes))
+        client:setData("jointimes", newJointimes)
     end
 
     if doMigrate.money then
         local oldMoney = client:getData("Money")
         local newMoney = oldMoney + 300000
-        --client:setData("Money", newMoney)
-        outputChatBox(("Migrate money - New: %s"):format(newMoney))
+        client:setData("Money", newMoney)
     end
 
     if doMigrate.dmstats then
@@ -88,10 +97,8 @@ function Migration:startMigration(username, password, doMigrate)
         local oldDMWon = client:getData("DMWon")
         local newDMPlayed = oldDMPlayed + account:getData("dmsplayed")
         local newDMWon = oldDMWon + account:getData("dmswon")
-        --client:setData("DMMaps", newDMPlayed)
-        --client:setData("DMWon", newDMWon)
-        outputChatBox(("Migrate DMPlayed - New: %s"):format(newDMPlayed))
-        outputChatBox(("Migrate DMWon - New: %s"):format(newDMWon))
+        client:setData("DMMaps", newDMPlayed)
+        client:setData("DMWon", newDMWon)
     end
 
     if doMigrate.ddstats then
@@ -99,12 +106,11 @@ function Migration:startMigration(username, password, doMigrate)
         local oldDDWon = client:getData("DDWon")
         local newDDPlayed = oldDDPlayed + account:getData("ddsplayed")
         local newDDWon = oldDDWon + account:getData("ddswon")
-        --client:setData("DDMaps", newDMPlayed)
-        --client:setData("DDWon", newDMWon)
-        outputChatBox(("Migrate DDPlayed - New: %s"):format(newDDPlayed))
-        outputChatBox(("Migrate DDWon - New: %s"):format(newDDWon))
+        client:setData("DDMaps", newDDPlayed)
+        client:setData("DDWon", newDDWon)
     end
 
-    --Todo set migrated to 1.
-    --Todo set accountdata to migrated (check account bevor migrate)
+    sql:queryExec("UPDATE ??_account SET Migrated = ? WHERE ID = ?", sql:getPrefix(), 1, client.m_ID)
+    account:setData("Migrated", true)
+    client:triggerEvent("migrationSuccess")
 end

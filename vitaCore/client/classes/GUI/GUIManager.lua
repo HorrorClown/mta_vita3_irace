@@ -72,7 +72,9 @@ function GUIManager:addClickHandler()
 end
 
 function GUIManager:removeClickHandler()
-    removeEventHandler("onClientClick", root, self.onClickFunc)
+    if self.onClickFunc then
+        removeEventHandler("onClientClick", root, self.onClickFunc)
+    end
 end
 
 function GUIManager:setEnabled(enabled)

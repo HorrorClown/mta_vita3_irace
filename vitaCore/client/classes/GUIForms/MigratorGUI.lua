@@ -5,10 +5,9 @@
 -- pewx.de // pewbox.org // iGaming-mta.de // iRace-mta.de // iSurvival.de // mtasa.de
 --
 MigratorGUI = inherit(Singleton)
-addRemoteEvents{"migrationLoginFailed", "migrationLoginSuccess"}
+addRemoteEvents{"migrationLoginFailed", "migrationLoginSuccess", "migrationSuccess", "migrationFailed"}
 
 function MigratorGUI:constructor()
-
     self.m_CurrentStep = 1
 
     self:createGUI()
@@ -18,12 +17,13 @@ end
 
 function MigratorGUI:destructor()
     showCursor(false)
+    delete(self.m_Window)
 end
 
 function MigratorGUI:createGUI()
     local width, height = 400, 250
     self.m_Window = GUIWindow:new("iRace Migration", 500, 200, width, height, true, true)
-    self.m_Label_CurrentStep = GUILabel:new("Step 1 of 3", 10, 30, 100, 100, self.m_Window)
+    self.m_Label_CurrentStep = GUILabel:new("Step 1 of 2", 10, 30, 100, 100, self.m_Window)
     self.m_Button_NextStep = GUIButton:new("Next", width - 70, height - 30, 60, 20, {["normal"] = {220, 80, 0}, ["hover"] = {220, 50, 0}}, self.m_Window)
     self.m_Label_Error = GUILabel:new("", 10, height - 30, 300, 30, self.m_Window)
     self.m_Label_Error:setAlign("left", "center")
@@ -35,7 +35,6 @@ function MigratorGUI:createGUI()
     self.m_Label_login = GUILabel:new("Please enter your old login credentials.", 10, 5, 300, 20, self.m_Step1)
     self.m_Editbox_Username = GUIEdit:new("Username", 10, 30, 180, 20, false, false, self.m_Step1)
     self.m_Editbox_Password = GUIEdit:new("Password", 10, 55, 180, 20, false, true, self.m_Step1)
-
 
     -- Step2
     self.m_Label_Selection = GUILabel:new("Please select ...", 10, 5, 300, 20, self.m_Step2)
@@ -50,9 +49,7 @@ function MigratorGUI:createGUI()
     self.m_CB_Jointimes:setProperty("m_Checked", true)
     -- Step3
 
-
     self.m_Step2:setEnabled(false)
-
 
     self.fn_NextStep = bind(self.nextStep, self)
     self.m_Button_NextStep:addClickFunction(self.fn_NextStep)
@@ -104,7 +101,7 @@ addEventHandler("migrationLoginSuccess", localPlayer,
         mgi.m_Step2:setEnabled(true)
         mgi.m_Button_NextStep:setEnabled(true)
         mgi.m_CurrentStep = 2
-        mgi.m_Label_CurrentStep:setText("Step 2 of 3")
+        mgi.m_Label_CurrentStep:setText("Step 2 of 2")
 
         local default = mgi.m_CB_Playtime:getText()
         mgi.m_CB_Playtime:setText(default:format(receivedDatas.playtime))
@@ -123,6 +120,23 @@ addEventHandler("migrationLoginSuccess", localPlayer,
         local default = mgi.m_CB_DD:getText()
         mgi.m_CB_DD:setText(default:format(DDText))
 
+        mgi.m_Window:updateRenderTarget()
+    end
+)
+
+addEventHandler("migrationSuccess", localPlayer,
+    function()
+        local mgi = MigratorGUI:getSingleton()
+        delete(mgi)
+        removeCommandHandler("migrate", localPlayer.fn_Migrate)
+    end
+)
+
+addEventHandler("migrationFailed", localPlayer,
+    function(message)
+        local mgi = MigratorGUI:getSingleton()
+        mgi.m_Label_Error:setText("#ff0000"..message)
+        mgi.m_Button_NextStep:setEnabled(false)
         mgi.m_Window:updateRenderTarget()
     end
 )
