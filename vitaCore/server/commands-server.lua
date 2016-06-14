@@ -141,9 +141,14 @@ function roll ( player, commandname)
 			else
 				outputChatBoxToGamemode ( "#1C86EE:ROLL: #FFFFFF"..getPlayerName(player).." rolls 3 and is a noob for a minute.", getPlayerGameMode(player), 255, 0, 0, true )
 				rollOldNick[player] = _getPlayerName(player)
-				setPlayerName ( player, "Noob"..tostring(math.random(1,1337)) )		
-				setTimer ( function(player)
-					setPlayerName ( player, rollOldNick[player] )
+				local rnd = math.random(1,1337)
+				if rnd == 1337 then
+					addPlayerArchivement(source, 77)
+				end
+				setPlayerName(player, "Noob"..tostring(rnd))
+				setTimer(function(player)
+					if not isElement(player) then return end
+					setPlayerName(player, rollOldNick[player])
 					rollOldNick[player] = false
 				end, 60000, 1, player )			
 			end			
@@ -173,7 +178,7 @@ function roll ( player, commandname)
 		outputChatBox ( "#FF0000:ERROR: #FFFFFF/roll can only be used once every 20 seconds!", player, 255, 0, 0, true )
 	end
 end
-addCommandHandler ( "roll", roll )
+addCommandHandler("roll", roll)
 
 local spinTimer = {}
 function spin ( player, commandname, Zahl, Einsatz )
@@ -198,8 +203,9 @@ function spin ( player, commandname, Zahl, Einsatz )
 						else 
 							setPlayerMoney(player, getPlayerMoney(player) - tonumber(Einsatz))
 							outputChatBoxToGamemode ( "#1C86EE:SPIN: #FFFFFF "..getPlayerName ( player ).." lost "..Einsatz , getPlayerGameMode(player), 255, 0, 0, true )
-							if getPlayerMoney(player) <= 0 then
-								setPlayerMoney(player, 0)
+							if getPlayerMoney(player) < 0 then setPlayerMoney(player, 0) end
+							if tonumber(Einsatz) >= 20000 then
+								addPlayerArchivement(player, 78)
 							end
 						end
 					else

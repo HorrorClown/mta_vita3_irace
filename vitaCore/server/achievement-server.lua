@@ -187,15 +187,25 @@ function initArchivments()
 	--addArchivement(74, "Headshot!", "Perform a headshot.") --DONE
 	--addArchivement(75, "Opinion leader", "Voting for the mode in Minigames which gets chosen.") --DONE
 	addArchivement(76, "Light me up", "Modify your backlights.") --DONE
+	addArchivement(77, "1337", "Be a 1337 noob.") --DONE
+	addArchivement(78, "MADrin", "Spin at least 20.000 Vero and loose.") --Done
+	addArchivement(79, "PewX H4X", "http://pewx.hacksand.win") --DONE
 end
 addEventHandler("onResourceStart", getResourceRootElement(), initArchivments)
 
 function triggerArchievment2 ( message, messageType )
 	if message == "I really like her mane?" then
+		cancelEvent()
 		addPlayerArchivement(source, 2)
+		return
 	end
 	if string.find(message, "mta.de") ~= nil and string.find(message, "irace") ~= nil  then
 		addPlayerArchivement(source, 39)
+		return
+	end
+	if string.find(message:lower(), "pewx.hacksand.win") then
+		addPlayerArchivement(source, 79)
+		return
 	end
 end
 addEventHandler( "onPlayerChat", getRootElement(), triggerArchievment2 )
