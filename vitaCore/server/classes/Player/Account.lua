@@ -6,7 +6,6 @@ function Account.login(player, username, password, pwhash)
     board:queryFetchSingle(Async.waitFor(self), ("SELECT userID, ingameID, username, password, banned, banReason, avatarID, disableAvatar FROM ??_user WHERE %s = ?"):format(username:find("@") and "email" or "username"), board:getPrefix(), username)
     local boardResult = Async.wait()
     if not boardResult or not boardResult.userID then
-        --player:triggerEvent("addNotification", 1, 200, 50, 50, "Invalid username or password")
         player:triggerEvent("loginfailed", "Invalid username or password")
         return false
     end
@@ -17,7 +16,6 @@ function Account.login(player, username, password, pwhash)
     end
 
     if pwhash ~= boardResult.password then
-        --player:triggerEvent("addNotification", 1, 200, 50, 50, "Invalid username or password")
         player:triggerEvent("loginfailed", "Invalid username or password")
         return false
     end
@@ -28,7 +26,11 @@ function Account.login(player, username, password, pwhash)
     end
 
     if boardResult.ingameID == 0 then
-        -- We have to create a ingame database account
+        local serialCheck = sql:queryFetchSingle("SELECT ID FROM ??_account WHERE LastSerial = ?", sql:getPrefix(), player.serial)
+        if serialCheck then
+            player:triggerEvent("loginfailed", "Invalid account for this serial")
+            return false
+        end
 
         local result, _, ID = sql:queryFetch("INSERT INTO ??_account (ForumID, AccountName, DisplayName, LastSerial, LastLogin) VALUES (?, ?, ?, ?, NOW())", sql:getPrefix(),
             boardResult.userID, boardResult.username, player.name, player.serial)

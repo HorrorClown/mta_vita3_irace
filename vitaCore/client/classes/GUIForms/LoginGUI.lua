@@ -140,7 +140,7 @@ function LoginGUI:createGUI()
     --    bindKey("enter", "down", self.fn_PerformLogin)
 
     -- Workaround for above
-    self.fn_SubmitEnter = function(sButton, sState) if sButton == "enter" and sState then self.m_Button_Submit:performClick() end end
+    self.fn_SubmitEnter = function(sButton, sState) if (sButton == "enter" or sButton == "num_enter") and sState then self.m_Button_Submit:performClick() end end
     addEventHandler("onClientKey", root, self.fn_SubmitEnter)
 end
 
