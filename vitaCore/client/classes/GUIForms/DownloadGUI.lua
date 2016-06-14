@@ -60,6 +60,9 @@ function DownloadGUI:onComplete()
                 if not File.exists("files/_avatar.png") then
                     core:set("Login", "avatar", nil)
                     avatar = false
+                elseif not dxCreateTexture("files/_avatar.png") then
+                    core:set("Login", "avatar", nil)
+                    avatar = false
                 end
             end
 
