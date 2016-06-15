@@ -468,10 +468,9 @@ function toggleCarfadeMode ( button )
 end
 
 function toggleCarfadeModeKey()
-	toggleCarfadeMode ( "left" )
+	toggleCarfadeMode("left")
 end
-
-bindKey("F2", "down", toggleCarfadeModeKey)
+bindKey("F1", "down", toggleCarfadeModeKey)
 
 function toggleMemes ( button )
 	if button == "left" then
@@ -591,7 +590,9 @@ function stopsounds (player, commandname )
 		isStopSound = true
 		updateSettings("stopSounds", "1")
 		for k, v in ipairs(getElementsByType("sound")) do
-			stopSound ( v )
+			if v ~= gVitaMapMusic then
+				stopSound ( v )
+			end
 		end
 	else
 		isStopSound = false
@@ -599,7 +600,7 @@ function stopsounds (player, commandname )
 		addNotification(3, 200, 150, 100, "Sounds enabled.")
 	end
 end
-addCommandHandler ( "stopsound", stopsounds )
+--addCommandHandler ( "stopsound", stopsounds )
 
 function toggleVitaMusic ( button )
 	if button == "left" or button == "m" then
@@ -628,11 +629,13 @@ function toggleVitaLanguage(button)
 	end
 end
 
-addEventHandler("onClientSoundStream",getRootElement(), function ( ) 
-	if isStopSound == true then
-		setSoundVolume ( source, 0 ) 
-	end
-end )
+_playSound = playSound
+function playSound(soundPath, looped, throttled)
+	if isStopSound then return false end
+
+	local sound = _playSound(soundPath, looped, throttled)
+	return sound
+end
 
 --Settings GUI
 g_settingsgui = {}

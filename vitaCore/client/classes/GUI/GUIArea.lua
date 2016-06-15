@@ -15,7 +15,7 @@ end
 
 function GUIArea:destructor()
 	for _, subElement in ipairs(self.subElements) do
-		subElement:delete()
+		delete(subElement)
 	end
 	
 	self.m_RenderTarget:destroy()

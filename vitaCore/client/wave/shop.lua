@@ -302,6 +302,18 @@ g_customization1g["check_color1"] = guiCreateCheckBox ( screenWidth/2-75,screenH
 g_customization1g["check_color2"] = guiCreateCheckBox ( screenWidth/2-75,screenHeight/2-195, 20,20, "", true, false)
 g_customization1g["check_colorl"] = guiCreateCheckBox ( screenWidth/2-75,screenHeight/2-175, 20,20, "", true, false)
 
+-- Workaround
+addEventHandler("onClientGUIClick", guiRoot,
+	function()
+		for _, element in pairs(g_customization1g) do
+			if element.type == "gui-checkbox" and element == source then
+				guiCheckBoxSetSelected(source, not guiCheckBoxGetSelected(source))
+				return
+			end
+		end
+	end
+)
+
 addEventHandler("onClientGUIChanged", g_customization1g["hex_color"], function() 
    updateViaHex(1)
 end)
@@ -395,6 +407,7 @@ function waveDrawShop()
 		
 		for i,v in pairs(g_customization1g) do
 			guiSetVisible(v, true)
+			guiBringToFront(v)
 		end				
 	elseif guiComboBoxGetSelected( shopBox ) == 2 then
 		if getPlayerGameMode(getLocalPlayer()) == 4 or getPlayerGameMode(getLocalPlayer()) == 6 then

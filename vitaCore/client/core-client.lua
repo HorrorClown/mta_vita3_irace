@@ -486,7 +486,7 @@ function onMapSoundReceive(url)
 	--outputDebugString("CLIENT: Received music "..url)
 	if isElement(gVitaMapMusic) then stopSound(gVitaMapMusic) end
 	
-	gVitaMapMusic = playSound ( url, true )
+	gVitaMapMusic = _playSound ( url, true )
 	--outputDebugString("CLIENT: Played music "..tostring(gVitaMapMusic))
 	if getElementData(getLocalPlayer(), "disableMusic") == true or gWinsound and isElement(gWinsound) then
 		outputDebugString("CLIENT: Paused")

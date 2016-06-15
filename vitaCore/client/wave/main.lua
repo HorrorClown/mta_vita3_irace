@@ -66,6 +66,7 @@ startWave()
 
 function showWave()
 	if showUserGui ~= false then return end
+	guiSetInputMode("no_binds_when_editing")
 	showUserGui = true
 	playSound("files/audio/wave_change.mp3")
 	hideAdminPanel()
@@ -433,7 +434,7 @@ function toggleWaveHelp()
 	end
 end
 bindKey ( "F9", "down", toggleWaveHelp)
-bindKey ( "F1", "down", toggleWaveHelp)
+--bindKey ( "F1", "down", toggleWaveHelp)
 
 
 function waveChangeMenu(key, keyState, i)
