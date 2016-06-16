@@ -392,23 +392,25 @@ lotteryElement = createElement("lotteryElement")
 setElementData(lotteryElement, "money", 0)
 setElementData(lotteryElement, "players", 0)
 setElementData(lotteryElement, "lotteryRunning", false)
+setElementData(lotteryElement, "deposit", math.random(300, 1000))
 
 addCommandHandler("bt", 
 function (source, command)
-	if getPlayerMoney(source) >= 300 and isLoggedIn(source) == true then
+	local deposit = getElementData(lotteryElement, deposit)
+	if getPlayerMoney(source) >= deposit and isLoggedIn(source) == true then
 		if getElementData(source, "inLottery") == false then
-			setPlayerMoney(source, getPlayerMoney(source)-300)
-			setElementData(lotteryElement, "money", getElementData(lotteryElement, "money") + 300)
+			setPlayerMoney(source, getPlayerMoney(source)-deposit)
+			setElementData(lotteryElement, "money", getElementData(lotteryElement, "money") + deposit)
 			setElementData(lotteryElement, "players", getElementData(lotteryElement, "players") + 1)
 			setElementData(source, "inLottery", getElementData(lotteryElement, "players"))
 			if getElementData(lotteryElement, "lotteryRunning") == false then
 				setElementData(lotteryElement, "lotteryRunning", true)
 				for i,v in pairs(getElementsByType("player")) do
 					if getPlayerGameMode(v) ~= 0 then
-						triggerClientEvent ( v, "addNotification", getRootElement(), 4, 72,145,136, "A new lottery has been started by "..getPlayerName(source)..".\nUse /bt to buy a ticket. (-300 Vero)")
+						triggerClientEvent ( v, "addNotification", getRootElement(), 4, 72,145,136, "A new lottery has been started by "..getPlayerName(source)..".\nUse /bt to buy a ticket.")
 					end
 				end				
-				triggerClientEvent ( source, "addNotification", getRootElement(), 2, 0,200,0, "Lottery ticket bought: -300 Vero" )
+				--triggerClientEvent ( source, "addNotification", getRootElement(), 2, 0,200,0, "Lottery ticket bought: -300 Vero" )
 
 				setTimer(function()
 					for i,v in pairs(getElementsByType("player")) do
@@ -440,7 +442,7 @@ function (source, command)
 				end,240000, 1)
 				setTimer(endLottery,300000, 1)
 			else
-				triggerClientEvent ( source, "addNotification", getRootElement(), 2, 0,200,0, "Lottery ticket bought: -300 Vero" )
+				--triggerClientEvent ( source, "addNotification", getRootElement(), 2, 0,200,0, "Lottery ticket bought: -300 Vero" )
 				for i,v in pairs(getElementsByType("player")) do
 					if getPlayerGameMode(v) ~= 0 then
 						triggerClientEvent ( v, "addNotification", getRootElement(), 4, 72,145,136, getPlayerName(source).." has bought a lottery ticket (/bt)\nThere are now "..getElementData(lotteryElement, "money").." Vero in the lottery!")
@@ -477,6 +479,7 @@ function endLottery()
 			setElementData(lotteryElement, "lotteryRunning", false)
 			setElementData(lotteryElement, "money", 0)
 			setElementData(lotteryElement, "players", 0)
+			setElementData(lotteryElement, "deposit", math.random(300, 1000))
 			hasEnded = true
 		end
 	end
@@ -489,7 +492,7 @@ function endLottery()
 			end	
 			setElementData(lotteryElement, "lotteryRunning", false)
 			setElementData(lotteryElement, "money", 0)
-			setElementData(lotteryElement, "players", 0)	
+			setElementData(lotteryElement, "players", 0)			
 		else
 			endLottery()
 		end
