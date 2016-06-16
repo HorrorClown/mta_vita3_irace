@@ -171,7 +171,6 @@ function putPlayerBackToSelection(player)
 	triggerClientEvent ( player, "addNotification", getRootElement(), 2, 15,150,190, "You left '"..gRaceModes[getPlayerGameMode(player)].name.."'." )
 	callServerFunction(gRaceModes[getPlayerGameMode(player)].quitfunc, player)
 	triggerClientEvent ( player, "showSelection", getRootElement() )
-	setElementData(player, "hackyMapBought", false)
 end
 
 function joinRP(player)

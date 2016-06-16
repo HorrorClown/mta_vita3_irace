@@ -1,10 +1,10 @@
 Provider = inherit(Singleton)
 addEvent("onClientRequestFile", true)
-local DOWNLOAD_SPEED = 2 * 1024 * 1024 -- 2MiB/s
+local DOWNLOAD_SPEED = 4 * 1024 * 1024 -- 2MiB/s
 
 -- Unlimited speed if in debug mode
 if DEBUG then
-   -- DOWNLOAD_SPEED = 1000000000000
+    DOWNLOAD_SPEED = 1000000000000
 end
 
 function Provider:constructor()

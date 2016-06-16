@@ -242,6 +242,12 @@
     <irFile src="files/minigames_vote/games_su.png" />
     <irFile src="files/minigames_vote/games_su_hover.png" />
 
+    <!-- Shader -->
+    <!--<irFile src="files/shader/water/cube_env256.dds" />
+    <irFile src="files/shader/water/smallnoise3d.dds" />
+    <irFile src="files/shader/water/mta-helper.fx" />
+    <irFile src="files/shader/water/water.fx" />-->
+
     <irFile src="files/shader/texreplace.fx" />
     <irFile src="files/shader/zaa.png" />
 

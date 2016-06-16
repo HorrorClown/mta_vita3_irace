@@ -56,7 +56,7 @@ function bet ( player, commandname, bettedplayer, Value )
 
 	local B_Player = nil
 	if bettedplayer == nil or Value == nil then
-		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /bet [Player] [500-5000]", player, 255, 0, 0, true )
+		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /bet [Player] [500-10000]", player, 255, 0, 0, true )
 		return
 	end
 
@@ -69,14 +69,12 @@ function bet ( player, commandname, bettedplayer, Value )
 		end
 	end]]
 
-	if bettedplayer ~= nil and bettedplayer ~= false and Value ~= nil and Value ~= false and Value <= 5000 and Value ~= 0 and Value >= 500 and not bettedPlayer[player] then
+	if bettedplayer ~= nil and bettedplayer ~= false and Value ~= nil and Value ~= false and Value <= 10000 and Value ~= 0 and Value >= 500 and not bettedPlayer[player] then
 		if #getGamemodePlayers(getPlayerGameMode(player)) >= 5 then
 			if getElementData(getGamemodeElement(getPlayerGameMode(player)), "betAvailable") == true then
 				B_Player = getPlayerFromName2(bettedplayer)
 				if B_Player == false or B_Player == nil or B_Player == "false" or type(targetPlayer) == "table" or tostring(getPlayerName(B_Player)) == "false" then
 					outputChatBox ( "#FF0000:ERROR: #FFFFFFThe player doesn't exist or there are more than one players found with that name.", player, 255, 0, 0, true )
-				elseif tostring(getPlayerName(B_Player)) == getPlayerName(player) then
-					outputChatBox ( "#FF0000:ERROR: #FFFFFFYou may not bet on yourself.", player, 255, 0, 0, true )
 				elseif getPlayerGameMode(player) ~= getPlayerGameMode(B_Player) then
 					outputChatBox ( "#FF0000:ERROR: #FFFFFFYou must be in the same gamemode as the other.", player, 255, 0, 0, true )
 				else if getPlayerMoney(player) >= 0 and getPlayerMoney(player) >= tonumber ( Value ) then
@@ -95,7 +93,7 @@ function bet ( player, commandname, bettedplayer, Value )
 			outputChatBox ( "#FF0000:ERROR: #FFFFFFYou need atleast 5 players to bet.", player, 255, 0, 0, true )
 		end
 	else
-		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /bet [Player] [Money(500-5000)]", player, 255, 0, 0, true )
+		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /bet [Player] [Money(500-10000)]", player, 255, 0, 0, true )
 	end
 end
 addCommandHandler ( "bet", bet )
@@ -301,7 +299,6 @@ function buyRedoMap(player, commandName)
 	local gameMode = getPlayerGameMode(player)
 	if gameMode ~= 0 and gameMode ~= 4 and gameMode ~= 6 then
 		local gameModeElement = getGamemodeElement(gameMode)
-		if getElementData(player, "hackyMapBought") then return triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "You have to wait before buying the next map" ) end
 		if getElementData(gameModeElement, "map") ~= "none" and getElementData(gameModeElement, "nextmap") == "random" then
 			if getRedoCounter(getPlayerGameMode(player)) == 0 then
 				if getPlayerMoney(player) >= 3000 or getDonatorBonusState(player, "map", 4) then
@@ -314,7 +311,7 @@ function buyRedoMap(player, commandName)
 						else
 							setPlayerMoney( player, getPlayerMoney(player) - 3000 )
 						end
-						setElementData(player, "hackyMapBought", 2)
+
 						for i,v in ipairs(getGamemodePlayers(getPlayerGameMode(player))) do
 							triggerClientEvent ( v, "addNotification", getRootElement(), 3, 255,0,255, "Mapredo bought by "..getPlayerName(player).."." )
 						end
@@ -345,8 +342,7 @@ function buySetMap(player, commandName, ...)
 				triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map has been played in the last 15 minutes." )
 				return
 			end
-		end	
-		if getElementData(player, "hackyMapBought") then return triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "You have to wait before buying the next map" ) end
+		end
 		local gameModeElement = getGamemodeElement(gameMode)
 		if getElementData(gameModeElement, "map") ~= "none" and getElementData(gameModeElement, "nextmap") == "random" then
 			if getPlayerMoney(player) >= 6000 or getDonatorBonusState(player, "map", 4) then
@@ -361,9 +357,7 @@ function buySetMap(player, commandName, ...)
 					else
 						setPlayerMoney( player, getPlayerMoney(player) - 6000 )
 					end
-					
-					setElementData(player, "hackyMapBought", 2)
-					
+
 					local mapElement = createElement("mapElement")
 					setElementData(mapElement, "name", getElementData(gameModeElement, "nextmap"))
 					setElementData(mapElement, "realname", getElementData(gameModeElement, "nextmapname"))

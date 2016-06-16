@@ -4,17 +4,15 @@ File: dm-main.lua
 Author(s):	Sebihunter
 ]]--
 
---REMOVED: loadMapDMTimer
-
 local databaseMapDM = false
 local timesPlayed = 0
+local hunterTable = {}
 
 gGamemodeDM = 5
 gElementDM = createElement("elementDM")
 gIsDMRunning = false
 gHasEndedDM = false
 gDMMapTimer = false
-gHasHunterDM = false
 countdownTimerDM = false
 gMetaDM = false
 gRedoCounterDM = 0
@@ -89,9 +87,9 @@ function loadMapDM(mapname, force)
 		gRedoCounterDM = gRedoCounterDM - 1
 	else
 		gRedoCounterDM = 0
-	end	
-	
-	gHasHunterDM = false
+	end
+
+	hunterTable = {}
 	gHasEndedDM = false
 	gMapMusicDM = false
 
@@ -321,16 +319,8 @@ function loadMapDM(mapname, force)
 	
 	setTimer(function()
 	for i,v in pairs(getGamemodePlayers(gGamemodeDM)) do
-		--if getElementData(v, "state") == "dead" then
 			setUpDMPlayer(v)
-			local hacky = getElementData(v, "hackyMapBought")
-			if hacky == 2 then
-				setElementData(v, "hackyMapBought", 1)
-			else
-				setElementData(v, "hackyMapBought", false)
-			end			
 			textDisplayRemoveObserver(gTextdisplayDM, v)
-		--end
 	end end, 500,1)
 end
 
@@ -418,13 +408,9 @@ function joinDM(player)
 			setElementVisibleTo ( gPlayerBlips[v], player, true )
 		end
 	end
-	
-	if gHasHunterDM == true then
-		setElementData( player, "ghostmod", false )
-	else
-		setElementData( player, "ghostmod", true )
-	end
-	
+
+	setElementData(player, "ghostmod", true)
+
 	setElementDimension(player, gGamemodeDM)
 	triggerClientEvent ( player, "addNotification", getRootElement(), 2, 15,150,190, "You joined 'Deathmatch'." )
 	triggerClientEvent ( player, "hideSelection", getRootElement() )
@@ -996,17 +982,17 @@ addEventHandler ( "onPlayerWasted", getRootElement(), onPlayerWastedDM )
 
 function playerGotHunter()
 	local player = client
-	if gHasHunterDM == false then
-		gHasHunterDM = true
 
-		callClientFunction(player, "setWeather" ,0)
-		callClientFunction(player, "setTime", 0,0)
-		callClientFunction(player, "resetSkyGradient")
-		setElementData(player, "ghostmod", false )
-	end
-	toggleControl ( player, "vehicle_secondary_fire", false )
+	if hunterTable[client] then return end
+	hunterTable[client] = true
+
+	callClientFunction(player, "setWeather", 0)
+	callClientFunction(player, "setTime", 0, 0)
+	callClientFunction(player, "resetSkyGradient")
+	setElementData(player, "ghostmod", false)
+	toggleControl(player, "vehicle_secondary_fire", false)
 	outputChatBox("#996633:Points: #ffffff You recieved 50 extra-points for reaching the Hunter.", player, 255, 255, 255, true)
-	setElementData(player, "Points", getElementData(player, "Points")+50)
+	setElementData(player, "Points", getElementData(player, "Points") + 50)
 
 	local hasToptime, hasPosition = databaseMapDM:getToptimeFromPlayer(player.m_ID)
 	local toptimeAdded = databaseMapDM:addNewToptime(player.m_ID, getTickCount() - getElementData(gElementDM, "startTick"))
@@ -1024,12 +1010,12 @@ function playerGotHunter()
 		if tPosition <= 12 and (hasToptime and tPosition < hasPosition) then
 			addPlayerArchivement(source, 59)
 		end
+
+		for _, v in pairs(getGamemodePlayers(gGamemodeDM)) do
+			databaseMapDM:sendToptimes(v)
+		end
 	end
-	
-	for _, v in pairs(getGamemodePlayers(gGamemodeDM)) do
-		databaseMapDM:sendToptimes(v)
-	end
-		
+
 	setElementData(player, "hunterReachedCounter", getElementData(player, "hunterReachedCounter")+1)
 	if getElementData(player, "hunterReachedCounter") == 3 then
 		addPlayerArchivement(player, 11)
@@ -1037,9 +1023,10 @@ function playerGotHunter()
 		addPlayerArchivement(player, 10)
 	end		
 	addPlayerArchivement(player, 9)
+
 	if #getAliveGamemodePlayers(gGamemodeDM) == 1 then
 		endMapDM()
 	end
 end
 addEvent("playerGotHunter", true)
-addEventHandler("playerGotHunter", getRootElement(), playerGotHunter)
+addEventHandler("playerGotHunter", root, playerGotHunter)

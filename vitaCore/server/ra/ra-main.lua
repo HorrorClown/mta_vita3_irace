@@ -395,12 +395,6 @@ function loadMapRA(mapname, force)
 	setTimer(function()
 	for i,v in pairs(getGamemodePlayers(gGamemodeRA)) do
 		setUpRAPlayer(v)
-		local hacky = getElementData(v, "hackyMapBought")
-		if hacky == 2 then
-			setElementData(v, "hackyMapBought", 1)
-		else
-			setElementData(v, "hackyMapBought", false)
-		end		
 	end end, 500,1)
 end
 

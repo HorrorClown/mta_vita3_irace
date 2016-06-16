@@ -48,7 +48,7 @@ function startWave()
 		[4] = { text = "Achievements", image = "icon-trophy.png", clickable = clickableAreaCreate(0,0,0,0)  },
 		[5] = { text = "Shop", image = "icon-shop.png", clickable = clickableAreaCreate(0,0,0,0)  },
 		[6] = { text = "Meme", image = "icon-trollface.png", clickable = clickableAreaCreate(0,0,0,0)  },
-		[7] = { text = "Donator", image = "icon-donator.png", clickable = clickableAreaCreate(0,0,0,0)  },
+		[7] = { text = "Specials", image = "icon-donator.png", clickable = clickableAreaCreate(0,0,0,0)  },
 		[8] = { text = "Settings", image = "icon-settings.png", clickable = clickableAreaCreate(0,0,0,0)  }
 	}
 	

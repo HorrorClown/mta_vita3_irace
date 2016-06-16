@@ -153,28 +153,8 @@ function waveDrawDonator()
 			guiSetVisible(donatorStatus, true)
 		end
 	else
-		dxDrawShadowedText([[This is the Vita3 donator panel!
-		
-		Please note that you can only visit this panel by
-		becoming a donator of our community.
-		Donating is very easy and helps the administration
-		to keep up all the Vita services.
-		
-		Donator features (1 Euro per 6 days):
-		-Donator rank on forums, Vita3 and Teamspeak
-		-4 times free mapbuying and redoing per day
-		-Double money per map
-		-Instant and free access to "Memes"
-		-Instant and free access to backlights
-		-Disco color
-		-Rainbow color
-		-Winsound
-		-Custom wintext
-		-Custom nametag status
-		-20.000 Vero per each Euro donated
-		
-		For more information on donations visit:
-		race.vita-online.eu]],0,0, screenWidth, screenHeight, tocolor(255,255,255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "center", "center", false, false, false, true)
+		dxDrawShadowedText([[Available soon for everybody :)
+		-- irace.rocks --]],0,0, screenWidth, screenHeight, tocolor(255,255,255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "center", "center", false, false, false, true)
 	end
 end
 
