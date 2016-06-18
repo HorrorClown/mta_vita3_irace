@@ -390,7 +390,7 @@ setElementData(lotteryElement, "deposit", math.random(300, 1000))
 
 addCommandHandler("bt", 
 function (source, command)
-	local deposit = getElementData(lotteryElement, deposit)
+	local deposit = getElementData(lotteryElement, "deposit")
 	if getPlayerMoney(source) >= deposit and isLoggedIn(source) == true then
 		if getElementData(source, "inLottery") == false then
 			setPlayerMoney(source, getPlayerMoney(source)-deposit)
@@ -401,7 +401,8 @@ function (source, command)
 				setElementData(lotteryElement, "lotteryRunning", true)
 				for i,v in pairs(getElementsByType("player")) do
 					if getPlayerGameMode(v) ~= 0 then
-						triggerClientEvent ( v, "addNotification", getRootElement(), 4, 72,145,136, "A new lottery has been started by "..getPlayerName(source)..".\nUse /bt to buy a ticket.")
+						--triggerClientEvent ( v, "addNotification", getRootElement(), 4, 72,145,136, "A new lottery has been started by "..getPlayerName(source)..".\nUse /bt to buy a ticket (" .. deposit ..")")
+						triggerClientEvent(v, "addNotification", getRootElement(), 4, 72,145,136, ("A new lottery has been started by %s.\nUse /bt to buy a ticket (%s)"):format(source:getName(), deposit))
 					end
 				end				
 				--triggerClientEvent ( source, "addNotification", getRootElement(), 2, 0,200,0, "Lottery ticket bought: -300 Vero" )
