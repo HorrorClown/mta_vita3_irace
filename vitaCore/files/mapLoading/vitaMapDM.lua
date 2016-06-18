@@ -18,6 +18,14 @@ gMapObjects = {}
 gMapTimers = {}
 gScriptsVars = {}
 gScriptShaders = {}
+gBrowsers = {}
+
+_createBrowser = createBrowser
+function createBrowser(width, height, isLocal, transparent)
+	local browser = _createBrowser(width, height, isLocal, transparent)
+	table.insert(gBrowsers, browser)
+	return browser
+end
 
 _dxCreateShader = dxCreateShader
 function dxCreateShader (filepath, priority, maxDistance, layered, elementTypes )
@@ -296,7 +304,13 @@ function stopMap()
 			killTimer(v)
 		end
 	end
-	
+
+	for _, v in pairs(gBrowsers) do
+		if isElement(v) then
+			destroyElement(v)
+		end
+	end
+
 	--Delete script variables
 	for k, v in pairs(_G) do 
 		if not gScriptsVars[k] then
@@ -314,6 +328,7 @@ function stopMap()
 	gChangedModels = {}
 	gChangedTXD = {}
 	gMapTimers = {}
+	gBrowsers = {}
 	filesDownloaded = 0
 	scriptsDownloaded = 0
 	hasLoadedAlready = false
