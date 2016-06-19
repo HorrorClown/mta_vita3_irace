@@ -499,17 +499,24 @@ function downloadMapFinishedSH(player)
 
 	callClientFunction(player, "forceMapRating", getElementData(gElementSH, "mapname"), mapRating, timesPlayed)
 	callClientFunction(player, "allowNewHurryFunc")
+	callClientFunction(player, "showGUIComponents", "timeleft", "timepassed")
 	
 	if timesPlayed == 0 then addPlayerArchivement(player, 53) end
 
-	if gIsSHRunning == false then
+	if not gIsSHRunning then
 		setElementData(player, "state", "ready")
-	else
-		if getElementData(player, "state") ~= "dead" then
-			playerWaitRoundSH(player)
+		return
+	end
+
+	local startTick = getElementData(gElementSH, "startTick")
+	if getTickCount() - startTick < MAX_PLAYER_WAITING then
+		local playerVehicle = getPlayerRaceVeh(player)
+		if isElement(playerVehicle) then
+			setElementData(player, "state", "alive")
+			setVehicleDamageProof(playerVehicle, false)
+			setElementFrozen(playerVehicle, false)
 		end
 	end
-	callClientFunction(player, "showGUIComponents", "timeleft", "timepassed")
 end
 addEvent( "downloadMapFinishedSH", true)
 addEventHandler ( "downloadMapFinishedSH", getRootElement(), downloadMapFinishedSH )
@@ -937,7 +944,13 @@ function countdownFuncSH(id)
 						setElementData(v, "vitaJumpingAllowed", true)
 					end
 				else
-					playerWaitRoundSH(v)
+					setTimer(
+						function(player)
+							if not isElement(player) then return end
+							if getElementData(player, "state") ~= "alive" then
+								killSHPlayer(player)
+							end
+						end, MAX_PLAYER_WAITING, 1, v)
 				end
 			end			
 		end

@@ -499,17 +499,24 @@ function downloadMapFinishedDM(player)
 	mapRating.dislikes = #gRatingsDM - mapRating.likes
 
 	callClientFunction(player, "forceMapRating", getElementData(gElementDM, "mapname"), mapRating, timesPlayed)
-	
+	callClientFunction(player, "showGUIComponents", "timeleft", "timepassed")
+
 	if timesPlayed == 0 then addPlayerArchivement(player, 53) end
-	
-	if gIsDMRunning == false then
+
+	if not gIsDMRunning then
 		setElementData(player, "state", "ready")
-	else
-		if getElementData(player, "state") ~= "dead" then
-			playerWaitRoundDM(player)
+		return
+	end
+
+	local startTick = getElementData(gElementDM, "startTick")
+	if getTickCount() - startTick < MAX_PLAYER_WAITING then
+		local playerVehicle = getPlayerRaceVeh(player)
+		if isElement(playerVehicle) then
+			setElementData(player, "state", "alive")
+			setVehicleDamageProof(playerVehicle, false)
+			setElementFrozen(playerVehicle, false)
 		end
 	end
-	callClientFunction(player, "showGUIComponents", "timeleft", "timepassed")
 end
 addEvent( "downloadMapFinishedDM", true)
 addEventHandler ( "downloadMapFinishedDM", getRootElement(), downloadMapFinishedDM )
@@ -928,22 +935,13 @@ function countdownFuncDM(id)
 						setElementFrozen(getPlayerRaceVeh(v), false)
 					end
 				else
-					playerWaitRoundDM(v)
-					--Todo
-					--[[
 					setTimer(
 						function(player)
 							if not isElement(player) then return end
-							if getElementData(player, "state") == "ready" then
-								setElementData(player, "state", "alive")
-								if isElement(getPlayerRaceVeh(player)) then
-									setVehicleDamageProof(getPlayerRaceVeh(player), false)
-									setElementFrozen(getPlayerRaceVeh(player), false)
-								end
-							else
-								playerWaitRoundDM(player)
+							if getElementData(player, "state") ~= "alive" then
+								killDMPlayer(player)
 							end
-						end, 20000, 1, v)]]
+						end, MAX_PLAYER_WAITING, 1, v)
 				end
 			end			
 		end

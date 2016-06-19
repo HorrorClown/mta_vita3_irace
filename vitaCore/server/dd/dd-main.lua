@@ -489,17 +489,24 @@ function downloadMapFinishedDD(player)
 
 	callClientFunction(player, "forceMapRating", getElementData(gElementDD, "mapname"), mapRating, timesPlayed)
 	callClientFunction(player, "allowNewHurryFunc")
+	callClientFunction(player, "showGUIComponents", "timeleft", "timepassed")
 	
 	if timesPlayed == 0 then addPlayerArchivement(player, 53) end
 
-	if gIsDDRunning == false then
+	if not gIsDDRunning then
 		setElementData(player, "state", "ready")
-	else
-		if getElementData(player, "state") ~= "dead" then
-			playerWaitRoundDD(player)
+		return
+	end
+
+	local startTick = getElementData(gElementDD, "startTick")
+	if getTickCount() - startTick < MAX_PLAYER_WAITING then
+		local playerVehicle = getPlayerRaceVeh(player)
+		if isElement(playerVehicle) then
+			setElementData(player, "state", "alive")
+			setVehicleDamageProof(playerVehicle, false)
+			setElementFrozen(playerVehicle, false)
 		end
 	end
-	callClientFunction(player, "showGUIComponents", "timeleft", "timepassed")
 end
 addEvent( "downloadMapFinishedDD", true)
 addEventHandler ( "downloadMapFinishedDD", getRootElement(), downloadMapFinishedDD )
@@ -924,7 +931,13 @@ function countdownFuncDD(id)
 						setElementFrozen(getPlayerRaceVeh(v), false)
 					end
 				else
-					playerWaitRoundDD(v)
+					setTimer(
+						function(player)
+							if not isElement(player) then return end
+							if getElementData(player, "state") ~= "alive" then
+								killDDPlayer(player)
+							end
+						end, MAX_PLAYER_WAITING, 1, v)
 				end
 			end			
 		end
