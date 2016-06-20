@@ -38,6 +38,7 @@ end
 
 function Core:afterLogin()
     AntiBounce:new()
+    Sounds:new()
 end
 
 function Core:get(...)

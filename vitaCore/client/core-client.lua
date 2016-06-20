@@ -462,40 +462,21 @@ end
 setElementData(getLocalPlayer(), "isChatting", false)
 setTimer( chatCheckPulse, 250, 0)
 
-gWinsound = nil
-function playWinsound(winsound)
-	local sound = playSound(winsound)
-	gWinsound = sound
-	if sound then
-		local lenght = getSoundLength ( sound )
-		if not lenght then lenght = 15 end
-		if isElement(gVitaMapMusic) then setSoundPaused(gVitaMapMusic, true) end
-		setTimer(function()
-			if isElement(gVitaMapMusic) and getElementData(getLocalPlayer(), "disableMusic") == false then
-				setSoundPaused ( gVitaMapMusic, false )
-				gWinsound = nil
-			end
-		end, (lenght+1)*1000, 1)
-	end
-end
-addEvent( "playWinsound", true )
-addEventHandler( "playWinsound", getRootElement(), playWinsound )
-
+-- Todo: Move to Sound class
 gVitaMapMusic = false
 function onMapSoundReceive(url)
-	--outputDebugString("CLIENT: Received music "..url)
+	outputConsole("Mapmusic Stream: " .. tostring(url))
 	if isElement(gVitaMapMusic) then stopSound(gVitaMapMusic) end
 	
 	gVitaMapMusic = _playSound ( url, true )
-	--outputDebugString("CLIENT: Played music "..tostring(gVitaMapMusic))
 	if getElementData(getLocalPlayer(), "disableMusic") == true or gWinsound and isElement(gWinsound) then
-		outputDebugString("CLIENT: Paused")
 		setSoundPaused(gVitaMapMusic, true)
 	end
 end
 addEvent( "onMapSoundReceive", true )
 addEventHandler( "onMapSoundReceive", getRootElement(),onMapSoundReceive )
 
+-- Todo: Move to Sound class
 function onMapSoundStop()
 	if isElement(gVitaMapMusic) then
 		--outputDebugString("CLIENT: Stopped")

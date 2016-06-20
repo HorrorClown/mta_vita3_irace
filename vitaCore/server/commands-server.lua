@@ -54,25 +54,17 @@ bettedPlayer = {}
 function bet ( player, commandname, bettedplayer, Value )
 	if isLoggedIn(player) ~= true then outputChatBox ( "#FF0000:ERROR: #FFFFFFYou must be logged in to use this command.", player, 255, 0, 0, true ) return false end
 
-	local B_Player = nil
-	if bettedplayer == nil or Value == nil then
+	if not bettedplayer or not tonumber(Value) then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /bet [Player] [500-10000]", player, 255, 0, 0, true )
 		return
 	end
 
-	Value = math.ceil(Value)
-
-	--[[local check
-	for k, v in pairs(bettedPlayer) do
-		if k == player then
-			check = k
-		end
-	end]]
+	Value = math.ceil(tonumber(Value))
 
 	if bettedplayer ~= nil and bettedplayer ~= false and Value ~= nil and Value ~= false and Value <= 10000 and Value ~= 0 and Value >= 500 and not bettedPlayer[player] then
 		if #getGamemodePlayers(getPlayerGameMode(player)) >= 5 then
 			if getElementData(getGamemodeElement(getPlayerGameMode(player)), "betAvailable") == true then
-				B_Player = getPlayerFromName2(bettedplayer)
+				local B_Player = getPlayerFromName2(bettedplayer)
 				if B_Player == false or B_Player == nil or B_Player == "false" or type(targetPlayer) == "table" or tostring(getPlayerName(B_Player)) == "false" then
 					outputChatBox ( "#FF0000:ERROR: #FFFFFFThe player doesn't exist or there are more than one players found with that name.", player, 255, 0, 0, true )
 				elseif getPlayerGameMode(player) ~= getPlayerGameMode(B_Player) then
