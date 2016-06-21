@@ -9,39 +9,38 @@ local afktimer = nil
 local afkwarntimer = nil
 
 function checkMain()
-  if isLoggedIn(getLocalPlayer()) == true then
-   if getPlayerGameMode(getLocalPlayer()) == 3 or getPlayerGameMode(getLocalPlayer()) == 0 or getPlayerGameMode(getLocalPlayer()) == 4 or getPlayerGameMode(getLocalPlayer()) == 6 then--Race or Selection or Minigames or Monopoly
-	setElementData(getLocalPlayer(), "AFK", false)
-	setElementData(getLocalPlayer(), "warnAFK", false)
-	return
-   end
-   --if isPedInVehicle ( getLocalPlayer() ) and getElementVelocity ( getPedOccupiedVehicle ( getLocalPlayer() ) ) ~= false then
-   if getPedOccupiedVehicle(localPlayer) and getElementVelocity(getPedOccupiedVehicle(localPlayer)) then
-    v = getElementVelocity ( getPedOccupiedVehicle ( getLocalPlayer() ) )
-    if(v == 0) and getElementData(getLocalPlayer(), "AFK") ~= true then
-		if not isTimer(afktimer) then
-			if getElementData(getLocalPlayer(), "state") == "alive"then
-				afktimer = setTimer(setAutoafk, 1000*20*1, 1)
-				afkwarntimer = setTimer(setAFKWarn, 1000*15*1, 1)
+	if isLoggedIn(getLocalPlayer()) == true then
+		if getPlayerGameMode(getLocalPlayer()) == 3 or getPlayerGameMode(getLocalPlayer()) == 0 or getPlayerGameMode(getLocalPlayer()) == 4 or getPlayerGameMode(getLocalPlayer()) == 6 then--Race or Selection or Minigames or Monopoly
+			setElementData(getLocalPlayer(), "AFK", false)
+			setElementData(getLocalPlayer(), "warnAFK", false)
+			return
+		end
+
+		if getPedOccupiedVehicle(localPlayer) and getElementVelocity(getPedOccupiedVehicle(localPlayer)) then
+			v = getElementVelocity ( getPedOccupiedVehicle ( getLocalPlayer() ) )
+			if(v == 0) and getElementData(getLocalPlayer(), "AFK") ~= true then
+				if not isTimer(afktimer) then
+					if getElementData(getLocalPlayer(), "state") == "alive"then
+						afktimer = setTimer(setAutoafk, 1000*20*1, 1)
+						afkwarntimer = setTimer(setAFKWarn, 1000*15*1, 1)
+					end
+				else
+					if getElementData(getLocalPlayer(), "state") ~= "alive" or isElementFrozen(getPedOccupiedVehicle(getLocalPlayer())) or getElementAttachedTo(getPedOccupiedVehicle(getLocalPlayer())) then
+						if isTimer(afktimer) then killTimer(afktimer) end
+						if isTimer(afkwarntimer) then killTimer(afkwarntimer) end
+					end
+				end
+			else
+				if isTimer(afktimer) then killTimer(afktimer) end
+				if isTimer(afkwarntimer) then killTimer(afkwarntimer) end
+				setElementData(getLocalPlayer(),"warnAFK", false)
 			end
 		else
-			if getElementData(getLocalPlayer(), "state") ~= "alive" or isElementFrozen ( getPedOccupiedVehicle ( getLocalPlayer() )) == true then
-			    if isTimer(afktimer) then killTimer(afktimer) end
-				if isTimer(afkwarntimer) then killTimer(afkwarntimer) end
-			end
+			if isTimer(afktimer) then killTimer(afktimer) end
+			if isTimer(afkwarntimer) then killTimer(afkwarntimer) end
+			setElementData(getLocalPlayer(),"warnAFK", false)
 		end
-    else
-        if isTimer(afktimer) then killTimer(afktimer) end
-		if isTimer(afkwarntimer) then killTimer(afkwarntimer) end
-		setElementData(getLocalPlayer(),"warnAFK", false)
-
-    end
-   else
-        if isTimer(afktimer) then killTimer(afktimer) end
-		if isTimer(afkwarntimer) then killTimer(afkwarntimer) end
-		setElementData(getLocalPlayer(),"warnAFK", false)
-   end
-  end
+	end
 end
 setTimer ( checkMain, 100, 0)
 
