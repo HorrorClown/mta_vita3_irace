@@ -59,10 +59,10 @@ function waveDrawHelp()
 		First row
 		]]--
 		
-		--Members
-		dxDrawShadowedText("Members ("..#waveVitaMembers.members..")",screenWidth/2-392,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
+		--Recruits
+		dxDrawShadowedText("Recruits ("..#waveVitaMembers.recruits..")",screenWidth/2-392,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
 		lines = lines + 20
-		for i,v in ipairs(waveVitaMembers.members) do
+		for i,v in ipairs(waveVitaMembers.recruits) do
 			isDrawn = true
 			dxDrawShadowedText(tostring(v),screenWidth/2-392,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(255, 255, 255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)	
 			lines = lines+15
@@ -80,10 +80,10 @@ function waveDrawHelp()
 		]]--
 		lines = 0
 		
-		--Recruits
-		--[[dxDrawShadowedText("Recruits ("..#waveVitaMembers.recruits..")",screenWidth/2-192,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
+		--Members
+		dxDrawShadowedText("Members ("..#waveVitaMembers.members..")",screenWidth/2-192,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
 		lines = lines + 20
-		for i,v in ipairs(waveVitaMembers.recruits) do
+		for i,v in ipairs(waveVitaMembers.members) do
 			isDrawn = true
 			dxDrawShadowedText(v,screenWidth/2-192,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(255, 255, 255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)
 			lines = lines+15
@@ -94,23 +94,23 @@ function waveDrawHelp()
 			lines = lines +15
 		end
 		lines = lines +5
-		isDrawn = false	]]
+		isDrawn = false
 		
 		--Seniors
-		--[[dxDrawShadowedText("Senior Members ("..#waveVitaMembers.seniors..")",screenWidth/2-192,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
+		dxDrawShadowedText("Senior Members ("..#waveVitaMembers.seniors..")",screenWidth/2-192,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
 		lines = lines + 20
 		for i,v in ipairs(waveVitaMembers.seniors) do
 			isDrawn = true
 			dxDrawShadowedText(v,screenWidth/2-192,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(255, 255, 255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)	
 			lines = lines+15
-		end]]
+		end
 		
-		--[[if isDrawn == false then
+		if isDrawn == false then
 			dxDrawShadowedText("none",screenWidth/2-192,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(255, 255, 255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)
 			lines = lines +15
 		end
 		lines = lines+5
-		isDrawn = false]]
+		isDrawn = false
 		
 		dxDrawShadowedText("Moderators ("..#waveVitaMembers.mods..")",screenWidth/2-192,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
 		lines = lines + 20
@@ -133,7 +133,7 @@ function waveDrawHelp()
 		lines = 0
 		isDrawn = false	
 		
-		--[[dxDrawShadowedText("Global Moderators ("..#waveVitaMembers.gmods..")",screenWidth/2+92,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
+		dxDrawShadowedText("Co-Leader ("..#waveVitaMembers.gmods..")",screenWidth/2+92,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
 		lines = lines + 20
 		for i,v in ipairs(waveVitaMembers.gmods) do
 			isDrawn = true
@@ -146,7 +146,7 @@ function waveDrawHelp()
 			lines = lines +15
 		end	
 		isDrawn = false		
-		lines = lines+5]]
+		lines = lines+5
 
 		dxDrawShadowedText("Leader ("..#waveVitaMembers.admins..")",screenWidth/2+92,screenHeight/2-240+lines, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
 		lines = lines + 20
