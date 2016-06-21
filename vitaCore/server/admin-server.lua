@@ -503,12 +503,10 @@ addCommandHandler("addachievement", setachievementfunc)
 
 function setrights(player, commandname, toplayer, Value)
 	if not player:hasRights("Leader") then return end
-
-	local targetPlayer
-	if toplayer == nil or Value	== nil then
+	if not toplayer or not ADMIN_GROUPS[Value] then
 		outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /setrights [player] [User/Recruit/Member/SeniorMember/Moderator/CoLeader/Leader]", player, 255, 0, 0, true )
 	else if getPlayerFromName(toplayer) ~= false or getPlayerFromName(toplayer) ~= nil  then
-		targetPlayer = getPlayerFromName2(toplayer)
+			local targetPlayer = getPlayerFromName2(toplayer)
 			if targetPlayer == false or type(targetPlayer) == "table" then
 				outputChatBox ( "#FF0000:ERROR: #FFFFFFThe player doesn't exist or there are more then 1 possible player choice.", player, 255, 0, 0, true )
 			else

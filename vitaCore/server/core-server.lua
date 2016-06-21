@@ -28,15 +28,12 @@ gRaceModes = {
 
 donatorTeam = createTeam("Donator", 194, 103, 255)
 
-recruitTeam = createTeam("Recruit", 0, 51, 221)
-memberTeam = createTeam("Member", 0, 119, 255)
-seniorTeam = createTeam("Senior-Member", 0, 187, 255)
-moderatorTeam = createTeam("Moderator", 0, 189, 57)
-coleaderTeam = createTeam("CoLeader", 0, 243, 113)
-leaderTeam = createTeam("Leader", 130, 134, 134)
-
---adminTeam = createTeam ( "Admin", 130, 134, 134 )
---globalTeam = createTeam ( "GlobalModerator", 0, 243, 113 )
+recruitTeam = createTeam("Recruit", 145, 165, 240)
+memberTeam = createTeam("Member", 130, 88, 250)
+seniorTeam = createTeam("Senior-Member", 45, 100, 255)
+moderatorTeam = createTeam("Moderator", 255, 128, 0)
+coleaderTeam = createTeam("CoLeader", 223, 116, 1)
+leaderTeam = createTeam("Leader", 255, 0, 0)
 
 RandomMes = {
 	[1] = "Read and obey the rules (Show the help with 'F1')!",

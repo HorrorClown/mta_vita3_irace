@@ -276,37 +276,37 @@ function drawScoreboard()
 	
 	--Recruit
 	for id, team in ipairs(scdatas.players.recruit) do
-		drawUserstats(team, 0, 51, 221, "Recruit")
+		drawUserstats(team, 145, 165, 240, "Recruit")
 		scdatas.rowid = scdatas.rowid + 1
 	end
 	
 	--Member
 	for id, team in ipairs(scdatas.players.member) do
-		drawUserstats(team, 0, 119, 255, "Member")
+		drawUserstats(team, 130, 88, 250, "Member")
 		scdatas.rowid = scdatas.rowid + 1	
 	end
 	
 	--SeniorMember
 	for id, team in ipairs(scdatas.players.smember) do
-		drawUserstats(team, 0, 187, 255, "Senior-Member")
+		drawUserstats(team, 45, 100, 255, "Senior-Member")
 		scdatas.rowid = scdatas.rowid + 1
 	end
 	
 	--Moderator
 	for id, team in ipairs(scdatas.players.moderator) do
-		drawUserstats(team, 0, 189, 57, "Moderator")
+		drawUserstats(team, 255, 128, 0, "Moderator")
 		scdatas.rowid = scdatas.rowid + 1
 	end
 	
 	--CoLeader
 	for id, team in ipairs(scdatas.players.gmoderator) do
-		drawUserstats(team, 0, 243, 113, "Co-Leader")
+		drawUserstats(team, 223, 116, 1, "Co-Leader")
 		scdatas.rowid = scdatas.rowid + 1
 	end	
 	
 	--Leader
 	for id, team in ipairs(scdatas.players.admin) do
-		drawUserstats(team, 130, 134, 134, "Leader")
+		drawUserstats(team, 255, 0, 0, "Leader")
 		scdatas.rowid = scdatas.rowid + 1
 	end
 	

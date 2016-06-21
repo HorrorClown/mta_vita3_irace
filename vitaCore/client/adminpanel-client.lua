@@ -395,7 +395,7 @@ function showAdminPanel()
 			dxSetEnabled(guiAdminDX["bans_ip"], true)
 			dxSetEnabled(guiAdminDX["bans_serial"], true)	
 			dxSetEnabled(guiAdminDX["bans_delete"], true)			
-		elseif getElementData(getLocalPlayer(), "Level") == "Leader" then
+		elseif getElementData(getLocalPlayer(), "Level") == "Leader" or getElementData(getLocalPlayer(), "Level") == "Owner" then
 			dxSetEnabled(guiAdminDX["player_blow"], true)
 			dxSetEnabled(guiAdminDX["player_mute"], true)
 			dxSetEnabled(guiAdminDX["player_kick"], true)

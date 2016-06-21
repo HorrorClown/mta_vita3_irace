@@ -34,9 +34,8 @@ function Player:addArchivement(id)
 end
 
 
-local rightTable = {["Leader"] = 6, ["CoLeader"] = 5, ["Moderator"] = 4, ["SeniorMember"] = 3, ["Member"] = 2, ["Recruit"] = 1, ["User"] = 0}
 function Player:hasRights(level)
-    if rightTable[self.m_Level] >= rightTable[level] then
+    if ADMIN_LEVEL[self.m_Level] >= ADMIN_LEVEL[level] then
         return true
     end
 
