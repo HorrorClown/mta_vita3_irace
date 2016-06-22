@@ -30,11 +30,13 @@ winsoundNames = {
 	[22] = { name = "Wonderful Life" }
 }
 
+local previewSound
 function previewWinsound(button)
 	if button == "left" then
 		local row = dxGridListGetSelectedItem ( g_donatorgui["tabDonatorList"] )
 		if dxGridListGetItemData (g_donatorgui["tabDonatorList"], row ) then
-			playSound("files/winsounds/"..dxGridListGetItemData(g_donatorgui["tabDonatorList"], row )..".mp3")
+			if isElement(previewSound) then previewSound:stop() end
+			previewSound = playSound("files/winsounds/"..dxGridListGetItemData(g_donatorgui["tabDonatorList"], row )..".mp3")
 		end
 	end
 end
@@ -51,17 +53,20 @@ end
 function setWinsound(commandName, number)
 	number = math.floor(tonumber(number))
 	if number >= 0 and number <= #winsoundNames then
-		if getElementData(getLocalPlayer(), "isDonator") == true then
+		if getPlayerMoney() >= 200000 then
+			setPlayerMoney(getPlayerMoney() - 200000)
 			setElementData(getLocalPlayer(), "useWinsound", number)
 			updateSettings("useWinsound", tostring(number))
-			addNotification(1, 0, 200, 0, "New winsound has been set.")
+			addNotification(1, 0, 200, 0, "New winsound has been bought.")
+		else
+			addNotification(1, 200, 50, 50, "Not enough money.")
 		end
 	end
 end
-addCommandHandler ( "winsound", setWinsound )
+addCommandHandler("winsound", setWinsound)
 
 
-function toggleRainbowColor ( button )
+--[[function toggleRainbowColor ( button )
 	if button == "left" then
 		if getElementData(getLocalPlayer(), "rainbowColor") == true then
 			setElementData(getLocalPlayer(), "rainbowColor", false)
@@ -80,9 +85,9 @@ function toggleRainbowColor ( button )
 			end
 		end
 	end
-end
+end]]
 
-function toggleDisoColor ( button )
+--[[function toggleDisoColor ( button )
 	if button == "left" then
 		if getElementData(getLocalPlayer(), "discoColor") == true then
 			setElementData(getLocalPlayer(), "discoColor", false)
@@ -101,27 +106,27 @@ function toggleDisoColor ( button )
 			end
 		end
 	end
-end
+end]]
 
 g_donatorgui = {}
 g_donatorgui["tabDonatorList"] = dxCreateGridList(screenWidth/2-392,screenHeight/2-215,250,400)
-g_donatorgui["set_winsound"] = dxCreateButton(screenWidth/2-392,screenHeight/2+190,250,24,"Set Winsound",false)
+g_donatorgui["set_winsound"] = dxCreateButton(screenWidth/2-392,screenHeight/2+190,250,24,"Buy Winsound (200000 Vero)",false)
 addEventHandler ( "onClientDXClick", g_donatorgui["set_winsound"], clickOnWinsound, false )
 g_donatorgui["preview_winsound"] = dxCreateButton(screenWidth/2-392,screenHeight/2+219,250,24,"Preview Winsound",false)
 addEventHandler ( "onClientDXClick", g_donatorgui["preview_winsound"], previewWinsound, false )
 
-g_donatorgui["toggle_discocolor"] = dxCreateButton(screenWidth/2-137,screenHeight/2+45,250,24,"Disco Color: Off",false)
-addEventHandler ( "onClientDXClick", g_donatorgui["toggle_discocolor"], toggleDisoColor, false ) 
+--g_donatorgui["toggle_discocolor"] = dxCreateButton(screenWidth/2-137,screenHeight/2+45,250,24,"Disco Color: Off",false)
+--addEventHandler ( "onClientDXClick", g_donatorgui["toggle_discocolor"], toggleDisoColor, false ) 
 
-g_donatorgui["toggle_rainbowcolor"] = dxCreateButton(screenWidth/2-137,screenHeight/2+75,250,24,"Rainbow Color: Off",false)
-addEventHandler ( "onClientDXClick", g_donatorgui["toggle_rainbowcolor"], toggleRainbowColor, false ) 
+--g_donatorgui["toggle_rainbowcolor"] = dxCreateButton(screenWidth/2-137,screenHeight/2+75,250,24,"Rainbow Color: Off",false)
+--addEventHandler ( "onClientDXClick", g_donatorgui["toggle_rainbowcolor"], toggleRainbowColor, false ) 
 
-donatorWinmsg = guiCreateEdit ( screenWidth/2-137,screenHeight/2-40,250,24, "Ohai Thar", false )	
-guiSetVisible(donatorWinmsg, false)
-donatorStatus = guiCreateEdit ( screenWidth/2-137,screenHeight/2+10,250,24, "Ohai Thar", false )	
-guiSetVisible(donatorStatus, false)
-donatorBlank = guiCreateLabel ( 0,0,0,0,"",false )
-guiSetVisible(donatorBlank, false)	
+--donatorWinmsg = guiCreateEdit ( screenWidth/2-137,screenHeight/2-40,250,24, "Ohai Thar", false )	
+--guiSetVisible(donatorWinmsg, false)
+--donatorStatus = guiCreateEdit ( screenWidth/2-137,screenHeight/2+10,250,24, "Ohai Thar", false )	
+--guiSetVisible(donatorStatus, false)
+--donatorBlank = guiCreateLabel ( 0,0,0,0,"",false )
+--guiSetVisible(donatorBlank, false)	
 
 
 for num = 0, #winsoundNames do
@@ -134,31 +139,26 @@ for i, v in pairs(g_donatorgui) do
 end
 
 function waveDrawDonator()
-	if getElementData(getLocalPlayer(), "isDonator") == true then
-		dxDrawShadowedText("Available Winsounds",screenWidth/2-392,screenHeight/2-240, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
-		dxDrawShadowedText("In order to use a Winsound just select it\nin the list and press the button.\n\nYou can also use /winsound [ID]\nto choose your winsound while driving.\n\nIf you can't find the winsound you're\nlooking for please contact us so we\ncan add it for you.",screenWidth/2-137,screenHeight/2-215, screenWidth, screenHeight, tocolor(255,255,255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)	
-		
-		dxDrawShadowedText("Custom Wintext ('none' to disable)",screenWidth/2-137,screenHeight/2-60, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
-		
-		if string.len(removeColorCoding(guiGetText(donatorStatus))) <= 15 then
-			dxDrawShadowedText("Nametag Status ('none' to disable)",screenWidth/2-137,screenHeight/2-12, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
-		else
-			dxDrawShadowedText("Nametag Status (Status too long - max. 15 letters)",screenWidth/2-137,screenHeight/2-12, screenWidth, screenHeight, tocolor(255,0,0,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
-		end
-		for i, v in pairs(g_donatorgui) do
-			dxSetVisible(v, true)
-		end
-		if guiGetVisible(donatorWinmsg) ~= true then
-			guiSetVisible(donatorWinmsg, true)
-			guiSetVisible(donatorStatus, true)
-		end
+	dxDrawShadowedText("Available Winsounds",screenWidth/2-392,screenHeight/2-240, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
+	dxDrawShadowedText("In order to use a Winsound just select it\nin the list and press the button.\n\nYou can also use /winsound [ID]\nto choose your winsound while driving.\n\nIf you can't find the winsound you're\nlooking for please contact us so we\ncan add it for you.",screenWidth/2-137,screenHeight/2-215, screenWidth, screenHeight, tocolor(255,255,255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "left", "top", false, false, false, true)	
+	
+	--dxDrawShadowedText("Custom Wintext ('none' to disable)",screenWidth/2-137,screenHeight/2-60, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
+	
+	--[[if string.len(removeColorCoding(guiGetText(donatorStatus))) <= 15 then
+		dxDrawShadowedText("Nametag Status ('none' to disable)",screenWidth/2-137,screenHeight/2-12, screenWidth, screenHeight, tocolor(214,219,145,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
 	else
-		dxDrawShadowedText([[Available soon for everybody :)
-		-- irace.rocks --]],0,0, screenWidth, screenHeight, tocolor(255,255,255,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1,"default-bold", "center", "center", false, false, false, true)
+		dxDrawShadowedText("Nametag Status (Status too long - max. 15 letters)",screenWidth/2-137,screenHeight/2-12, screenWidth, screenHeight, tocolor(255,0,0,255*waveAlpha*waveMenuAlpha),tocolor(0,0,0,255*waveAlpha*waveMenuAlpha), 1, ms_bold_12 , "left", "top", false, false, false, true)
+	end]]
+	for i, v in pairs(g_donatorgui) do
+		dxSetVisible(v, true)
 	end
+	--if guiGetVisible(donatorWinmsg) ~= true then
+	--	guiSetVisible(donatorWinmsg, true)
+	--	guiSetVisible(donatorStatus, true)
+	--end
 end
 
-function checkIfNotClickedOnEditDonator ( button, state, sx, sy, worldX, worldY, worldZ, clickedElement )
+--[[function checkIfNotClickedOnEditDonator ( button, state, sx, sy, worldX, worldY, worldZ, clickedElement )
 	if waveSelected == 7 and state == "down" and showUserGui == true then
 		local x,y  = guiGetPosition(donatorWinmsg, false)
 		local w, h = guiGetSize(donatorWinmsg, false)
@@ -167,4 +167,4 @@ function checkIfNotClickedOnEditDonator ( button, state, sx, sy, worldX, worldY,
 		if not (sx >= x and sx <= x+w and sy >= y and sy <= y+h) and not (sx >= x1 and sx <= x1+w1 and sy >= y1 and sy <= y1+h1) then guiBringToFront ( donatorBlank ) end
 	end
 end
-addEventHandler ( "onClientClick", getRootElement(), checkIfNotClickedOnEditDonator )
+addEventHandler ( "onClientClick", getRootElement(), checkIfNotClickedOnEditDonator )]]
