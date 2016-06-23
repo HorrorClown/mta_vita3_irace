@@ -731,16 +731,17 @@ function killDMPlayer(player, noSpectate)
 		}
 		
 		local hasCustomText = false
-		
-		if getElementData(alivePlayers[1], "isDonator") == true then
-			if getElementData(alivePlayers[1], "useWinsound") ~= 0 then
-				local players = getGamemodePlayers(gGamemodeDM)
-				for theKey,thePlayer in ipairs(players) do
-					if getElementData(thePlayer, "toggleWinsounds") == 1 then
-						triggerClientEvent(thePlayer, "playWinsound", getRootElement(), "files/winsounds/"..tostring(getElementData(alivePlayers[1], "useWinsound"))..".mp3")
-					end
+
+		local winsound = getElementData(alivePlayers[1], "useWinsound")
+		if winsound ~= 0 then
+			for theKey,thePlayer in ipairs(getGamemodePlayers(gGamemodeDM)) do
+				if getElementData(thePlayer, "toggleWinsounds") == 1 then
+					thePlayer:triggerEvent("playWinsound", winsound)
 				end
 			end
+		end
+
+		if getElementData(alivePlayers[1], "isDonator") == true then
 			if getElementData(alivePlayers[1], "customWintext") ~= "none" then
 				showWinMessage(gGamemodeDM, "#FFFFFF"..tostring(getElementData(alivePlayers[1], "customWintext")), "#FFFFFF"..tostring(ran_win_mesage[math.random(1,9)]), 214, 219, 145)
 				hasCustomText = true

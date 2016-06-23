@@ -75,8 +75,8 @@ function showWave()
 	fadeCamera(true)
 	showCursor(true)
 	waveRefreshVitaMembers()
-	guiSetText(donatorWinmsg, getElementData(getLocalPlayer(), "customWintext"))
-	guiSetText(donatorStatus, getElementData(getLocalPlayer(), "customStatus"))
+	--guiSetText(donatorWinmsg, getElementData(getLocalPlayer(), "customWintext"))
+	--guiSetText(donatorStatus, getElementData(getLocalPlayer(), "customStatus"))
 
 	dxGridListClear(g_achievementgui["list_left"])
 	dxGridListClear(g_achievementgui["list_collected"])	
@@ -186,13 +186,13 @@ function renderWave()
 		dxSetAlpha(v, waveAlpha*waveMenuAlpha)	
 	end		
 	
-	if waveSelected ~= 7 then --Must be done this way because MTA does not like making it invisible all the time since 1.5 :(
+	--[[if waveSelected ~= 7 then --Must be done this way because MTA does not like making it invisible all the time since 1.5 :(
 		guiSetVisible(donatorWinmsg, false)
 		guiSetVisible(donatorStatus, false)
-	end
+	end]]
 	
-	guiSetAlpha(donatorWinmsg, waveAlpha*waveMenuAlpha)
-	guiSetAlpha(donatorStatus, waveAlpha*waveMenuAlpha)	
+	--guiSetAlpha(donatorWinmsg, waveAlpha*waveMenuAlpha)
+	--guiSetAlpha(donatorStatus, waveAlpha*waveMenuAlpha)
 	
 	guiSetVisible(settingsBox, false)
 	guiSetAlpha(settingsBox, waveAlpha*waveMenuAlpha)
@@ -390,17 +390,17 @@ function hideWave()
 	showCursor(false)
 	playSound("files/audio/wave_change.mp3")
 	
-	if tostring(guiGetText(donatorWinmsg)) ~= "Ohai Thar" then
+	--[[if tostring(guiGetText(donatorWinmsg)) ~= "Ohai Thar" then
 		setElementData(getLocalPlayer(), "customWintext", tostring(guiGetText(donatorWinmsg)))
 		updateSettings("customWintext", tostring(guiGetText(donatorWinmsg)))
-	end	
+	end	]]
 	
-	if tostring(guiGetText(donatorStatus)) ~= "Ohai Thar" then
+	--[[if tostring(guiGetText(donatorStatus)) ~= "Ohai Thar" then
 		if string.len(removeColorCoding(guiGetText(donatorStatus))) <= 15 then
 			setElementData(getLocalPlayer(), "customStatus", tostring(guiGetText(donatorStatus)))
 			updateSettings("customStatus", tostring(guiGetText(donatorStatus)))
 		end
-	end		
+	end		]]
 	--if getPlayerGameMode(getLocalPlayer()) ~= 0 then
 		--showGUIComponents("nextMap", "mapdisplay", "spectators", "money", "timeleft", "timepassed")
 	--end
