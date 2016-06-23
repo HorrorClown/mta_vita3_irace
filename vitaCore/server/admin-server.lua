@@ -359,7 +359,7 @@ function ban(player, commandname, toplayer, Value)
 			if targetPlayer == false or type(targetPlayer) == "table" then
 				outputChatBox ( "#FF0000:ERROR: #FFFFFFThe player doesn't exist or there are more then 1 possible player choice.", player, 255, 0, 0, true )
 			else
-				if Value == 0 then
+				if tonumber(Value) == 0 then
 					outputChatBoxToGamemode ( "#125861:ADMIN:#FFFFFF "..getPlayerName(targetPlayer).." has been banned by "..getPlayerName(player)..".", getPlayerGameMode(player), 255, 0, 0, true )
 					banPlayer(targetPlayer, true, true, true, player, "Permaban", 0)
 				else
