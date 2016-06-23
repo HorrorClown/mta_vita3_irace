@@ -22,7 +22,7 @@ function Sounds:destructor()
 end
 
 function Sounds:playWinsound(winsound)
-    if localPlayer:getData("toggleWinsounds") == 1 then return end
+    if localPlayer:getData("toggleWinsounds") == 0 then return end
     if self.m_Sound then return end
 
     if not string.find(winsound, "http") then
