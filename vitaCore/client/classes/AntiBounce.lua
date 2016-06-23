@@ -33,12 +33,13 @@ end
 function AntiBounce:toggleAntiBounce()
     self.m_Enabled = not self.m_Enabled
     core:set("AntiBounce", "enabled", self.m_Enabled)
-    addNotification(2, 0, 200, 0, ("AntiBounce %s"):format(self.m_Enabled and "enabled" or "disabled"))
 
     if self.m_Enabled then
         addEventHandler("onClientPreRender", root, self.fn_PreRender)
+        addNotification(2, 0, 200, 0, "AntiBounce enabled")
     else
         removeEventHandler("onClientPreRender", root, self.fn_PreRender)
+        addNotification(2, 220, 20, 0, "AntiBounce disabled")
     end
 end
 
