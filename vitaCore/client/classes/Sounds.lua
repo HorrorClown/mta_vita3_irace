@@ -58,9 +58,10 @@ function Sounds:handleMapMusic(length)
         function()
             if isElement(gVitaMapMusic) then
                 gVitaMapMusic:setPaused(false)
-                self.m_Sound = nil
-                gWinsound = nil
             end
+
+            self.m_Sound = nil
+            gWinsound = nil
         end, (length+0.5)*1000, 1
     )
 end
