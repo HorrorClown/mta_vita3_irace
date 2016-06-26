@@ -20,7 +20,7 @@ function addKillmessage(killed, killer, reason)
 			gKillmessages[number] = {}
 			gKillmessages[number].alpha = 0
 			gKillmessages[number].killed = _getPlayerName(killed)
-			gKillmessages[number].killer = _getPlayerName(killer)
+			gKillmessages[number].killer = killer and _getPlayerName(killer) or false
 			gKillmessages[number].reason = reason
 			gKillmessages[number].starttick = getTickCount ()
 			if isEventHandlerAdded( "onClientRender", getRootElement(), renderKillmessages ) == false then
