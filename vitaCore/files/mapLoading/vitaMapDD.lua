@@ -103,13 +103,9 @@ function createMarker(x,y,z,theType,size,r,g,b,a,visibleTo )
 end
 
 _createObject = createObject
-function createObject(modelid, x,y,z,rx,ry,rz,isLowLOD )
-	if not rx then rx = 0 end
-	if not ry then ry = 0 end
-	if not rz then rz = 0 end
-	if not isLowLOD then isLowLOD = false end
-	if not visibleTo then visibleTo = getRootElement() end
-	local object = _createObject(modelid, x,y,z,rx,ry,rz,isLowLOD )
+function createObject(modelid, x, y, z, ...)
+	if not modelid or not x or not y or not z then return false end
+	local object = _createObject(modelid, x,y,z, ...)
 	gMapObjects[#gMapObjects+1] = object
 	setElementDimension(object, getElementData(getLocalPlayer(), "gameMode"))
 	return object
@@ -533,23 +529,24 @@ function onDownloadFinish ( file )
 							local collisions = (xmlNodeGetAttribute(mapfilenode, "collisions") or "true")
 							
 							local object = createObject(modelID, posX, posY, posZ, rotX, rotY, rotZ)
-							
-							if interiorID then
-								setElementInterior(object, interiorID)
+							if object then
+								if interiorID then
+									setElementInterior(object, interiorID)
+								end
+								setElementDimension(object, getElementData(getLocalPlayer(), "gameMode"))
+
+								if doublesided == "true" then
+									setElementDoubleSided(object, true)
+								end
+
+								if(collisions == "false" or collisions == false) then
+									setElementCollisionsEnabled(object,false)
+								else
+									setElementCollisionsEnabled(object,true)
+								end
+								setObjectScale(object,scale)
+								setElementAlpha(object,alpha)
 							end
-							setElementDimension(object, getElementData(getLocalPlayer(), "gameMode"))
-							
-							if doublesided == "true" then
-								setElementDoubleSided(object, true)
-							end
-							
-							if(collisions == "false" or collisions == false) then
-								setElementCollisionsEnabled(object,false)
-							else
-								setElementCollisionsEnabled(object,true)
-							end							
-							setObjectScale(object,scale)
-							setElementAlpha(object,alpha)
 						end
 						i2 = i2+1
 					end

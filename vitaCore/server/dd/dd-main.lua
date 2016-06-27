@@ -75,8 +75,24 @@ function loadMapDD(mapname, force)
 	if not force then force = false end
 	if isMapRunningDD() or gIsDDRunning == true then unloadMapDD() end
 	if #getGamemodePlayers(gGamemodeDD) == 0 and force == false then return unloadMapDD() end	
-	
-	if mapname == "random" then 
+
+	-- Make sure that the resource is stopped
+	local ddRes = getResourceFromName("vitaMapDD")
+	if ddRes then
+		if getResourceState(ddRes) == "Running" then
+			stopResource(ddRes)
+			setTimer(loadMapDD, 500, 1, mapname, force)
+			return
+		elseif getResourceState(ddRes) == "failed to load" then
+			loadMapDD("random")
+			return false
+		elseif getResourceState(ddRes) ~= "loaded" then
+			setTimer(loadMapDD, 500, 1, mapname, force)
+			return
+		end
+	end
+
+	if mapname == "random" then
 		mapname = getRandomMap(gGamemodeDD)
 		if mapname == "failed" then
 			loadMapDD("random")
@@ -106,7 +122,7 @@ function loadMapDD(mapname, force)
 	end		
 	
 	local resource = getResourceFromName ( mapname )
-	
+
 	--stopResource(getResourceFromName ( "vitaMapDD" ))
 	--deleteResource ( "vitaMapDD")
 	--refreshResources ( false )
@@ -115,7 +131,9 @@ function loadMapDD(mapname, force)
 	end
 	
 	for i,v in ipairs(gMapFilesDD) do
-		fileDelete ( ":vitaMapDD/"..tostring(v) )
+		if fileExists(":vitaMapDD/"..tostring(v)) then
+			fileDelete (":vitaMapDD/"..tostring(v))
+		end
 	end
 	gMapFilesDD = {}
 	
@@ -130,9 +148,15 @@ function loadMapDD(mapname, force)
 	
 	mapNode = xmlCreateChild(mapXML, "script")
 	xmlNodeSetAttribute(mapNode, "src", "vitaMap.lua")
-	xmlNodeSetAttribute(mapNode, "type", "client")	
+	xmlNodeSetAttribute(mapNode, "type", "client")
+
+	mapNode = xmlCreateChild(mapXML, "script")
+	xmlNodeSetAttribute(mapNode, "src", "vitaMapServer.lua")
+	xmlNodeSetAttribute(mapNode, "type", "server")
+
 	fileCopy ( "files/mapLoading/vitaMapDD.lua", ":vitaMapDD/vitaMap.lua", true )
-	
+	fileCopy ( "files/mapLoading/serverDD.lua", ":vitaMapDD/vitaMapServer.lua", true )
+
 	xmlSaveFile(mapXML)
 	xmlUnloadFile(mapXML)
 		
@@ -213,13 +237,23 @@ function loadMapDD(mapname, force)
 				local metaLineExists = false
 				for i,v in ipairs(temporaryTable) do if v == copyFile then metaLineExists = true end end
 
-				if metaLineExists == false and xmlNodeGetAttribute(xmlNode, "type") == "client" then		
+				if metaLineExists == false and (xmlNodeGetAttribute(xmlNode, "type") == "client" or xmlNodeGetAttribute(xmlNode, "type") == "shared") then
 					fileCopy ( ":"..mapname.."/"..copyFile, ":vitaMapDD/"..copyFile, true )
 					table.insert(gMapFilesDD, copyFile)
 					mapNode = xmlCreateChild(mapXML, "file")
 					xmlNodeSetAttribute(mapNode, "src", copyFile)
 					xmlNodeSetAttribute(mapNode, "type", "client")
 					xmlNodeSetAttribute(mapNode, "download", "false")	
+					temporaryTable[#temporaryTable+1] = copyFile
+				end
+
+				if not metaLineExists and (xmlNodeGetAttribute(xmlNode, "type") == "server" or xmlNodeGetAttribute(xmlNode, "type") == "shared" or not xmlNodeGetAttribute(xmlNode, "type")) then
+					fileCopy ( ":"..mapname.."/"..copyFile, ":vitaMapDD/"..copyFile, true )
+					table.insert(gMapFilesDD, copyFile)
+					mapNode = xmlCreateChild(mapXML, "file")
+					xmlNodeSetAttribute(mapNode, "src", copyFile)
+					xmlNodeSetAttribute(mapNode, "type", "server")
+					xmlNodeSetAttribute(mapNode, "download", "false")
 					temporaryTable[#temporaryTable+1] = copyFile
 				end
 				i = i + 1
@@ -319,13 +353,23 @@ function loadMapDD(mapname, force)
 	
 	gMapResourceNameDD = mapname
 	
-	setTimer(function()
-	for i,v in pairs(getGamemodePlayers(gGamemodeDD)) do
-		setUpDDPlayer(v)
-	end end, 500,1)
+	setTimer(
+		function()
+			triggerEvent("serverStartScriptDD", root)
+			for i,v in pairs(getGamemodePlayers(gGamemodeDD)) do
+				setUpDDPlayer(v)
+			end
+		end
+	, 500,1)
 end
 
 function unloadMapDD()
+	local ddRes = getResourceFromName("vitaMapDD")
+	if ddRes then
+		stopResource(ddRes)
+		--deleteResource(ddRes)
+	end
+
 	if isTimer(gStartTimerDD) then
 		killTimer(gStartTimerDD)
 		gStartTimerDD = false
@@ -953,6 +997,7 @@ function countdownFuncDD(id)
 	elseif id == 1 then
 		countdownTimerDD = setTimer(countdownFuncDD, 1000, 1, 0)
 	elseif id == 0 then
+		triggerEvent("onRaceStateChanging", root, "Running")
 		if #getAliveGamemodePlayers(gGamemodeDD) == 0 or #getAliveGamemodePlayers(gGamemodeDD) == false then --No players were able to be ready? Lets try the next map...
 			loadMapDD(getElementData(gElementDD, "nextmap"))
 			return
