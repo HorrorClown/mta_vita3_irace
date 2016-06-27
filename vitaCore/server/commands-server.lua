@@ -331,7 +331,7 @@ function buySetMap(player, commandName, ...)
 		local allMaps = getElementsByType ( "mapElement" )
 		for theKey,mapElement in ipairs(allMaps) do 
 			if getElementData(mapElement, "name") == mapname or getElementData(mapElement, "name") == getMapNameByRealName(mapname) then
-				triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map has been played in the last 15 minutes." )
+				triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map has been played in the last 30 minutes." )
 				return
 			end
 		end
@@ -359,7 +359,7 @@ function buySetMap(player, commandName, ...)
 							triggerClientEvent ( v, "addNotification", getRootElement(), 3, 245,0,246, getElementData(mapElement, "realname").." can be bought again." )
 						end
 						destroyElement(mapElement)	
-					end, 900000, 1, mapElement)			
+					end, 1800000, 1, mapElement)			
 				else
 					triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map could not be found." )
 				end
