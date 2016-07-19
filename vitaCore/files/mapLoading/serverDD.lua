@@ -63,6 +63,8 @@ local valid = {
     ["setObjectScale"] = true,
     ["moveObject"] = true,
     ["createExplosion"] = true,
+    ["addVehicleUpgrade"] = true,
+    ["getVehicleNameFromModel"] = true,
 
     -- defaults
     ["pairs"] = true,
@@ -79,6 +81,7 @@ local valid = {
     ["getTickCount"] = true,
     ["interpolateBetween"] = true,
     ["getDistanceBetweenPoints3D"] = true,
+    ["getDistanceBetweenPoints2D"] = true,
 }
 
 -- These functions will be overridden to change the dimension to the specific gamemode

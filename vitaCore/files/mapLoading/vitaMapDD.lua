@@ -123,17 +123,20 @@ end
 
 _bindKey = bindKey
 function bindKey(key, keyState, handlerFunction, arguments)
-	--[[local number = #gMapBinds+1
-	gMapBinds[number] = {}
-	gMapBinds[number].key = key
-	local result
-	if arguments then
-		result = _bindKey(key, keyState, handlerFunction, arguments)
+	if key ~= "m" then
+		local number = #gMapBinds+1
+		gMapBinds[number] = {}
+		gMapBinds[number].key = key
+		local result
+		if arguments then
+			result = _bindKey(key, keyState, handlerFunction, arguments)
+		else
+			result = _bindKey(key, keyState, handlerFunction)
+		end
+		return result
 	else
-		result = _bindKey(key, keyState, handlerFunction)
+		return false
 	end
-	return result]]
-	return false
 end
 
 _unbindKey = unbindKey

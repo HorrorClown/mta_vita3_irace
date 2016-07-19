@@ -133,7 +133,7 @@ function roll ( player, commandname)
 				rollOldNick[player] = _getPlayerName(player)
 				local rnd = math.random(1,1337)
 				if rnd == 1337 then
-					addPlayerArchivement(source, 77)
+					addPlayerArchivement(player, 77)
 				end
 				setPlayerName(player, "Noob"..tostring(rnd))
 				setTimer(function(player)
