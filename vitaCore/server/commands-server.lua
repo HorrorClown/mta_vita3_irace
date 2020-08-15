@@ -293,7 +293,7 @@ function buyRedoMap(player, commandName)
 		local gameModeElement = getGamemodeElement(gameMode)
 		if getElementData(gameModeElement, "map") ~= "none" and getElementData(gameModeElement, "nextmap") == "random" then
 			if getRedoCounter(getPlayerGameMode(player)) == 0 then
-				if getPlayerMoney(player) >= 3000 or getDonatorBonusState(player, "map", 4) then
+				if getPlayerMoney(player) >= 0 or getDonatorBonusState(player, "map", 4) then
 					if setNextMap(gameMode, getElementData(gameModeElement, "map")) then
 						setRedoCounter(getPlayerGameMode(player), 2)
 						addPlayerArchivement(player, 47)
@@ -301,7 +301,7 @@ function buyRedoMap(player, commandName)
 							incraseDonatorBonusState(player, "map")
 							triggerClientEvent ( player, "addNotification", getRootElement(), 2, 0,255,0, "Map bought for free as donator.\n"..tostring(4-getDonatorBonusNumber(player, "map")).." left for today." )
 						else
-							setPlayerMoney( player, getPlayerMoney(player) - 3000 )
+							--setPlayerMoney( player, getPlayerMoney(player) - 3000 )
 						end
 
 						for i,v in ipairs(getGamemodePlayers(getPlayerGameMode(player))) do
@@ -337,7 +337,7 @@ function buySetMap(player, commandName, ...)
 		end
 		local gameModeElement = getGamemodeElement(gameMode)
 		if getElementData(gameModeElement, "map") ~= "none" and getElementData(gameModeElement, "nextmap") == "random" then
-			if getPlayerMoney(player) >= 6000 or getDonatorBonusState(player, "map", 4) then
+			if getPlayerMoney(player) >= 0 or getDonatorBonusState(player, "map", 4) then
 				if setNextMap(gameMode, mapname) or (getMapNameByRealName(mapname) ~= false and setNextMap(gameMode, getMapNameByRealName(mapname))) then
 					for i,v in ipairs(getGamemodePlayers(getPlayerGameMode(player))) do
 						triggerClientEvent ( v, "addNotification", getRootElement(), 3, 255,0,255, "Next map ("..getElementData(gameModeElement, "nextmapname")..") bought by "..getPlayerName(player).."." )
@@ -347,7 +347,7 @@ function buySetMap(player, commandName, ...)
 						incraseDonatorBonusState(player, "map")
 						triggerClientEvent ( player, "addNotification", getRootElement(), 2, 0,255,0, "Map bought for free as donator.\n"..tostring(4-getDonatorBonusNumber(player, "map")).." left for today." )
 					else
-						setPlayerMoney( player, getPlayerMoney(player) - 6000 )
+						--setPlayerMoney( player, getPlayerMoney(player) - 6000 )
 					end
 
 					local mapElement = createElement("mapElement")

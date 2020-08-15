@@ -85,7 +85,7 @@ function redoMap(player, commandName)
 	if gameMode ~= 0 and gameMode ~= gGamemodeFUN and gameMode ~= gGamemodeMO then
 		local gameModeElement = getGamemodeElement(gameMode)
 		if getElementData(gameModeElement, "map") ~= "none" and getElementData(gameModeElement, "nextmap") == "random" then
-			if getRedoCounter(getPlayerGameMode(player)) == 0 then
+			--if getRedoCounter(getPlayerGameMode(player)) == 0 then
 				if setNextMap(gameMode, getElementData(gameModeElement, "map")) then
 					setRedoCounter(getPlayerGameMode(player), 2)
 					for i,v in ipairs(getGamemodePlayers(getPlayerGameMode(player))) do
@@ -93,9 +93,9 @@ function redoMap(player, commandName)
 					end
 					--outputChatBoxToGamemode ( "#125861:ADMIN:#FFFFFF "..getPlayerName(player).." #FFFFFFhas set the map to be replayed as next map.",gameMode, 255, 0, 0, true)
 				end
-			else
-				triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map has already been redone." )
-			end
+			--else
+			--	triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Map has already been redone." )
+			--end
 		else
 			triggerClientEvent ( player, "addNotification", getRootElement(), 1, 255,0,0, "Next map is already set." )
 		end
