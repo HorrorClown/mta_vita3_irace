@@ -1,9 +1,9 @@
 MYSQL_HOST	    = "localhost"
-MYSQL_PORT	    = 3306
-MYSQL_USER	    = "root"
-MYSQL_PW	    = "abc123"
-MYSQL_DB	    = "vita3"
-MYSQL_BOARD_DB  = "igaming_board"
+MYSQL_PORT	    = 6033
+MYSQL_USER	    = "irace"
+MYSQL_PW	    = "Pg8XZVem3cWuZZyU"
+MYSQL_DB	    = "irace_mta"
+MYSQL_BOARD_DB  = "irace_forum"
 
 MAX_PLAYER_WAITING = 15000
 
