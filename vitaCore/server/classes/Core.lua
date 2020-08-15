@@ -9,7 +9,7 @@ function Core:constructor()
     sql = MySQL:new(MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PW, MYSQL_DB)
     board = MySQL:new(MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PW, MYSQL_BOARD_DB)
     sql:setPrefix("ir")
-    board:setPrefix("wcf1")
+    board:setPrefix("wcf2")
 
     self:loadAccountElements()
     self:generatePackage()
@@ -61,3 +61,29 @@ function Core:generatePackage()
     Package.save("ir.data", files)
     Provider:getSingleton():offerFile("ir.data")
 end
+
+
+
+--[[
+Benutzt 11.08.2020 um IDs aus alter Datenbank in neue zu migrieren >_>
+addCommandHandler("fixIds", function()
+		local boardFix = MySQL:new(MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PW, MYSQL_BOARD_DB)
+		boardFix:setPrefix("wcf2")
+		
+		
+		local result = boardFix:queryFetch("SELECT userID FROM ??_user", boardFix:getPrefix())
+		
+		if result then
+			for _, row in pairs(result) do
+				local result2 = board:queryFetchSingle("SELECT ingameID FROM ??_user WHERE userID = ?", board:getPrefix(), row.userID)
+				if result2 then
+					local execString = boardFix:prepareString("UPDATE ??_user SET ingameID = ? WHERE userID = ?", boardFix:getPrefix(), result2.ingameID, row.userID)
+					outputServerLog(execString)
+					boardFix:queryExec("UPDATE ??_user SET ingameID = ? WHERE userID = ?", boardFix:getPrefix(), result2.ingameID, row.userID)
+				end
+			end
+		end
+		
+		outputServerLog("Hopefully fixed all IDs :)")
+	end
+)]]

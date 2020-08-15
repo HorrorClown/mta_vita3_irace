@@ -12,6 +12,10 @@ function SQL:queryExec(query, ...)
     return dbExec(self.m_DBHandle, query, ...)
 end
 
+function SQL:prepareString(query, ...)
+    return dbPrepareString(self.m_DBHandle, query, ...)
+end
+
 -- The prefix is to be used in all table names
 -- Use ??_$tablename in SQL Statements
 function SQL:getPrefix()

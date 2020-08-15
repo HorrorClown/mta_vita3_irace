@@ -13,6 +13,7 @@ function Account.login(player, username, password, pwhash)
     if not pwhash then
         local salt = string.sub(boardResult.password, 1, 29)
         pwhash = WBBC.getDoubleSaltedHash(password, salt)
+		--WBBC:debugOutput({dbHash = boardResult.password, salt = salt, pwHash = pwhash})
     end
 
     if pwhash ~= boardResult.password then
