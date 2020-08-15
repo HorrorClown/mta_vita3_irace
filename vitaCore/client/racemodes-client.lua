@@ -302,9 +302,9 @@ function onClientRender()
 			raceTime_leftTime = raceTime_duration - raceTime_passedTime
 			guiSetText(g_GUI.timeleft, msToTimeStr(raceTime_leftTime > 0 and raceTime_leftTime or 0))
 			
-			if getElementData(getLocalPlayer(), "state") == "alive" then
+			--if getElementData(getLocalPlayer(), "state") == "alive" then
 				guiSetText(g_GUI.timepassed, msToTimeStr(raceTime_passedTime))
-			end
+			--end
 		else
 			raceTime_leftTime = getElementData(gRaceModes[playerGamemode].realelement, "duration")
 			guiSetText(g_GUI.timeleft, msToTimeStr(raceTime_leftTime > 0 and raceTime_leftTime or 0))
