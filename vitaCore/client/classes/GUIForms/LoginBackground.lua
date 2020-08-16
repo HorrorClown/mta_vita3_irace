@@ -16,7 +16,7 @@ function LoginBackground:constructor()
         function()
             local url = core:get("Login", "video", "http://pewx.de/res/irace/GUI/backgrounds/background.html")
             self.m_Browser:loadURL(url)
-            self.m_Browser:setVolume(0.1)
+            self.m_Browser:setVolume(0.05)
             self.m_MainAnimation:startAnimation(1500, "OutQuad", LOGIN_HEIGHT, 255)
         end
     )

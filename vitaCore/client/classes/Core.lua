@@ -39,6 +39,7 @@ end
 function Core:afterLogin()
     AntiBounce:new()
     Sounds:new()
+    SpawnPosition:new()
 end
 
 function Core:get(...)

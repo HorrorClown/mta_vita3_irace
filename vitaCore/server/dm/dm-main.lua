@@ -515,6 +515,7 @@ function downloadMapFinishedDM(player)
 			setElementData(player, "state", "alive")
 			setVehicleDamageProof(playerVehicle, false)
 			setElementFrozen(playerVehicle, false)
+			outputChatBox("GO")
 		end
 	end
 end
@@ -626,6 +627,8 @@ function killDMPlayer(player, noSpectate)
 	end
 	
 	setElementData(player, "state", "dead")
+	player:triggerEvent("updateSpawnPositions", false)
+
 	if isElement(getPlayerRaceVeh(player)) then
 		if isVehicleOnGround ( getPlayerRaceVeh(player) ) == false and getElementHealth ( getPlayerRaceVeh(player) ) <= 250 then 
 			addPlayerArchivement(player, 4)
@@ -850,6 +853,8 @@ function setUpDMPlayer(player)
 	setElementData( player, "ghostmod", true )
 	
 	setElementData(player, "state", "not ready")
+
+	local spawnId = 1
 	for spawn,v in ipairs(gSpawnPositionsDM) do
 		if gSpawnPositionsDM[spawn].used == false then
 			setCameraTarget ( player )
@@ -866,7 +871,8 @@ function setUpDMPlayer(player)
 			setElementAlpha(player, 255)
 			setElementFrozen(player, false)			
 			setElementData(player, "mapname", getElementData(gElementDM, "mapname"))
-			setElementData(player, "nextmap", getElementData(gElementDM, "nextmap"))				
+			setElementData(player, "nextmap", getElementData(gElementDM, "nextmap"))
+			spawnId = spawn
 			break
 		else
 			if gSpawnPositionsDM[spawn+1] == nil then
@@ -885,11 +891,14 @@ function setUpDMPlayer(player)
 				setElementAlpha(player, 255)
 				setElementFrozen(player, false)			
 				setElementData(player, "mapname", getElementData(gElementDM, "mapname"))
-				setElementData(player, "nextmap", getElementData(gElementDM, "nextmap"))						
+				setElementData(player, "nextmap", getElementData(gElementDM, "nextmap"))
+				spawnId = spawn
 				break
 			end
 		end
 	end
+
+	player:triggerEvent("updateSpawnPositions", gSpawnPositionsDM, spawnId)
 end
 
 function countdownFuncDM(id)

@@ -103,6 +103,7 @@
     <script src = "client/classes/Provider.lua" type = "client" cache = "false"/>
     <script src = "client/classes/AntiBounce.lua" type = "client" cache = "false"/>
     <script src = "client/classes/Sounds.lua" type = "client" cache = "false"/>
+    <script src = "client/classes/SpawnPosition.lua" type = "client" cache = "false"/>
     <script src = "client/constants/Main.lua" type = "client" cache = "false"/>
 
     <!-- GUI System -->
