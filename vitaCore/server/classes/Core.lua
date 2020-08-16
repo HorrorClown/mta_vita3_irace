@@ -60,6 +60,8 @@ function Core:generatePackage()
 
     Package.save("ir.data", files)
     Provider:getSingleton():offerFile("ir.data")
+
+    xml:unload()
 end
 
 
