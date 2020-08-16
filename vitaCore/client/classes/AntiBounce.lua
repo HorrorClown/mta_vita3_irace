@@ -47,7 +47,7 @@ function AntiBounce:preRender()
     local vehicle = localPlayer:getOccupiedVehicle()
     if not vehicle then return end
 
-    local tx, ty, tz = AntiBounce.getVehicleTurnVelocity(vehicle)
+    local tx, ty, tz = AntiBounce.getElementAngularVelocity(vehicle)
     self.m_TurnDiffX = tx - self.m_OldTurnX
     self.m_TurnDiffY = ty - self.m_OldTurnY
     self.m_TurnDiffZ = tz - self.m_OldTurnZ
@@ -173,7 +173,7 @@ function AntiBounce.isVehicleOnGround(vehicle)
     return false
 end
 
-function AntiBounce.getVehicleTurnVelocity(vehicle)
+function AntiBounce.getElementAngularVelocity(vehicle)
     local turnX, turnY, turnZ = getElementAngularVelocity(vehicle)
     local m = getElementMatrix(vehicle)
     local tx = turnX * m[1][1] + turnY * m[1][2] + turnZ * m[1][3]

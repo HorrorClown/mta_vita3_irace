@@ -1315,7 +1315,7 @@ function respawnPlayerRA(player, start)
 				setElementFrozen(veh, false)
 				setVehicleDamageProof (  veh, false )
 				setElementVelocity(veh, vx,vy,vz)
-				setVehicleTurnVelocity(veh, tx,ty,tz)
+				setElementAngularVelocity(veh, tx, ty, tz)
 				setElementData(player, "state", "alive")
 			end
 		end, 3000,1,player, gRARespawns[player][Counter]["VX"], gRARespawns[player][Counter]["VY"], gRARespawns[player][Counter]["VZ"], gRARespawns[player][Counter]["TX"], gRARespawns[player][Counter]["TY"], gRARespawns[player][Counter]["TZ"])	
