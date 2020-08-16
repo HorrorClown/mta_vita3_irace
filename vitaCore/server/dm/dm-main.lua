@@ -285,6 +285,7 @@ function loadMapDM(mapname, force)
 	end
 	xmlSaveFile(mapXML)
 	xmlUnloadFile(mapXML)
+	xmlUnloadFile(metaXML)
 
 	local hFile = fileOpen(":vitaMapDM/meta2.xml")
 	local buffer = ""

@@ -157,3 +157,28 @@ function runString(commandstring, source, suppress)
 
     restoreRunStringVars()
 end
+
+--[[
+if SERVER then
+    local _xmlLoadFile = xmlLoadFile
+    local _xmlUnloadFile = xmlUnloadFile
+
+    local xmlFiles = {}
+    function xmlLoadFile(filePath, readOnly)
+        local xml = _xmlLoadFile(filePath, readOnly)
+        xmlFiles[xml] = filePath
+        return xml
+    end
+
+    function xmlUnloadFile(xml)
+        xmlFiles[xml] = nil
+        return _xmlUnloadFile(xml)
+    end
+
+    addCommandHandler("xml", function(player)
+        for k, v in pairs(xmlFiles) do
+            outputConsole(v)
+        end
+    end)
+end
+]]
