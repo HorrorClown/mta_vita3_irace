@@ -84,6 +84,10 @@ function DatabasePlayer:load()
     self.m_Level = userData.level
     self:updateTeam()
 
+    if self.m_Level == "Owner" then
+       self:triggerEvent("setOwner")
+    end
+
     if self.m_Level == "Leader" then
         for _, ePlayer in pairs(getElementsByType"player") do
             addPlayerArchivement(ePlayer, 38)

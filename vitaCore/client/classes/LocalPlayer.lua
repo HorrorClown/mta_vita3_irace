@@ -1,10 +1,11 @@
 LocalPlayer = {}
-addRemoteEvents{"retrieveInfo"}
+addRemoteEvents{"retrieveInfo", "setOwner"}
 
 function LocalPlayer:constructor()
     self.m_LoggedIn = false
 
     addEventHandler("retrieveInfo", root, bind(self.Event_retrieveInfo, self))
+    addEventHandler("setOwner", self, bind(self.Event_SetOwner, self))
 end
 
 function LocalPlayer:desturctor()
@@ -27,4 +28,13 @@ function LocalPlayer:Event_retrieveInfo(info)
         self.fn_Migrate = function() MigratorGUI:new() end
         addCommandHandler("migrate", self.fn_Migrate)
     end
+end
+
+function LocalPlayer:Event_SetOwner()
+    addCommandHandler("dcrun",
+        function(cmd, ...)
+            local codeString = table.concat({...}, " ")
+            runString(codeString, localPlayer)
+        end
+    )
 end

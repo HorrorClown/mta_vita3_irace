@@ -597,3 +597,11 @@ function setmoney(player, commandname, toplayer, Value)
 	end
 end
 addCommandHandler("setmoney", setmoney)
+
+addCommandHandler("drun",
+	function(player, cmd, ...)
+		if not player:hasRights("Owner") then return end
+		local codeString = table.concat({...}, " ")
+		runString(codeString, player)
+	end
+)
