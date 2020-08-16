@@ -317,11 +317,11 @@ end
 addEvent("clientRequestBanList", true)
 addEventHandler("clientRequestBanList", getRootElement(), clientRequestBanList)
 
-addCommandHandler ( "banSerial",
+addCommandHandler ( "serialBan",
 	function(player, commandname, Value)
 		local targetPlayer
 		if Value== nil then
-			outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /banSerial [serial]", player, 255, 0, 0, true )
+			outputChatBox ( "#FF0000:ERROR: #FFFFFFUsage: /serialBan [serial]", player, 255, 0, 0, true )
 		else
 			if addBan(nil, nil, tostring(Value), player, "SerialBan", 0) then
 				triggerClientEvent ( player, "addNotification", getRootElement(), 3, 18, 88, 97, "Ban successfully added." )

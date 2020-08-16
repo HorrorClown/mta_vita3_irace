@@ -35,12 +35,12 @@ local rotorr = 0
 
 addEventHandler("onClientRender", getRootElement(), 
 function()
-	if getPlayerGameMode(getLocalPlayer()) == 0 or getPlayerGameMode(getLocalPlayer()) == 6 or minigamesVoteShown == true then showPlayerHudComponent("radar", false) return end
+	if getPlayerGameMode(getLocalPlayer()) == 0 or getPlayerGameMode(getLocalPlayer()) == 6 or minigamesVoteShown == true then setPlayerHudComponentVisible("radar", false) return end
 	if useVitaRadar == false then
 		if showUserGui == false then
-			showPlayerHudComponent("radar", true)
+			setPlayerHudComponentVisible("radar", true)
 		else
-			showPlayerHudComponent("radar", false)
+			setPlayerHudComponentVisible("radar", false)
 		end
 		return
 	end
@@ -51,8 +51,8 @@ function()
 	else
 		lp = getLocalPlayer()
 	end
-	
-	showPlayerHudComponent("radar", false)
+
+	setPlayerHudComponentVisible("radar", false)
 	if rotorr ~= 360 then rotorr = rotorr+5 else rotorr = 1 end	
 
 	local px, py, pz = getElementPosition(lp)

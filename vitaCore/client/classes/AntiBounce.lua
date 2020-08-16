@@ -174,7 +174,7 @@ function AntiBounce.isVehicleOnGround(vehicle)
 end
 
 function AntiBounce.getVehicleTurnVelocity(vehicle)
-    local turnX, turnY, turnZ = getVehicleTurnVelocity(vehicle)
+    local turnX, turnY, turnZ = getElementAngularVelocity(vehicle)
     local m = getElementMatrix(vehicle)
     local tx = turnX * m[1][1] + turnY * m[1][2] + turnZ * m[1][3]
     local ty = turnX * m[2][1] + turnY * m[2][2] + turnZ * m[2][3]

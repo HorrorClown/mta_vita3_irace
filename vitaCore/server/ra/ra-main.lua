@@ -1173,7 +1173,7 @@ function savePlayerPositionRA (ply, model)
 			gRARespawns[ply][Counter]["VX"] = vx
 			gRARespawns[ply][Counter]["VY"] = vy
 			gRARespawns[ply][Counter]["VZ"] = vz
-			local tx, ty, tz = getVehicleTurnVelocity ( vehicle )
+			local tx, ty, tz = getElementAngularVelocity ( vehicle )
 			gRARespawns[ply][Counter]["TX"] = tx
 			gRARespawns[ply][Counter]["TY"] = ty
 			gRARespawns[ply][Counter]["TZ"] = tz

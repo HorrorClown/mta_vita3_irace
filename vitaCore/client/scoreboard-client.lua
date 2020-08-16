@@ -176,7 +176,7 @@ function drawScoreboard()
 	---Some newly added settings--
 	--scdatas.y/2 - scdatas.height/2 + 30 + ( 20 * scdatas.rowid)
 	--scdatas.titletext = "Vita Race | race.vita-online.eu | "..gRaceModes[gameMode].name
-	scdatas.titletext = ("iRace 2.0 | irace-mta.de | powered by Vita3 | %s"):format(gRaceModes[gameMode].name)
+	scdatas.titletext = ("iRace | irace-mta.de | %s"):format(gRaceModes[gameMode].name)
 	
 	---Draws the Title---
 	dxDrawRectangle(scdatas.x/2 - scdatas.width/2, scdatas.y/2 - scdatas.height/2, scdatas.width, 50, tocolor(0,0,0,200))

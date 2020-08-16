@@ -30,7 +30,7 @@ function savePlayerPositionsDM ()
 				gDeathmatchRespawns[ply][Counter]["VX"] = vx
 				gDeathmatchRespawns[ply][Counter]["VY"] = vy
 				gDeathmatchRespawns[ply][Counter]["VZ"] = vz
-				local tx, ty, tz = getVehicleTurnVelocity ( vehicle )
+				local tx, ty, tz = getElementAngularVelocity ( vehicle )
 				gDeathmatchRespawns[ply][Counter]["TX"] = tx
 				gDeathmatchRespawns[ply][Counter]["TY"] = ty
 				gDeathmatchRespawns[ply][Counter]["TZ"] = tz
@@ -109,7 +109,7 @@ function respawnPlayerDM(player, key, keyState, start)
 			if isElement(veh) then
 				setElementFrozen(veh, false)
 				setElementVelocity(veh, vx,vy,vz)
-				setVehicleTurnVelocity(veh, tx,ty,tz)
+				setElementAngularVelocity(veh, tx,ty,tz)
 				setVehicleDamageProof ( veh, false )
 				setElementData(player, "state", "replaying")
 			end

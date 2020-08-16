@@ -57,7 +57,7 @@ addEventHandler ( "onClientDXClick", guiAdminDX["bans_ip"], function()
 end, false )
 
 addEventHandler ( "onClientDXClick", guiAdminDX["bans_serial"], function() 
-	executeServerCommandHandler ( "banSerial", guiGetText(guiAdminGUI["bans_edit"]) )
+	executeServerCommandHandler ( "serialBan", guiGetText(guiAdminGUI["bans_edit"]) )
 end, false )
 
 addEventHandler ( "onClientDXClick", guiAdminDX["maps_set"], function() 

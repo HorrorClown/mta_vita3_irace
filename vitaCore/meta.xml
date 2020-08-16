@@ -1,6 +1,6 @@
 <meta>
 	<info author="Sebihunter" type="gamemode" name="Vita3" />
-    <min_mta_version client="1.5" />
+    <min_mta_version client="1.5.7" server="1.5.5-9.14060"/>
     <oop>true</oop>
 
 	<!-- Shared -->

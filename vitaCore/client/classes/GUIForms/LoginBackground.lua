@@ -16,7 +16,7 @@ function LoginBackground:constructor()
         function()
             local url = core:get("Login", "video", "http://pewx.de/res/irace/GUI/backgrounds/background.html")
             self.m_Browser:loadURL(url)
-            self.m_Browser:setVolume(0)
+            self.m_Browser:setVolume(0.1)
             self.m_MainAnimation:startAnimation(1500, "OutQuad", LOGIN_HEIGHT, 255)
         end
     )
@@ -50,7 +50,7 @@ function LoginBackground:render()
     dxDrawRectangle(0, 0, screenWidth, 15, tocolor(0, 0, 0))
     dxDrawRectangle(0, screenHeight-15, screenWidth, 15, tocolor(0, 0, 0))
     dxDrawText("Press 'm' to toggle sound", 0, 0, screenWidth, screenHeight, nil, 1, "clear", "center", "bottom")
-    dxDrawText("Powered by Vita3 (vita-online.eu)", 0, 0, screenWidth, screenHeight, nil, 1, "clear", "left", "bottom")
+    dxDrawText("irace-mta.de", 0, 0, screenWidth, screenHeight, nil, 1, "clear", "left", "bottom")
 
     dxDrawImage(0, screenHeight/2-self.m_HEIGHT/2, screenWidth, self.m_HEIGHT, self.rt_Background, 0, 0, 0, tocolor(255, 255, 255, self.m_ALPHA))
 end
