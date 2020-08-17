@@ -45,4 +45,5 @@ function SpawnPosition:mouseWheel(button)
     localPlayer.vehicle:setPosition(spawn.posX, spawn.posY, spawn.posZ)
     localPlayer.vehicle:setRotation(spawn.rotX, spawn.rotY, spawn.rotZ)
     setCameraTarget(localPlayer)
+    playSound("files/audio/swosh.mp3")
 end
