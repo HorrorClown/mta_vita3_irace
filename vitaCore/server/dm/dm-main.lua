@@ -397,7 +397,6 @@ function joinDM(player)
 	bindKey ( player, "c", "down", respawnPlayerDM, true )
 
     databaseMapDM:sendToptimes(player)
-    --sendToptimes(player, false)
 	setElementData(player, "gameMode", gGamemodeDM)
 	setElementData(player, "mapname", getElementData(gElementDM, "mapname"))
 	setElementData(player, "nextmap", getElementData(gElementDM, "nextmap"))
@@ -490,6 +489,8 @@ addEventHandler("quitDM", getRootElement(), quitDM)
 
 function downloadMapFinishedDM(player)
     databaseMapDM:sendToptimes(player)
+	player:triggerEvent("initTimings", getElementData(gElementDM, "mapname"))
+
 	callClientFunction(player, "forceToptimesOpen")
 	callClientFunction(player, "allowNewHurryFunc")
 
@@ -516,7 +517,6 @@ function downloadMapFinishedDM(player)
 			setElementData(player, "state", "alive")
 			setVehicleDamageProof(playerVehicle, false)
 			setElementFrozen(playerVehicle, false)
-			outputChatBox("GO")
 		end
 	end
 end

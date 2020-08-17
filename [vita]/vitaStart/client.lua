@@ -81,7 +81,7 @@ addEventHandler("onClientRender", getRootElement(), function()
 			
 			dxDrawText ( d_hour..":"..d_minute..":"..d_second, 0, screenHeight/2+15,screenWidth,screenHeight, tocolor(255,255,255,255), 4, "default-bold", "center" )
 		else
-			dxDrawText ( "00:00:00", 0, screenHeight/2+15,screenWidth,screenHeight, tocolor(255,255,255,255), 4, "default-bold", "center" )
+			dxDrawText ( "00:00:000", 0, screenHeight/2+15,screenWidth,screenHeight, tocolor(255,255,255,255), 4, "default-bold", "center" )
 		end
 	end
 end)

@@ -195,24 +195,20 @@ function removeColorCoding ( name, nocentiseconds )
 	return type(name)=='string' and string.gsub ( name, '#%x%x%x%x%x%x', '' ) or name
 end
 
-function msToTimeStr(ms, nocentiseconds)
-	if not ms then
-		return ''
-	end
+function msToTimeStr(ms, nocentiseconds, nm)
+	if not ms then return '' end
+
 	local centiseconds = tostring(math.floor(math.fmod(ms, 1000)))
-	if #centiseconds == 1 then
-		centiseconds = '0' .. centiseconds
-	end
 	local s = math.floor(ms / 1000)
 	local seconds = tostring(math.fmod(s, 60))
-	if #seconds == 1 then
-		seconds = '0' .. seconds
-	end
 	local minutes = tostring(math.floor(s / 60))
+
 	if nocentiseconds then
-		return minutes .. ':' .. seconds
+		return ("%.2d:%.2d"):format(minutes, seconds)
+	elseif nm then
+		return ("%.2d.%.3d"):format(seconds, centiseconds)
 	else
-		return minutes .. ':' .. seconds .. ':' .. centiseconds
+		return ("%.2d:%.2d.%.3d"):format(minutes, seconds, centiseconds)
 	end
 end
 

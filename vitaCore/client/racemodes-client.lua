@@ -99,7 +99,7 @@ end
 function setStartTickLater(timerLeft)
 	timerLeft = getElementData(gRaceModes[getPlayerGameMode(getLocalPlayer())].realelement, "duration")-timerLeft
 	raceTime_startTick = getTickCount()-timerLeft
-	guiSetText(g_GUI.timepassed, "00:00:00")
+	guiSetText(g_GUI.timepassed, "00:00.000")
 end
 
 function setPassedTime(anus)
@@ -308,7 +308,7 @@ function onClientRender()
 		else
 			raceTime_leftTime = getElementData(gRaceModes[playerGamemode].realelement, "duration")
 			guiSetText(g_GUI.timeleft, msToTimeStr(raceTime_leftTime > 0 and raceTime_leftTime or 0))
-			guiSetText(g_GUI.timepassed, "00:00:00")
+			guiSetText(g_GUI.timepassed, "00:00.000")
 		end
 		
 		if (showDeadAlive == 1) and screenWidth > 1024 and not isInGamemode(getLocalPlayer(), 3) then
@@ -357,39 +357,42 @@ function allowNewHurryFunc()
 end
 
 local lastNitroTick = 0
-function onClientColShapeHit( element, matchingDimension )
-	local veh = getPedOccupiedVehicle(getLocalPlayer())
-	if not veh then return false end
-    if ( element == veh ) then 
-        if matchingDimension then
-			local pickup = getElementData(source, "pickup")
-			if pickup then
-				local data = { }
-				data.type = getElementData(pickup, "type")
-				data.vehicle = getElementData(pickup, "vehicle")
-				
-				if data.type == "nitro" then
-					addVehicleUpgrade(veh, 1010)
-					playSoundFrontEnd(46)
+function onClientColShapeHit(element, matchingDimension)
+	if not matchingDimension then return end
 
-					lastNitroTick = getTickCount()
-					--setTimer(function(veh)
-					--	addVehicleUpgrade(veh, 1010)
-					--end, 100,1, veh)
-					triggerServerEvent('syncVehicleNitro', getLocalPlayer())
-				elseif data.type == "repair" then
-					fixVehicle(veh)
-					playSoundFrontEnd(46)	
-				elseif data.type == "vehicle" then
-					if data.vehicle ~= getElementModel(veh) then
-						if getElementData(getLocalPlayer(), "state") == "replaying" and data.vehicle == 425 and getPlayerGameMode(getLocalPlayer()) == 5 then --DM Gamemode
-							outputChatBox("#7A142D:Hunter: #ffffff People in replay mode are not allowed to get the hunter", 255, 255, 255, true)
-							return false
-						end
-						
-						--Use a timer to fake lag. I know this is horrible but some maps rely on that little lag on vehiclechange if they should work properly
-						setTimer(changeVehicle, 50, 1, veh, data.vehicle)
+	local veh = getPedOccupiedVehicle(localPlayer)
+	if not veh then return false end
+
+    if ( element == veh ) then
+		local pickup = getElementData(source, "pickup")
+		if pickup then
+			local data = { }
+			data.type = getElementData(pickup, "type")
+			data.vehicle = getElementData(pickup, "vehicle")
+			data.id = getElementData(pickup, "id")
+
+			if data.type == "nitro" then
+				addVehicleUpgrade(veh, 1010)
+				playSoundFrontEnd(46)
+
+				lastNitroTick = getTickCount()
+				triggerServerEvent('syncVehicleNitro', getLocalPlayer())
+
+				if getPlayerGameMode(localPlayer) == 5 and raceTime_passedTime then
+					Timings:getSingleton():hitPickup(data.id, raceTime_passedTime)
+				end
+			elseif data.type == "repair" then
+				fixVehicle(veh)
+				playSoundFrontEnd(46)
+			elseif data.type == "vehicle" then
+				if data.vehicle ~= getElementModel(veh) then
+					if getElementData(getLocalPlayer(), "state") == "replaying" and data.vehicle == 425 and getPlayerGameMode(getLocalPlayer()) == 5 then --DM Gamemode
+						outputChatBox("#7A142D:Hunter: #ffffff People in replay mode are not allowed to get the hunter", 255, 255, 255, true)
+						return false
 					end
+
+					--Use a timer to fake lag. I know this is horrible but some maps rely on that little lag on vehiclechange if they should work properly
+					setTimer(changeVehicle, 50, 1, veh, data.vehicle)
 				end
 			end
 		end
