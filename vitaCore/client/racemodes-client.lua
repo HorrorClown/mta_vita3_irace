@@ -403,6 +403,13 @@ addEventHandler("onClientColShapeHit",getRootElement(),onClientColShapeHit)
 function changeVehicle(veh, model)
 	if isElement(veh) then		
 		if model ~= getElementModel(veh) then
+			if getPlayerGameMode(getLocalPlayer()) == 5 and model == 425 then --DM Gamemode
+				Timings:getSingleton():hitPickup("Hunter", raceTime_passedTime)
+
+				local timings = Timings:getSingleton():getTimings()
+				triggerServerEvent('playerGotHunter', localPlayer, raceTime_passedTime, timings)
+			end
+
 			alignVehicleWithUp(veh)
 			setElementModel(veh, model)
 			changeVehicleClient(veh)
@@ -416,9 +423,6 @@ function changeVehicle(veh, model)
 			if getElementData(getLocalPlayer(), "Wheels") and  getElementData(getLocalPlayer(), "Wheels") ~= 0 then
 				addVehicleUpgrade ( veh, getElementData(getLocalPlayer(), "Wheels") )
 			end
-			if getPlayerGameMode(getLocalPlayer()) == 5 and model == 425 then --DM Gamemode
-				triggerServerEvent('playerGotHunter', getLocalPlayer())
-			end	
 		end
 	end
 end

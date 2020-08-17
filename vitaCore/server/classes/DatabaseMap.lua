@@ -8,6 +8,7 @@ function DatabaseMap:constructor(sMapname)
     if result then
         self.m_MapID = result.ID
         self.m_Toptimes = fromJSON(result.toptimes)
+        self.m_Timings = fromJSON(result.timings)
         self.m_Ratings = fromJSON(result.ratings)
         self.m_Timesplayed = tonumber(result.timesplayed)
 
@@ -15,6 +16,7 @@ function DatabaseMap:constructor(sMapname)
     else
         self.m_Toptimes = {}
         self.m_Ratings = {}
+        self.m_Timings = {}
         self.m_Timesplayed = 0
         local _, _, insertID = sql:queryFetch("INSERT INTO ??_maps (mapname, toptimes, ratings, timesplayed) VALUES (?, ?, ?, ?)", sql:getPrefix(), self.m_Mapname, toJSON(self.m_Toptimes), toJSON(self.m_Ratings), self.m_Timesplayed)
         self.m_MapID = insertID
@@ -23,7 +25,7 @@ function DatabaseMap:constructor(sMapname)
 end
 
 function DatabaseMap:destructor()
-    sql:queryExec("UPDATE ??_maps SET toptimes = ?, ratings = ?, timesplayed = ? WHERE ID = ?", sql:getPrefix(), toJSON(self.m_Toptimes), toJSON(self.m_Ratings), self.m_Timesplayed, self.m_MapID)
+    sql:queryExec("UPDATE ??_maps SET toptimes = ?, timings = ?, ratings = ?, timesplayed = ? WHERE ID = ?", sql:getPrefix(), toJSON(self.m_Toptimes), toJSON(self.m_Timings), toJSON(self.m_Ratings), self.m_Timesplayed, self.m_MapID)
 end
 
 function DatabaseMap:updatePlayernames()
@@ -77,9 +79,9 @@ function DatabaseMap:getToptimeFromPlayer(PlayerID)
     return false
 end
 
-function DatabaseMap:sendToptimes(Player)
-    if Player then
-        callClientFunction(Player, "setToptimeTable", self.m_Toptimes)
+function DatabaseMap:sendToptimes(player)
+    if player then
+        callClientFunction(player, "setToptimeTable", self.m_Toptimes, self.m_Timings)
     end
     return false
 end
@@ -111,6 +113,20 @@ function DatabaseMap:sortToptimes()
            end
         end
     end
+end
+
+function DatabaseMap:setTimings(playerId, hunterTime, timings)
+    if self.m_Timings and self.m_Timings.hunterTime then
+       if self.m_Timings.hunterTime < hunterTime then
+           return false
+       end
+    end
+
+    self.m_Timings.PlayerID = playerId
+    self.m_Timings.hunterTime = hunterTime
+    self.m_Timings.timings = timings
+
+    return true
 end
 
 function DatabaseMap.getPlayerToptimeCount(player, prefix)

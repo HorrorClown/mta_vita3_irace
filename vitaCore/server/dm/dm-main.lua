@@ -989,7 +989,8 @@ function onPlayerWastedDM()
 end
 addEventHandler ( "onPlayerWasted", getRootElement(), onPlayerWastedDM )
 
-function playerGotHunter()
+function playerGotHunter(hunterTime, timings)
+	if not hunterTime then return end
 	local player = client
 
 	if hunterTable[client] then return end
@@ -1004,7 +1005,8 @@ function playerGotHunter()
 	setElementData(player, "Points", getElementData(player, "Points") + 50)
 
 	local hasToptime, hasPosition = databaseMapDM:getToptimeFromPlayer(player.m_ID)
-	local toptimeAdded = databaseMapDM:addNewToptime(player.m_ID, getTickCount() - getElementData(gElementDM, "startTick"))
+	local toptimeAdded = databaseMapDM:addNewToptime(player.m_ID, hunterTime)
+	databaseMapDM:setTimings(player.m_ID, hunterTime, timings)
 
 	if toptimeAdded then
 		callClientFunction(player, "forceToptimesOpen")
@@ -1015,7 +1017,7 @@ function playerGotHunter()
         if tPosition <= 12 and hasToptime == false then
 			setElementData(source, "TopTimes", getElementData(source, "TopTimes") + 1)
 			setElementData(source, "TopTimeCounter", getElementData(source, "TopTimeCounter") + 1)
-		end	
+		end
 		if tPosition <= 12 and (hasToptime and tPosition < hasPosition) then
 			addPlayerArchivement(source, 59)
 		end

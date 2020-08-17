@@ -206,7 +206,7 @@ function msToTimeStr(ms, nocentiseconds, nm)
 	if nocentiseconds then
 		return ("%.2d:%.2d"):format(minutes, seconds)
 	elseif nm then
-		return ("%.2d.%.3d"):format(seconds, centiseconds)
+		return ("%d.%.3d"):format(seconds, centiseconds)
 	else
 		return ("%.2d:%.2d.%.3d"):format(minutes, seconds, centiseconds)
 	end

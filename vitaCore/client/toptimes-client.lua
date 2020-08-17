@@ -8,6 +8,11 @@ local showToptimes = false
 local toptimeX = 435
 local toptimeTimer = false
 local toptimeTable = false
+local timingTable = false
+
+local normalColor = tocolor(255, 255, 255)
+local personalColor = tocolor(255, 255, 200)
+local timingsColor = tocolor(120, 105, 200)
 
 function getNameFromAccountName(accountname)
 	for i,v in pairs(getElementsByType ( "userAccount" )) do
@@ -37,20 +42,28 @@ function toptimeRender()
 		local isInToptime = false
 		for i = 1, 12, 1 do
 			if toptimeTable[i] then
+				local timeColor = normalColor
+
+				if timingTable.PlayerID == toptimeTable[i].PlayerID then
+					timeColor = timingsColor
+				elseif toptimeTable[i].PlayerID == localPlayer:getID() then
+					timeColor = personalColor
+				end
+
 				if toptimeTable[i].PlayerID == localPlayer:getID() then
 					isInToptime = true
-					dxDrawText ( i..".",screenWidth-345+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, tocolor(255,255,200,255), 1, "default-bold", "left")
-					dxDrawText ( tostring(msToTimeStr(toptimeTable[i].time)),screenWidth-305+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, tocolor(255,255,200,255), 1, "default-bold", "left")
-					dxDrawText ( tostring(_getPlayerName(getLocalPlayer())),screenWidth-225+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, tocolor(255,255,255,255), 1, "default-bold", "left", "top",false,false,false,true)				
+					dxDrawText ( i..".",screenWidth-345+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, personalColor, 1, "default-bold", "left")
+					dxDrawText ( tostring(msToTimeStr(toptimeTable[i].time)),screenWidth-305+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, timeColor, 1, "default-bold", "left")
+					dxDrawText ( tostring(_getPlayerName(getLocalPlayer())),screenWidth-225+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, normalColor, 1, "default-bold", "left", "top",false,false,false,true)
 				else
-					dxDrawText ( i..".",screenWidth-345+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, tocolor(255,255,255,255), 1, "default-bold", "left")
-					dxDrawText ( tostring(msToTimeStr(toptimeTable[i].time)),screenWidth-305+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, tocolor(255,255,255,255), 1, "default-bold", "left")
-					dxDrawText ( toptimeTable[i].name,screenWidth-225+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, tocolor(255,255,255,255), 1, "default-bold", "left", "top",false,false,false,true)
+					dxDrawText ( i..".",screenWidth-345+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, normalColor, 1, "default-bold", "left")
+					dxDrawText ( tostring(msToTimeStr(toptimeTable[i].time)),screenWidth-305+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, timeColor, 1, "default-bold", "left")
+					dxDrawText ( toptimeTable[i].name,screenWidth-225+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, normalColor, 1, "default-bold", "left", "top",false,false,false,true)
 				end
 			else
-				dxDrawText ( i..".",screenWidth-345+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, tocolor(255,255,255,255), 1, "default-bold", "left")
-				dxDrawText ( "-",screenWidth-305+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, tocolor(255,255,255,255), 1, "default-bold", "left")
-				dxDrawText ( "-",screenWidth-225+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, tocolor(255,255,255,255), 1, "default-bold", "left")			
+				dxDrawText ( i..".",screenWidth-345+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, normalColor, 1, "default-bold", "left")
+				dxDrawText ( "-",screenWidth-305+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, normalColor, 1, "default-bold", "left")
+				dxDrawText ( "-",screenWidth-225+toptimeX, screenHeight/3+50+13*i, screenWidth, screenHeight/3+80, normalColor, 1, "default-bold", "left")
 			end
 		end
 		
@@ -108,8 +121,9 @@ function forceToptimesOpen()
 	end
 end
 
-function setToptimeTable(ttable)
+function setToptimeTable(ttable, timings)
 	toptimeTable = ttable
+	timingTable = timings
 	--[[if toptimeTable == false then return end
 	for i = 1, 12 do
 		if toptimeTable[i] then

@@ -6,7 +6,7 @@
 --
 Timings = inherit(Singleton)
 
-addRemoteEvents{"initTimings" }
+addRemoteEvents{"initTimings"}
 
 function Timings:constructor()
     self.m_Hits = {}
@@ -43,8 +43,12 @@ function Timings:hitPickup(id, timePassed)
         if isTimer(self.m_timer) then return end
         self.m_timer = setTimer(
             function(diff)
-                outputChatBox(("%s%s"):format((diff < 0 and "-" or "+"), msToTimeStr(math.abs(diff), false, true)))
+                outputChatBox(("%s%ss"):format((diff < 0 and "-" or "+"), msToTimeStr(math.abs(diff), false, true)))
             end, 100, 1, diff
         )
     end
+end
+
+function Timings:getTimings()
+    return self.m_Hits[self.m_Map]
 end
