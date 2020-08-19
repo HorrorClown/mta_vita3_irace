@@ -1,0 +1,12 @@
+<meta>
+	<script src="cloudremover_c.lua" type="client"/>
+		
+	<file src="files/cloud1.png"/>
+	<file src="files/cloudhigh.png"/>
+	<file src="files/cloudmasked.png"/>
+	<file src="files/Sky.png"/>
+	<file src="files/Sky2.png"/>
+	<file src="files/Sky3.png"/>
+	<file src="files/Skysnow.png"/>
+	<file src="files/globshader.fx"/>
+</meta>
