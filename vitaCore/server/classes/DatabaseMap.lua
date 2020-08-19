@@ -81,7 +81,7 @@ end
 
 function DatabaseMap:sendToptimes(player)
     if player then
-        callClientFunction(player, "setToptimeTable", self.m_Toptimes, self.m_Timings)
+        callClientFunction(player, "setToptimeTable", self.m_Toptimes, self.m_Timings.PlayerID)
     end
     return false
 end
@@ -127,6 +127,14 @@ function DatabaseMap:setTimings(playerId, hunterTime, timings)
     self.m_Timings.timings = timings
 
     return true
+end
+
+function DatabaseMap:getTimings()
+    if self.m_Timings and self.m_Timings.timings then
+        return self.m_Timings.timings
+    end
+
+    return false
 end
 
 function DatabaseMap.getPlayerToptimeCount(player, prefix)

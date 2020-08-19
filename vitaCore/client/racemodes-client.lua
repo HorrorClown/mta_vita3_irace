@@ -315,7 +315,7 @@ function onClientRender()
 			local allPeople =  #getGamemodePlayers(playerGamemode)
 			local alivePeople = #getAliveGamemodePlayers(playerGamemode)
 			local deadPeople = allPeople - alivePeople
-			dxDrawImage(screenWidth/2-1024/2, 0, 1024,128, "files/vitatime.png")
+			dxDrawImage(screenWidth/2-1024/2, 0, 1024, 128, "files/vitatime.png")
 			dxDrawText ( tostring(deadPeople), screenWidth/2-259, 5, screenWidth/2-236, screenHeight, tocolor(255,255,255,255), 1, "default-bold", "center")
 			dxDrawText ( tostring(alivePeople), screenWidth/2+235, 5, screenWidth/2+259, screenHeight, tocolor(255,255,255,255), 1, "default-bold", "center")	
 			dxDrawImageSection ( screenWidth/2-111.5-69*deadPeople/allPeople, 8.5, 69*deadPeople/allPeople, 10, 0, 0, 69*deadPeople/allPeople, 10, "files/vitaprogress.png", 0, 0, 0, tocolor(255,0,0,255))	

@@ -25,6 +25,18 @@ function table.findAll(tab, value)
     return result
 end
 
+function table.setIndexToInteger(tab)
+    local newTab = {}
+    for index, value in pairs(tab) do
+        if tonumber(index) then
+            newTab[tonumber(index)] = value
+        else
+            newTab[index] = value
+        end
+    end
+    return newTab
+end
+
 function toboolean(num)
     return num ~= 0 and num ~= "0"
 end

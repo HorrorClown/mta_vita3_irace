@@ -8,7 +8,7 @@ local showToptimes = false
 local toptimeX = 435
 local toptimeTimer = false
 local toptimeTable = false
-local timingTable = false
+local topTimingPlayerID = false
 
 local normalColor = tocolor(255, 255, 255)
 local personalColor = tocolor(255, 255, 200)
@@ -44,7 +44,7 @@ function toptimeRender()
 			if toptimeTable[i] then
 				local timeColor = normalColor
 
-				if timingTable.PlayerID == toptimeTable[i].PlayerID then
+				if topTimingPlayerID == toptimeTable[i].PlayerID then
 					timeColor = timingsColor
 				elseif toptimeTable[i].PlayerID == localPlayer:getID() then
 					timeColor = personalColor
@@ -123,7 +123,8 @@ end
 
 function setToptimeTable(ttable, timings)
 	toptimeTable = ttable
-	timingTable = timings
+	topTimingPlayerID = timings
+
 	--[[if toptimeTable == false then return end
 	for i = 1, 12 do
 		if toptimeTable[i] then

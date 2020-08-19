@@ -9,6 +9,7 @@ local afktimer = nil
 local afkwarntimer = nil
 
 function checkMain()
+	if localPlayer.noAFK then return end
 	if isLoggedIn(getLocalPlayer()) == true then
 		if getPlayerGameMode(getLocalPlayer()) == 3 or getPlayerGameMode(getLocalPlayer()) == 0 or getPlayerGameMode(getLocalPlayer()) == 4 or getPlayerGameMode(getLocalPlayer()) == 6 then--Race or Selection or Minigames or Monopoly
 			setElementData(getLocalPlayer(), "AFK", false)

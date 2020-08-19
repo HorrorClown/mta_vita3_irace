@@ -402,7 +402,7 @@ function joinDM(player)
 	setElementData(player, "nextmap", getElementData(gElementDM, "nextmap"))
 	setElementData(player, "winningCounter", 0)
 
-	for i,v in ipairs(getGamemodePlayers(gGamemodeDM)) do
+	for i, v in pairs(getGamemodePlayers(gGamemodeDM)) do
 		if v ~= player then
 			setElementVisibleTo ( gPlayerBlips[player], v, true )
 			setElementVisibleTo ( gPlayerBlips[v], player, true )
@@ -455,7 +455,6 @@ function quitDM(player)
 	end
 	
 	toggleControl ( player, "vehicle_secondary_fire", true )
-	--sendToptimes(player, false)
 	setElementData(player, "ghostmod", false )
 	setElementData(player, "winline", nil)
 	setElementData(player, "winline2", nil)
@@ -489,7 +488,7 @@ addEventHandler("quitDM", getRootElement(), quitDM)
 
 function downloadMapFinishedDM(player)
     databaseMapDM:sendToptimes(player)
-	player:triggerEvent("initTimings", getElementData(gElementDM, "mapname"))
+	player:triggerEvent("initTimings", getElementData(gElementDM, "mapname"), databaseMapDM:getTimings())
 
 	callClientFunction(player, "forceToptimesOpen")
 	callClientFunction(player, "allowNewHurryFunc")
