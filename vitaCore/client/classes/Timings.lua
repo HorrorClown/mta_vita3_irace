@@ -31,6 +31,7 @@ end
 function Timings:initTimings(map, globalTimings)
     self.m_localTimings = {}
     self.m_shareTimings = {}
+    self.m_globalTimings = {}
     self.m_Map = map
     self.m_Finished = false
 
