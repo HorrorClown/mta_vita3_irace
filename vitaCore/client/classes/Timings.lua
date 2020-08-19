@@ -5,7 +5,7 @@
 -- pewx.de // irace-mta.de
 --
 Timings = inherit(Singleton)
-Timings.fileString = "@:vitaCore/files/timings/%s.json"
+Timings.fileString = ":vitaCore/files/timings/%s.json"
 
 Timings.WIDTH = 80
 Timings.HEIGHT = 20
