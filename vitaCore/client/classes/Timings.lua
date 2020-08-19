@@ -29,11 +29,14 @@ function Timings:constructor()
 end
 
 function Timings:initTimings(map, globalTimings)
+    self.m_localTimings = {}
+    self.m_shareTimings = {}
     self.m_Map = map
     self.m_Finished = false
 
     if globalTimings then
         self.m_globalTimings = table.setIndexToInteger(globalTimings)
+        self:createMarker()
     end
 
     if File.exists(Timings.fileString:format(md5(self.m_Map))) then
@@ -47,11 +50,29 @@ function Timings:initTimings(map, globalTimings)
             self.m_localTimings = table.setIndexToInteger(json)
             end
         end
-
-        return
     end
+end
 
-    self.m_localTimings = {}
+function Timings:isTimingPickup(id)
+    for pId in pairs(self.m_globalTimings) do
+       if pId == id then
+           return true
+       end
+    end
+end
+
+function Timings:createMarker()
+    for k, pickup in pairs(getElementsByType("racePickup")) do
+        if pickup:getData("mode") == "DM" then
+            local id = pickup:getData("id")
+            if self:isTimingPickup(id) then
+                local object = pickup:getData("object")
+                local marker = Marker(object.position + Vector3(0, 0, 1.3), "arrow", .3, 170, 10, 210)
+                marker:setDimension(localPlayer:getData("gameMode"))
+                marker:setParent(object)
+            end
+        end
+    end
 end
 
 function Timings:saveTimings()
@@ -61,12 +82,13 @@ function Timings:saveTimings()
 end
 
 function Timings:getTimings()
-    return self.m_localTimings
+    return self.m_shareTimings
 end
 
 function Timings:hitPickup(id, timePassed)
     if self.m_Finished then return end
     if id == "Hunter" then self.m_Finished = true end
+    self.m_shareTimings[id] = timePassed
 
     local change = false
     local globalDiff = false
