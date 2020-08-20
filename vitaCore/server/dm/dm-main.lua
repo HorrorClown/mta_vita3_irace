@@ -1003,9 +1003,9 @@ function playerGotHunter(hunterTime, timings)
 	outputChatBox("#996633:Points: #ffffff You recieved 50 extra-points for reaching the Hunter.", player, 255, 255, 255, true)
 	setElementData(player, "Points", getElementData(player, "Points") + 50)
 
+	databaseMapDM:setTimings(player.m_ID, hunterTime, timings)
 	local hasToptime, hasPosition = databaseMapDM:getToptimeFromPlayer(player.m_ID)
 	local toptimeAdded = databaseMapDM:addNewToptime(player.m_ID, hunterTime)
-	databaseMapDM:setTimings(player.m_ID, hunterTime, timings)
 
 	if toptimeAdded then
 		callClientFunction(player, "forceToptimesOpen")

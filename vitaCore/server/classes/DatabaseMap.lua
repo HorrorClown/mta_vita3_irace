@@ -104,10 +104,10 @@ function DatabaseMap:sortToptimes()
     if old12 ~= new12 then
         for _, Player in pairs(getElementsByType("player")) do
            if Player.m_ID == old12.PlayerID then
-               if getPlayerGamemode(Player) == gGamemodeDM then
+               if getPlayerGameMode(Player) == gGamemodeDM then
                    Player:setData("TopTimes", Player:getData("TopTimes") - 1)
                    Player:setData("TopTimeCounter", Player:getData("TopTimeCounter") - 1)
-               elseif getPlayerGamemode(Player) == gGamemodeRA then
+               elseif getPlayerGameMode(Player) == gGamemodeRA then
                    Player:setData("TopTimesRA", Player:getData("TopTimesRA") - 1)
                end
            end
