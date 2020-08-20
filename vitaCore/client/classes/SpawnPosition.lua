@@ -5,10 +5,12 @@
 -- pewx.de // irace-mta.de
 --
 SpawnPosition = inherit(Singleton)
+SpawnPosition.file = ":vitaCore/files/spawns.json"
 
 addRemoteEvents{"updateSpawnPositions"}
 
 function SpawnPosition:constructor()
+    self:loadSpawns()
     self.m_Enabled = false
     self.m_Index = 0
 
@@ -18,7 +20,32 @@ function SpawnPosition:constructor()
     addEventHandler("onClientKey", root, self.fn_OnClientMouseWheel)
 end
 
-function SpawnPosition:updateSpawnPositions(positions, spawnId)
+function SpawnPosition:loadSpawns()
+    if File.exists(SpawnPosition.file) then
+        local file = File.open(SpawnPosition.file, true)
+        local data = file:read(file.size)
+        file:close()
+
+        if data then
+            local json = fromJSON(data)
+            if json then
+                self.m_localSpawns = json
+            end
+        end
+    else
+        self.m_localSpawns = {}
+    end
+end
+
+function SpawnPosition:updateSpawnPositions(positions, spawnId, map)
+    if self.m_Changed then
+        self.m_Changed = false
+
+        local file = File.new(SpawnPosition.file)
+        file:write(toJSON(self.m_localSpawns))
+        file:close()
+    end
+
     if not positions then
         self.m_Enabled = false
         return
@@ -26,7 +53,22 @@ function SpawnPosition:updateSpawnPositions(positions, spawnId)
 
     self.m_SpawnPositions = positions
     self.m_Index = spawnId
+    self.m_Map = md5(map)
     self.m_Enabled = true
+
+    if not localPlayer.vehicle then outputChatBox("no vehicle :C") return end
+
+    if self.m_localSpawns[self.m_Map] then
+        local savedIndex = self.m_localSpawns[self.m_Map]
+        if self.m_SpawnPositions[savedIndex] then
+            self.m_Index = savedIndex
+
+            local spawn = self.m_SpawnPositions[savedIndex]
+            localPlayer.vehicle:setPosition(spawn.posX, spawn.posY, spawn.posZ)
+            localPlayer.vehicle:setRotation(spawn.rotX, spawn.rotY, spawn.rotZ)
+            setCameraTarget(localPlayer)
+        end
+    end
 end
 
 function SpawnPosition:mouseWheel(button)
@@ -37,9 +79,15 @@ function SpawnPosition:mouseWheel(button)
 
     local int = button == "mouse_wheel_up" and 1 or -1
 
+
     self.m_Index = self.m_Index + int
     if self.m_Index < 1 then self.m_Index = #self.m_SpawnPositions end
     if self.m_Index > #self.m_SpawnPositions then self.m_Index = 1 end
+
+    if self.m_localSpawns[self.m_Map] ~= self.m_Index then
+        self.m_localSpawns[self.m_Map] = self.m_Index
+        self.m_Changed = true
+    end
 
     local spawn = self.m_SpawnPositions[self.m_Index]
     localPlayer.vehicle:setPosition(spawn.posX, spawn.posY, spawn.posZ)

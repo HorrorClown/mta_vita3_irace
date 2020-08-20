@@ -898,7 +898,7 @@ function setUpDMPlayer(player)
 		end
 	end
 
-	player:triggerEvent("updateSpawnPositions", gSpawnPositionsDM, spawnId)
+	player:triggerEvent("updateSpawnPositions", gSpawnPositionsDM, spawnId, gElementDM:getData("mapname"))
 end
 
 function countdownFuncDM(id)
